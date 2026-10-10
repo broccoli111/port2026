@@ -40,4 +40,6 @@ The runner refuses any document root other than the confirmed staging directory,
 
 The runner source is deployment/namecheap-staging-deploy.sh. Updating it requires installing the updated copy on the host; repository scripts are not automatically executed. The staging checkout is separate from cPanel's production Git repository. Do not use the inherited .cpanel.yml for staging: it is the production-only manual deployment recipe.
 
+The environment banner is hostname-gated in site.js and appears only when the site is served from staging.rosslauda.com. Merging staging into main cannot display the banner on production.
+
 For rollback, revert the unwanted commit on staging and push the revert. The next check deploys it. Do not edit the hosted checkout directly. The original password-gate index and authentication scripts remain backed up outside the web root in portfolio-staging-deploy/original-gate-index.html, original-auth.js, and original-gate.js; the full staging backup also preserves the original site.

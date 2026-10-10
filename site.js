@@ -53,6 +53,15 @@
     })[character]);
   }
 
+  function initEnvironmentBanner() {
+    if (location.hostname !== 'staging.rosslauda.com') return;
+    const banner = document.createElement('aside');
+    banner.className = 'environment-banner';
+    banner.setAttribute('role', 'status');
+    banner.textContent = 'this is a staging environment';
+    document.body.prepend(banner);
+  }
+
   function noteArrow(direction) {
     const directionClass = direction === 'forward' ? ' is-forward' : ' is-back';
     return `<svg class="detail-nav-arrow${directionClass}" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M10.3358 16.75L7.04289 13.4571C6.65237 13.0666 6.65237 12.4334 7.04289 12.0429L10.3358 8.75M7.33579 12.75H17.3358" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`;
@@ -925,6 +934,7 @@
       </div>`;
   }
 
+  initEnvironmentBanner();
   initPrinciples();
   renderNote();
   initArticleHighlights();
