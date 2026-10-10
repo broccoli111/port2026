@@ -536,7 +536,7 @@ html,body{overflow-x:clip}
     height:auto;
     aspect-ratio:375 / 812;
     max-width:none!important;
-    scroll-snap-align:start;
+    scroll-snap-align:end;
     scroll-snap-stop:always;
     filter:none!important
   }
@@ -558,7 +558,7 @@ html,body{overflow-x:clip}
     overflow-y:hidden;
     overscroll-behavior-inline:contain;
     background:#a9e7ed url("assets/cases/feelmore-wellness/gallery-02-device.png") center/contain no-repeat;
-    scroll-snap-align:start;
+    scroll-snap-align:end;
     scroll-snap-stop:always;
     scroll-snap-type:x mandatory;
     scroll-padding-inline:calc((100vw - min(78vw,340px))/2);

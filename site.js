@@ -179,10 +179,13 @@
 
     const root = document.documentElement;
     let ticking = false;
+    let bottomSnapTimer = 0;
+    let lastScrollY = window.scrollY;
+    let scrollDirection = 0;
     let wasBeforeGallery = firstPanel.getBoundingClientRect().top > 0;
     const pinFirstPanel = () => {
-      const firstPanelTop = firstPanel.getBoundingClientRect().top;
-      const targetY = window.scrollY + firstPanelTop;
+      const firstPanelBottom = firstPanel.getBoundingClientRect().bottom;
+      const targetY = window.scrollY + firstPanelBottom - window.innerHeight;
       root.style.scrollBehavior = 'auto';
       window.scrollTo(0, targetY);
       root.style.removeProperty('scroll-behavior');
@@ -190,9 +193,33 @@
       root.classList.add('feelmore-gallery-snap-at-start');
       wasBeforeGallery = false;
     };
+    const snapNearestPanelBottom = () => {
+      if (window.innerWidth > 700 || !root.classList.contains('feelmore-gallery-snap-active')) return;
+      const cardPanel = gallery.querySelector('[data-case-id="feelmore-wellness"][data-gallery-group="1"]');
+      const panels = [
+        ...gallery.querySelectorAll('[data-case-id="feelmore-wellness"] .case-gallery-item:not(.onboard-card)'),
+        ...(cardPanel ? [cardPanel] : [])
+      ].filter((panel) => {
+        const rect = panel.getBoundingClientRect();
+        return rect.height > 0 && rect.bottom > 0 && rect.top < window.innerHeight;
+      });
+      if (!panels.length) return;
+      const target = panels.reduce((nearest, panel) => {
+        const distance = Math.abs(panel.getBoundingClientRect().bottom - window.innerHeight);
+        const nearestDistance = Math.abs(nearest.getBoundingClientRect().bottom - window.innerHeight);
+        return distance < nearestDistance ? panel : nearest;
+      });
+      const delta = target.getBoundingClientRect().bottom - window.innerHeight;
+      if (target === firstPanel && delta > 1 && scrollDirection < 0) return;
+      if (Math.abs(delta) <= 1) return;
+      root.style.scrollSnapType = 'none';
+      window.scrollTo(0, window.scrollY + delta);
+      requestAnimationFrame(() => root.style.removeProperty('scroll-snap-type'));
+    };
     const update = () => {
       const rect = gallery.getBoundingClientRect();
       const firstPanelTop = firstPanel.getBoundingClientRect().top;
+      const firstPanelBottomOffset = firstPanel.getBoundingClientRect().bottom - window.innerHeight;
       const isMobile = window.innerWidth <= 700;
       const isImmersive = isMobile && rect.top <= 72 && rect.bottom > 0;
 
@@ -204,7 +231,7 @@
         if (wasBeforeGallery) pinFirstPanel();
         else {
           root.classList.add('feelmore-gallery-snap-active');
-          root.classList.toggle('feelmore-gallery-snap-at-start', Math.abs(firstPanelTop) <= 1);
+          root.classList.toggle('feelmore-gallery-snap-at-start', firstPanelBottomOffset >= -1);
         }
       }
 
@@ -212,6 +239,12 @@
       ticking = false;
     };
     const requestUpdate = () => {
+      const currentScrollY = window.scrollY;
+      const nextDirection = Math.sign(currentScrollY - lastScrollY);
+      if (nextDirection) scrollDirection = nextDirection;
+      lastScrollY = currentScrollY;
+      window.clearTimeout(bottomSnapTimer);
+      bottomSnapTimer = window.setTimeout(snapNearestPanelBottom, 120);
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(update);
