@@ -534,6 +534,8 @@ html,body{overflow-x:clip}
     display:block;
     width:100vw;
     height:100vh;
+    height:100dvh;
+    aspect-ratio:375 / 812;
     max-width:none!important;
     scroll-snap-align:start;
     scroll-snap-stop:always;
@@ -548,14 +550,15 @@ html,body{overflow-x:clip}
     box-shadow:none
   }
   .case-gallery-figure[data-case-id="feelmore-wellness"] .case-device-frame>img,
-  .case-gallery-figure[data-case-id="feelmore-wellness"] .case-layered-device>*{object-fit:fill}
+  .case-gallery-figure[data-case-id="feelmore-wellness"] .case-layered-device>*{object-fit:contain}
 
   .case-gallery-figure[data-case-id="feelmore-wellness"][data-gallery-group="1"]{
     height:100vh;
+    height:100dvh;
     overflow-x:auto;
     overflow-y:hidden;
     overscroll-behavior-inline:contain;
-    background:#a9e7ed url("assets/cases/feelmore-wellness/gallery-02-device.png") center/100% 100% no-repeat;
+    background:#a9e7ed url("assets/cases/feelmore-wellness/gallery-02-device.png") center/contain no-repeat;
     scroll-snap-align:start;
     scroll-snap-stop:always;
     scroll-snap-type:x mandatory;
