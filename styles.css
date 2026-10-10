@@ -533,13 +533,8 @@ html,body{overflow-x:clip}
     inset:auto;
     display:block;
     width:100vw;
-    height:calc(100vw * 812 / 375 + var(--feelmore-browser-chrome-gap,0px));
-    aspect-ratio:auto;
-    padding-bottom:var(--feelmore-browser-chrome-gap,0px);
-    background-image:var(--feelmore-screen-edge-image);
-    background-position:center bottom;
-    background-size:100vw calc(100vw * 812 / 375);
-    background-repeat:no-repeat;
+    height:calc(100vw * 812 / 375);
+    aspect-ratio:375 / 812;
     max-width:none!important;
     scroll-snap-align:end;
     scroll-snap-stop:always;
@@ -557,9 +552,8 @@ html,body{overflow-x:clip}
   .case-gallery-figure[data-case-id="feelmore-wellness"] .case-layered-device>*{object-fit:contain}
 
   .case-gallery-figure[data-case-id="feelmore-wellness"][data-gallery-group="1"]{
-    height:calc(100vw * 812 / 375 + var(--feelmore-browser-chrome-gap,0px));
-    aspect-ratio:auto!important;
-    padding-bottom:var(--feelmore-browser-chrome-gap,0px);
+    height:calc(100vw * 812 / 375);
+    aspect-ratio:375 / 812!important;
     overflow-x:auto;
     overflow-y:hidden;
     overscroll-behavior-inline:contain;
