@@ -497,8 +497,10 @@ html,body{overflow-x:clip}
 /* Feelmore's app screens become viewport-sized chapters on mobile. The page
    moves through them vertically; only the onboarding cards swipe sideways. */
 @media(max-width:700px){
-  html.feelmore-mobile-snap{scroll-snap-type:y mandatory}
-  html.feelmore-mobile-snap .case-bottom-nav{scroll-snap-align:end;scroll-snap-stop:always}
+  html.feelmore-mobile-snap{scroll-snap-type:none}
+  html.feelmore-mobile-snap.feelmore-gallery-snap-active{scroll-snap-type:y mandatory}
+  html.feelmore-mobile-snap.feelmore-gallery-snap-active.feelmore-gallery-snap-at-start{scroll-snap-type:y proximity}
+  html.feelmore-mobile-snap.feelmore-gallery-snap-active .case-bottom-nav{scroll-snap-align:end;scroll-snap-stop:always}
   .case-header-overlay.is-gallery-immersive{
     opacity:0;
     pointer-events:none;

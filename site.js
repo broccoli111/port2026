@@ -164,7 +164,6 @@
       ticking = true;
       requestAnimationFrame(update);
     };
-
     update();
     window.addEventListener('scroll', requestUpdate, { passive: true });
     window.addEventListener('resize', requestUpdate, { passive: true });
@@ -175,12 +174,40 @@
   function initMobileCaseGalleryHeader() {
     const header = document.querySelector('.case-header-overlay');
     const gallery = document.querySelector('.case-gallery');
-    if (!header || !gallery?.querySelector('[data-case-id="feelmore-wellness"]')) return;
+    const firstPanel = gallery?.querySelector('[data-case-id="feelmore-wellness"] .case-gallery-item');
+    if (!header || !firstPanel) return;
 
+    const root = document.documentElement;
     let ticking = false;
+    let wasBeforeGallery = firstPanel.getBoundingClientRect().top > 0;
+    const pinFirstPanel = () => {
+      const firstPanelTop = firstPanel.getBoundingClientRect().top;
+      const targetY = window.scrollY + firstPanelTop;
+      root.style.scrollBehavior = 'auto';
+      window.scrollTo(0, targetY);
+      root.style.removeProperty('scroll-behavior');
+      root.classList.add('feelmore-gallery-snap-active');
+      root.classList.add('feelmore-gallery-snap-at-start');
+      wasBeforeGallery = false;
+    };
     const update = () => {
       const rect = gallery.getBoundingClientRect();
-      const isImmersive = window.innerWidth <= 700 && rect.top <= 72 && rect.bottom > 0;
+      const firstPanelTop = firstPanel.getBoundingClientRect().top;
+      const isMobile = window.innerWidth <= 700;
+      const isImmersive = isMobile && rect.top <= 72 && rect.bottom > 0;
+
+      if (!isMobile || firstPanelTop > 1) {
+        root.classList.remove('feelmore-gallery-snap-active');
+        root.classList.remove('feelmore-gallery-snap-at-start');
+        wasBeforeGallery = true;
+      } else {
+        if (wasBeforeGallery) pinFirstPanel();
+        else {
+          root.classList.add('feelmore-gallery-snap-active');
+          root.classList.toggle('feelmore-gallery-snap-at-start', Math.abs(firstPanelTop) <= 1);
+        }
+      }
+
       header.classList.toggle('is-gallery-immersive', isImmersive);
       ticking = false;
     };
@@ -189,7 +216,6 @@
       ticking = true;
       requestAnimationFrame(update);
     };
-
     update();
     window.addEventListener('scroll', requestUpdate, { passive: true });
     window.addEventListener('resize', requestUpdate, { passive: true });
