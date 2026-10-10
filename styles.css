@@ -498,6 +498,13 @@ html,body{overflow-x:clip}
    moves through them vertically; only the onboarding cards swipe sideways. */
 @media(max-width:700px){
   html.feelmore-mobile-snap{scroll-snap-type:none}
+  html.feelmore-mobile-snap .case-hero{background:#cfeaf1}
+  html.feelmore-mobile-snap .case-hero>img{
+    width:160%;
+    max-width:none;
+    margin-left:-30%;
+    object-fit:contain
+  }
   html.feelmore-mobile-snap.feelmore-gallery-snap-active{scroll-snap-type:y mandatory}
   html.feelmore-mobile-snap.feelmore-gallery-snap-active.feelmore-gallery-snap-at-start{scroll-snap-type:y proximity}
   html.feelmore-mobile-snap.feelmore-gallery-snap-active .case-bottom-nav{scroll-snap-align:end;scroll-snap-stop:always}
