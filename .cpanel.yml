@@ -1,0 +1,4 @@
+---
+deployment:
+  tasks:
+    - /bin/cp -a assets index.html home.html case-study.html note.html styles.css data.js case-galleries.js site.js .htaccess /home/rossxzni/public_html/
