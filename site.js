@@ -603,6 +603,16 @@
       initOnboardingCardReveal();
     };
 
+    const shouldHydrateFeelmoreMobile = window.matchMedia('(max-width:700px)').matches
+      && figures.some((figure) => figure.dataset.caseId === 'feelmore-wellness');
+    if (shouldHydrateFeelmoreMobile) {
+      figures.forEach((figure) => {
+        figure.classList.add('is-render-active');
+        hydrate(figure);
+      });
+      return;
+    }
+
     if (!('IntersectionObserver' in window)) {
       figures.forEach((figure) => {
         figure.classList.add('is-render-active');
@@ -925,6 +935,7 @@
       history.replaceState(null, '', `case-study.html?id=${id}`);
     }
     const caseStudy = data.cases[id];
+    document.documentElement.classList.toggle('feelmore-mobile-snap', id === 'feelmore-wellness');
     const nextId = ids[(ids.indexOf(id) + 1) % ids.length];
     const darkHero = ['feelmore-confidence', 'citi-platform', 'citi-guidance', 'meta-consistency', 'meta-inevitable', 'meta-clutter'].includes(id);
     document.title = `${caseStudy.title} — ${caseStudy.company}`;
