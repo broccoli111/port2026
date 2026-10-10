@@ -533,8 +533,7 @@ html,body{overflow-x:clip}
     inset:auto;
     display:block;
     width:100vw;
-    height:100vh;
-    height:100dvh;
+    height:auto;
     aspect-ratio:375 / 812;
     max-width:none!important;
     scroll-snap-align:start;
@@ -553,8 +552,8 @@ html,body{overflow-x:clip}
   .case-gallery-figure[data-case-id="feelmore-wellness"] .case-layered-device>*{object-fit:contain}
 
   .case-gallery-figure[data-case-id="feelmore-wellness"][data-gallery-group="1"]{
-    height:100vh;
-    height:100dvh;
+    height:auto;
+    aspect-ratio:375 / 812!important;
     overflow-x:auto;
     overflow-y:hidden;
     overscroll-behavior-inline:contain;
