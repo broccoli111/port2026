@@ -183,7 +183,11 @@
     let lastScrollY = window.scrollY;
     let scrollDirection = 0;
     let wasBeforeGallery = firstPanel.getBoundingClientRect().top > 0;
-    const deviceScreenBottom = () => Math.max(window.innerHeight, firstPanel.getBoundingClientRect().height);
+    const deviceScreenBottom = () => {
+      const hiddenScreenHeight = Math.max(0, firstPanel.getBoundingClientRect().height - window.innerHeight);
+      const browserChromeUnderlap = Math.min(6, hiddenScreenHeight);
+      return window.innerHeight + browserChromeUnderlap;
+    };
     const pinFirstPanel = () => {
       const firstPanelBottom = firstPanel.getBoundingClientRect().bottom;
       const targetY = window.scrollY + firstPanelBottom - deviceScreenBottom();
