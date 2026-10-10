@@ -172,6 +172,29 @@
     window.addEventListener('load', requestUpdate, { once: true });
   }
 
+  function initMobileCaseGalleryHeader() {
+    const header = document.querySelector('.case-header-overlay');
+    const gallery = document.querySelector('.case-gallery');
+    if (!header || !gallery?.querySelector('[data-case-id="feelmore-wellness"]')) return;
+
+    let ticking = false;
+    const update = () => {
+      const rect = gallery.getBoundingClientRect();
+      const isImmersive = window.innerWidth <= 700 && rect.top <= 72 && rect.bottom > 0;
+      header.classList.toggle('is-gallery-immersive', isImmersive);
+      ticking = false;
+    };
+    const requestUpdate = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate, { passive: true });
+  }
+
   function initNoteHighlights() {
     document.querySelectorAll('.text-list a, .detail-nav a').forEach((link) => {
       const existingWrapper = link.querySelector('.note-link-label');
@@ -945,6 +968,7 @@
   initViewportVideos();
   initStickyHeader();
   initCaseHeader();
+  initMobileCaseGalleryHeader();
   initEmailHighlights();
   initNoteHighlights();
 })();

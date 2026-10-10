@@ -490,6 +490,80 @@ html,body{overflow-x:clip}
 @media(prefers-reduced-motion:reduce){.case-device-frame,.case-gallery-image,.onboard-card{transition:none}.case-gallery-figure:not(.is-onboarding-revealed) .onboard-card{transform:none}}
 @media(max-width:700px){.case-device-frame.is-landscape{--device-radius:12px}}
 
+/* Feelmore's app screens become the phone viewport on mobile. Each gallery
+   group stays independently swipeable so the case-study page can still
+   scroll vertically between chapters. */
+@media(max-width:700px){
+  .case-header-overlay.is-gallery-immersive{
+    opacity:0;
+    pointer-events:none;
+    transform:translateY(-100%);
+    transition:opacity 220ms ease,transform 360ms cubic-bezier(.22,1,.36,1)
+  }
+  .case-gallery-figure[data-case-id="feelmore-wellness"]{
+    width:100vw;
+    height:100vh;
+    height:100dvh;
+    margin-inline:calc(50% - 50vw);
+    aspect-ratio:auto!important;
+    overflow-x:auto;
+    overflow-y:hidden;
+    overscroll-behavior-inline:contain;
+    scroll-snap-type:x mandatory;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch
+  }
+  .case-gallery-figure[data-case-id="feelmore-wellness"]::-webkit-scrollbar{display:none}
+  .case-gallery-figure[data-case-id="feelmore-wellness"] .case-composition-inner{
+    position:static;
+    display:flex;
+    left:auto!important;
+    width:max-content!important;
+    height:100%
+  }
+  .case-gallery-figure[data-case-id="feelmore-wellness"] .case-gallery-item{
+    position:relative;
+    inset:auto;
+    flex:0 0 100vw;
+    width:100vw;
+    height:100%;
+    max-width:none!important;
+    scroll-snap-align:start;
+    scroll-snap-stop:always;
+    filter:none!important
+  }
+  .case-gallery-figure[data-case-id="feelmore-wellness"] .case-device-frame{
+    --device-border:0px;
+    --device-radius:0;
+    border-radius:0;
+    corner-shape:initial;
+    background:transparent;
+    box-shadow:none
+  }
+  .case-gallery-figure[data-case-id="feelmore-wellness"] .case-device-frame>img,
+  .case-gallery-figure[data-case-id="feelmore-wellness"] .case-layered-device>*{object-fit:cover}
+
+  .case-gallery-figure[data-case-id="feelmore-wellness"][data-gallery-group="1"]{
+    background:#071315 url("assets/cases/feelmore-wellness/gallery-02-item-01.png") center/cover no-repeat;
+    scroll-padding-inline:24px
+  }
+  .case-gallery-figure[data-case-id="feelmore-wellness"][data-gallery-group="1"] .case-composition-inner{
+    align-items:center;
+    gap:16px;
+    padding-inline:24px
+  }
+  .case-gallery-figure[data-case-id="feelmore-wellness"][data-gallery-group="1"] .case-gallery-item:not(.onboard-card){display:none}
+  .case-gallery-figure[data-case-id="feelmore-wellness"][data-gallery-group="1"] .onboard-card{
+    flex:0 0 min(78vw,340px);
+    width:min(78vw,340px);
+    height:auto;
+    transform:none!important;
+    transition:none;
+    object-fit:contain;
+    scroll-snap-align:start
+  }
+}
+
 /* Citi Platform theme control and image transition. */
 .case-gallery.has-citi-theme-switcher{position:relative}
 .citi-theme-switcher-anchor{
