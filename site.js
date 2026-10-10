@@ -183,11 +183,17 @@
     let lastScrollY = window.scrollY;
     let scrollDirection = 0;
     let wasBeforeGallery = firstPanel.getBoundingClientRect().top > 0;
-    const deviceScreenBottom = () => {
-      const hiddenScreenHeight = Math.max(0, firstPanel.getBoundingClientRect().height - window.innerHeight);
-      const browserChromeUnderlap = Math.min(6, hiddenScreenHeight);
-      return window.innerHeight + browserChromeUnderlap;
+    const appScreenHeight = () => window.innerWidth * (812 / 375);
+    const deviceScreenBottom = () => Math.max(window.innerHeight, appScreenHeight());
+    const syncBrowserChromeGap = () => {
+      const gap = Math.max(0, appScreenHeight() - window.innerHeight);
+      root.style.setProperty('--feelmore-browser-chrome-gap', `${gap}px`);
     };
+    gallery.querySelectorAll('[data-case-id="feelmore-wellness"] .case-device-frame').forEach((panel) => {
+      const edgeImage = panel.querySelector('.case-layered-device-background, img');
+      if (edgeImage?.src) panel.style.setProperty('--feelmore-screen-edge-image', `url("${edgeImage.src}")`);
+    });
+    syncBrowserChromeGap();
     const pinFirstPanel = () => {
       const firstPanelBottom = firstPanel.getBoundingClientRect().bottom;
       const targetY = window.scrollY + firstPanelBottom - deviceScreenBottom();
@@ -223,6 +229,7 @@
       requestAnimationFrame(() => root.style.removeProperty('scroll-snap-type'));
     };
     const update = () => {
+      syncBrowserChromeGap();
       const rect = gallery.getBoundingClientRect();
       const firstPanelTop = firstPanel.getBoundingClientRect().top;
       const firstPanelBottomOffset = firstPanel.getBoundingClientRect().bottom - deviceScreenBottom();
