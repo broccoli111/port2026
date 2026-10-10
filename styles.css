@@ -527,7 +527,6 @@ html,body{overflow-x:clip}
     display:block;
     width:100vw;
     height:100vh;
-    height:100dvh;
     max-width:none!important;
     scroll-snap-align:start;
     scroll-snap-stop:always;
@@ -546,7 +545,6 @@ html,body{overflow-x:clip}
 
   .case-gallery-figure[data-case-id="feelmore-wellness"][data-gallery-group="1"]{
     height:100vh;
-    height:100dvh;
     overflow-x:auto;
     overflow-y:hidden;
     overscroll-behavior-inline:contain;
