@@ -535,10 +535,6 @@ html,body{overflow-x:clip}
     width:100vw;
     height:calc(100vw * 812 / 375);
     aspect-ratio:375 / 812;
-    background-image:var(--feelmore-screen-edge-image);
-    background-position:center top;
-    background-size:100vw calc(100vw * 812 / 375);
-    background-repeat:no-repeat;
     max-width:none!important;
     scroll-snap-align:end;
     scroll-snap-stop:always;
@@ -553,10 +549,7 @@ html,body{overflow-x:clip}
     box-shadow:none
   }
   .case-gallery-figure[data-case-id="feelmore-wellness"] .case-device-frame>img,
-  .case-gallery-figure[data-case-id="feelmore-wellness"] .case-layered-device>*{
-    object-fit:contain;
-    transform:translateY(calc(-1 * var(--feelmore-browser-chrome-gap,0px)))
-  }
+  .case-gallery-figure[data-case-id="feelmore-wellness"] .case-layered-device>*{object-fit:contain}
 
   .case-gallery-figure[data-case-id="feelmore-wellness"][data-gallery-group="1"]{
     height:calc(100vw * 812 / 375);
@@ -564,11 +557,7 @@ html,body{overflow-x:clip}
     overflow-x:auto;
     overflow-y:hidden;
     overscroll-behavior-inline:contain;
-    background-color:#a9e7ed;
-    background-image:url("assets/cases/feelmore-wellness/gallery-02-device.png"),url("assets/cases/feelmore-wellness/gallery-02-device.png");
-    background-position:center calc(-1 * var(--feelmore-browser-chrome-gap,0px)),center top;
-    background-size:100vw calc(100vw * 812 / 375);
-    background-repeat:no-repeat;
+    background:#a9e7ed url("assets/cases/feelmore-wellness/gallery-02-device.png") center top/100vw calc(100vw * 812 / 375) no-repeat;
     scroll-snap-align:end;
     scroll-snap-stop:always;
     scroll-snap-type:x mandatory;
@@ -583,8 +572,7 @@ html,body{overflow-x:clip}
     gap:16px;
     width:max-content!important;
     height:100%;
-    padding-inline:calc((100vw - min(78vw,340px))/2);
-    transform:translateY(calc(-1 * var(--feelmore-browser-chrome-gap,0px)))
+    padding-inline:calc((100vw - min(78vw,340px))/2)
   }
   .case-gallery-figure[data-case-id="feelmore-wellness"][data-gallery-group="1"] .case-gallery-item:not(.onboard-card){display:none}
   .case-gallery-figure[data-case-id="feelmore-wellness"][data-gallery-group="1"] .onboard-card{
