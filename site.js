@@ -183,9 +183,10 @@
     let lastScrollY = window.scrollY;
     let scrollDirection = 0;
     let wasBeforeGallery = firstPanel.getBoundingClientRect().top > 0;
+    const deviceScreenBottom = () => Math.max(window.innerHeight, firstPanel.getBoundingClientRect().height);
     const pinFirstPanel = () => {
       const firstPanelBottom = firstPanel.getBoundingClientRect().bottom;
-      const targetY = window.scrollY + firstPanelBottom - window.innerHeight;
+      const targetY = window.scrollY + firstPanelBottom - deviceScreenBottom();
       root.style.scrollBehavior = 'auto';
       window.scrollTo(0, targetY);
       root.style.removeProperty('scroll-behavior');
@@ -204,12 +205,13 @@
         return rect.height > 0 && rect.bottom > 0 && rect.top < window.innerHeight;
       });
       if (!panels.length) return;
+      const screenBottom = deviceScreenBottom();
       const target = panels.reduce((nearest, panel) => {
-        const distance = Math.abs(panel.getBoundingClientRect().bottom - window.innerHeight);
-        const nearestDistance = Math.abs(nearest.getBoundingClientRect().bottom - window.innerHeight);
+        const distance = Math.abs(panel.getBoundingClientRect().bottom - screenBottom);
+        const nearestDistance = Math.abs(nearest.getBoundingClientRect().bottom - screenBottom);
         return distance < nearestDistance ? panel : nearest;
       });
-      const delta = target.getBoundingClientRect().bottom - window.innerHeight;
+      const delta = target.getBoundingClientRect().bottom - screenBottom;
       if (target === firstPanel && delta > 1 && scrollDirection < 0) return;
       if (Math.abs(delta) <= 1) return;
       root.style.scrollSnapType = 'none';
@@ -219,7 +221,7 @@
     const update = () => {
       const rect = gallery.getBoundingClientRect();
       const firstPanelTop = firstPanel.getBoundingClientRect().top;
-      const firstPanelBottomOffset = firstPanel.getBoundingClientRect().bottom - window.innerHeight;
+      const firstPanelBottomOffset = firstPanel.getBoundingClientRect().bottom - deviceScreenBottom();
       const isMobile = window.innerWidth <= 700;
       const isImmersive = isMobile && rect.top <= 72 && rect.bottom > 0;
 
