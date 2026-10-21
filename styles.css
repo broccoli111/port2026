@@ -352,7 +352,7 @@ html,body{overflow-x:clip}
   .about-divider-top{background:transparent}
   .about-section{height:800px}
   .portrait-wrap{left:calc(50% - 50vw);right:auto;top:-48px;width:100vw;height:auto;aspect-ratio:2613/2883}
-  .portrait-art{transform:none}
+  .portrait-art{transform:translateX(12px)}
   .portrait-art .portrait-photo{width:100%;height:100%;object-fit:contain;object-position:center}
   .portrait-wrap::before,.portrait-wrap::after{content:"";position:absolute;left:24px;width:calc(100% - 48px);height:1px;background:var(--line)}
   .portrait-wrap::before{top:0}
