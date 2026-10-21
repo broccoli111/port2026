@@ -383,7 +383,6 @@
     const draw = () => {
       bodies.forEach((body) => {
         const isHomepageHighlight = body.classList.contains('about-copy');
-        const horizontalScale = isHomepageHighlight ? .9 : 1;
         const verticalScale = isHomepageHighlight ? .9 : 1;
         body.querySelectorAll('.note-marker-art').forEach((art) => art.remove());
 
@@ -402,11 +401,8 @@
 
           fragments.forEach((rect, index) => {
             const profile = profiles[(index + fragments.length - 1) % profiles.length];
-            let x1 = rect.left - paragraphRect.left - profile.left + 8;
-            let x2 = rect.right - paragraphRect.left + profile.right - 8;
-            const centerX = (x1 + x2) / 2;
-            x1 = centerX + (x1 - centerX) * horizontalScale;
-            x2 = centerX + (x2 - centerX) * horizontalScale;
+            const x1 = rect.left - paragraphRect.left - profile.left + 8;
+            const x2 = rect.right - paragraphRect.left + profile.right - 8;
             const width = x2 - x1;
             const centerY = rect.top - paragraphRect.top + rect.height * profile.y;
             const startY = centerY - profile.tilt;
