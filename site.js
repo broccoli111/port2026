@@ -369,8 +369,8 @@
   }
 
   function initArticleHighlights() {
-    const body = document.querySelector('.note-body');
-    if (!body) return;
+    const bodies = document.querySelectorAll('.note-body, .about-copy');
+    if (!bodies.length) return;
     const svgNamespace = 'http://www.w3.org/2000/svg';
     let resizeFrame;
 
@@ -381,38 +381,40 @@
     ];
 
     const draw = () => {
-      body.querySelectorAll('.note-marker-art').forEach((art) => art.remove());
+      bodies.forEach((body) => {
+        body.querySelectorAll('.note-marker-art').forEach((art) => art.remove());
 
-      body.querySelectorAll('mark').forEach((mark) => {
-        const paragraph = mark.closest('p');
-        if (!paragraph) return;
-        const paragraphRect = paragraph.getBoundingClientRect();
-        const fragments = Array.from(mark.getClientRects()).filter((rect) => rect.width > 1 && rect.height > 1);
-        if (!fragments.length) return;
+        body.querySelectorAll('mark').forEach((mark) => {
+          const paragraph = mark.closest('p');
+          if (!paragraph) return;
+          const paragraphRect = paragraph.getBoundingClientRect();
+          const fragments = Array.from(mark.getClientRects()).filter((rect) => rect.width > 1 && rect.height > 1);
+          if (!fragments.length) return;
 
-        const svg = document.createElementNS(svgNamespace, 'svg');
-        svg.classList.add('note-marker-art', `note-marker-lines-${Math.min(fragments.length, 3)}`);
-        svg.setAttribute('aria-hidden', 'true');
-        svg.setAttribute('viewBox', `0 0 ${paragraphRect.width} ${paragraphRect.height}`);
-        svg.setAttribute('preserveAspectRatio', 'none');
+          const svg = document.createElementNS(svgNamespace, 'svg');
+          svg.classList.add('note-marker-art', `note-marker-lines-${Math.min(fragments.length, 3)}`);
+          svg.setAttribute('aria-hidden', 'true');
+          svg.setAttribute('viewBox', `0 0 ${paragraphRect.width} ${paragraphRect.height}`);
+          svg.setAttribute('preserveAspectRatio', 'none');
 
-        fragments.forEach((rect, index) => {
-          const profile = profiles[(index + fragments.length - 1) % profiles.length];
-          const x1 = rect.left - paragraphRect.left - profile.left + 8;
-          const x2 = rect.right - paragraphRect.left + profile.right - 8;
-          const width = x2 - x1;
-          const centerY = rect.top - paragraphRect.top + rect.height * profile.y;
-          const startY = centerY - profile.tilt;
-          const endY = centerY + profile.tilt;
-          const path = document.createElementNS(svgNamespace, 'path');
-          path.classList.add('note-marker-stroke');
-          path.setAttribute('d', `M ${x1} ${startY} C ${x1 + width * .28} ${centerY + profile.bend}, ${x1 + width * .72} ${centerY - profile.bend}, ${x2} ${endY}`);
-          path.setAttribute('stroke-width', String(Math.min(29, rect.height * profile.width * 1.3)));
-          path.style.opacity = profile.opacity;
-          svg.appendChild(path);
+          fragments.forEach((rect, index) => {
+            const profile = profiles[(index + fragments.length - 1) % profiles.length];
+            const x1 = rect.left - paragraphRect.left - profile.left + 8;
+            const x2 = rect.right - paragraphRect.left + profile.right - 8;
+            const width = x2 - x1;
+            const centerY = rect.top - paragraphRect.top + rect.height * profile.y;
+            const startY = centerY - profile.tilt;
+            const endY = centerY + profile.tilt;
+            const path = document.createElementNS(svgNamespace, 'path');
+            path.classList.add('note-marker-stroke');
+            path.setAttribute('d', `M ${x1} ${startY} C ${x1 + width * .28} ${centerY + profile.bend}, ${x1 + width * .72} ${centerY - profile.bend}, ${x2} ${endY}`);
+            path.setAttribute('stroke-width', String(Math.min(29, rect.height * profile.width * 1.3)));
+            path.style.opacity = profile.opacity;
+            svg.appendChild(path);
+          });
+
+          paragraph.appendChild(svg);
         });
-
-        paragraph.appendChild(svg);
       });
     };
 
