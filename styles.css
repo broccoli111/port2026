@@ -1067,6 +1067,8 @@ html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rota
 .note-link-highlight-text,
 .contact-email:hover .contact-email-text,
 .contact-email:focus-visible .contact-email-text{color:var(--ink)}
+.contact-email:hover .contact-stroke,
+.contact-email:focus-visible .contact-stroke{opacity:.9}
 
 @media(prefers-color-scheme:dark){
   :root{
@@ -1074,6 +1076,4 @@ html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rota
     --signal-strip-wash:rgba(11,69,58,.95);
     --signal-strip-line:rgba(11,69,58,.95)
   }
-  .contact-email:hover .contact-stroke,
-  .contact-email:focus-visible .contact-stroke{opacity:.95}
 }
