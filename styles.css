@@ -698,3 +698,9 @@ html,body{overflow-x:clip}
     --signal-strip-line:rgba(11,69,58,.95)
   }
 }
+
+/* Favor editorial line breaks in article body copy without forcing word splits. */
+.note-body p{
+  text-wrap:pretty;
+  overflow-wrap:break-word
+}
