@@ -1071,9 +1071,9 @@ html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rota
 @media(prefers-color-scheme:dark){
   :root{
     --email-highlight:#0b453a;
-    --signal-strip-wash:rgba(11,69,58,.85);
-    --signal-strip-line:rgba(11,69,58,.85)
+    --signal-strip-wash:rgba(11,69,58,.95);
+    --signal-strip-line:rgba(11,69,58,.95)
   }
   .contact-email:hover .contact-stroke,
-  .contact-email:focus-visible .contact-stroke{opacity:.85}
+  .contact-email:focus-visible .contact-stroke{opacity:.95}
 }
