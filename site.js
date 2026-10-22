@@ -61,44 +61,26 @@
       { id: 'felt', label: 'Felt marker' },
       { id: 'hybrid', label: 'Hybrid' }
     ];
-    const strokeColors = [
-      { id: 'lavender', label: 'Lavender', value: '#b9b4c8' },
-      { id: 'slate', label: 'Slate', value: '#a9bac4' },
-      { id: 'clay', label: 'Clay', value: '#c3aaa2' },
-      { id: 'ochre', label: 'Ochre', value: '#c4b585' },
-      { id: 'moss', label: 'Moss', value: '#aab7a4' }
-    ];
     const params = new URLSearchParams(location.search);
     const requestedStyle = params.get('highlight');
-    const requestedStrokeColor = params.get('strokeColor');
     let savedStyle = '';
-    let savedStrokeColor = '';
-    try {
-      savedStyle = localStorage.getItem('portfolio-highlight-style') || '';
-      savedStrokeColor = localStorage.getItem('portfolio-stroke-color') || '';
-    } catch (_) {}
+    try { savedStyle = localStorage.getItem('portfolio-highlight-style') || ''; } catch (_) {}
     const initialStyle = styles.some((style) => style.id === requestedStyle)
       ? requestedStyle
       : styles.some((style) => style.id === savedStyle) ? savedStyle : 'hybrid';
-    const initialStrokeColor = strokeColors.some((color) => color.id === requestedStrokeColor)
-      ? requestedStrokeColor
-      : strokeColors.some((color) => color.id === savedStrokeColor) ? savedStrokeColor : 'lavender';
     document.documentElement.dataset.highlightStyle = initialStyle;
 
     const banner = document.createElement('aside');
     banner.className = 'environment-banner';
     banner.setAttribute('role', 'region');
     banner.setAttribute('aria-label', 'Staging controls');
-    banner.innerHTML = `<span class="environment-banner-copy">this is a staging environment</span><div class="environment-labs"><div class="highlight-lab" role="group" aria-label="Highlight style">${styles.map((style) => `<button type="button" data-highlight-style="${style.id}">${style.label}</button>`).join('')}</div><div class="stroke-color-lab" role="group" aria-label="Text stroke color" hidden><span class="stroke-color-label">Stroke color</span>${strokeColors.map((color) => `<button type="button" data-stroke-color="${color.id}" style="--swatch:${color.value}"><span class="stroke-color-swatch" aria-hidden="true"></span>${color.label}</button>`).join('')}</div></div>`;
+    banner.innerHTML = `<span class="environment-banner-copy">this is a staging environment</span><div class="highlight-lab" role="group" aria-label="Highlight style">${styles.map((style) => `<button type="button" data-highlight-style="${style.id}">${style.label}</button>`).join('')}</div>`;
     document.body.prepend(banner);
 
     const buttons = [...banner.querySelectorAll('[data-highlight-style]')];
-    const colorButtons = [...banner.querySelectorAll('[data-stroke-color]')];
-    const strokeColorLab = banner.querySelector('.stroke-color-lab');
     const selectStyle = (style, updateUrl = true) => {
       document.documentElement.dataset.highlightStyle = style;
       buttons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.highlightStyle === style)));
-      strokeColorLab.hidden = style !== 'stroke';
       try { localStorage.setItem('portfolio-highlight-style', style); } catch (_) {}
       if (updateUrl) {
         const url = new URL(location.href);
@@ -107,21 +89,7 @@
       }
       window.dispatchEvent(new Event('highlightstylechange'));
     };
-    const selectStrokeColor = (colorId, updateUrl = true) => {
-      const color = strokeColors.find((option) => option.id === colorId) || strokeColors[0];
-      document.documentElement.dataset.strokeColor = color.id;
-      document.documentElement.style.setProperty('--stroke-option', color.value);
-      colorButtons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.strokeColor === color.id)));
-      try { localStorage.setItem('portfolio-stroke-color', color.id); } catch (_) {}
-      if (updateUrl) {
-        const url = new URL(location.href);
-        url.searchParams.set('strokeColor', color.id);
-        history.replaceState(null, '', url);
-      }
-    };
     buttons.forEach((button) => button.addEventListener('click', () => selectStyle(button.dataset.highlightStyle)));
-    colorButtons.forEach((button) => button.addEventListener('click', () => selectStrokeColor(button.dataset.strokeColor)));
-    selectStrokeColor(initialStrokeColor, false);
     selectStyle(initialStyle, false);
   }
 
