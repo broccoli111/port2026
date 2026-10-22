@@ -784,6 +784,7 @@ html,body{overflow-x:clip}
   text-align:left
 }
 .environment-banner-copy{white-space:nowrap}
+.environment-labs{display:grid;justify-items:end;gap:8px}
 .highlight-lab{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px}
 .highlight-lab button{
   min-height:30px;
@@ -798,6 +799,25 @@ html,body{overflow-x:clip}
 }
 .highlight-lab button:hover,.highlight-lab button:focus-visible{border-color:#ff9900;outline:none}
 .highlight-lab button[aria-pressed="true"]{background:#ff9900;color:#241700}
+.stroke-color-lab{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:6px}
+.stroke-color-lab[hidden]{display:none}
+.stroke-color-label{margin-right:2px;font:600 11px/20px var(--sans);letter-spacing:.02em}
+.stroke-color-lab button{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  min-height:28px;
+  padding:3px 8px 3px 5px;
+  border:1px solid color-mix(in srgb,#ff9900 34%,transparent);
+  border-radius:999px;
+  background:transparent;
+  color:inherit;
+  font:600 11px/20px var(--sans);
+  cursor:pointer
+}
+.stroke-color-lab button:hover,.stroke-color-lab button:focus-visible{border-color:#ff9900;outline:none}
+.stroke-color-lab button[aria-pressed="true"]{border-color:#ff9900;background:rgba(255,153,0,.09)}
+.stroke-color-swatch{width:16px;height:16px;border:1px solid rgba(34,34,34,.14);border-radius:50%;background:var(--swatch)}
 
 .about-copy p{position:relative;isolation:isolate}
 html[data-highlight-style] .note-body mark,
@@ -817,7 +837,7 @@ html[data-highlight-style="stroke"] .about-copy mark{
   box-shadow:none;
   padding:0;
   margin:0;
-  -webkit-text-stroke:calc(.28em + 2px) var(--email-highlight);
+  -webkit-text-stroke:calc(.28em + 2px) var(--stroke-option,#b9b4c8);
   paint-order:stroke fill
 }
 html[data-highlight-style="stroke"] .email-highlight::before,
@@ -828,17 +848,17 @@ html[data-highlight-style="stroke"] .email-highlight-text,
 html[data-highlight-style="stroke"] .note-link-highlight-text{
   color:var(--ink);
   text-decoration:none;
-  -webkit-text-stroke:calc(.28em + 2px) var(--email-highlight);
+  -webkit-text-stroke:calc(.28em + 2px) var(--stroke-option,#b9b4c8);
   paint-order:stroke fill
 }
 html[data-highlight-style="stroke"] .contact-email:hover .contact-email-text,
 html[data-highlight-style="stroke"] .contact-email:focus-visible .contact-email-text{
-  -webkit-text-stroke:calc(.22em + 2px) var(--email-highlight);
+  -webkit-text-stroke:calc(.22em + 2px) var(--stroke-option,#b9b4c8);
   paint-order:stroke fill
 }
 html[data-highlight-style="stroke"] .principle-arrow:not(:disabled):hover svg,
 html[data-highlight-style="stroke"] .principle-arrow:not(:disabled):focus-visible svg{
-  filter:drop-shadow(2px 0 0 var(--email-highlight)) drop-shadow(-2px 0 0 var(--email-highlight)) drop-shadow(0 2px 0 var(--email-highlight)) drop-shadow(0 -2px 0 var(--email-highlight))
+  filter:drop-shadow(2px 0 0 var(--stroke-option,#b9b4c8)) drop-shadow(-2px 0 0 var(--stroke-option,#b9b4c8)) drop-shadow(0 2px 0 var(--stroke-option,#b9b4c8)) drop-shadow(0 -2px 0 var(--stroke-option,#b9b4c8))
 }
 
 /* 2. A clean, squared block that intentionally meets adjacent lines. */
@@ -945,6 +965,9 @@ html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rota
 @media(max-width:700px){
   .environment-banner{align-items:flex-start;flex-direction:column;gap:10px}
   .environment-banner-copy{white-space:normal}
+  .environment-labs{justify-items:start;width:100%}
   .highlight-lab{justify-content:flex-start;width:100%}
   .highlight-lab button{flex:1 1 calc(50% - 3px)}
+  .stroke-color-lab{justify-content:flex-start}
+  .stroke-color-label{flex-basis:100%}
 }
