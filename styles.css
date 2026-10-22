@@ -974,18 +974,19 @@ html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rota
 }
 
 /* Final staging direction: one clean, squared highlight system. */
+:root{--signal-highlight-height:85%}
 .environment-banner{display:block;text-align:center}
 .note-marker-art{display:none!important}
 .note-body mark,.about-copy mark{
   color:inherit;
   font:inherit;
   letter-spacing:inherit;
-  background:var(--signal-strip-wash)!important;
+  background:linear-gradient(var(--signal-strip-wash),var(--signal-strip-wash)) center/100% var(--signal-highlight-height) no-repeat!important;
   border:0;
   border-radius:0;
   box-shadow:none;
-  padding:.25em .12em;
-  margin:-.25em -.08em;
+  padding:0 .12em;
+  margin:0 -.08em;
   -webkit-text-stroke:0;
   text-shadow:none;
   box-decoration-break:clone;
@@ -993,7 +994,7 @@ html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rota
 }
 .email-highlight::before,.note-link-reveal::before{
   top:50%;
-  height:calc(100% - 10px);
+  height:var(--signal-highlight-height);
   background:var(--signal-strip-wash);
   border:0;
   border-radius:0;
@@ -1040,11 +1041,11 @@ html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rota
 @media(prefers-color-scheme:dark){
   :root{
     --email-highlight:#7D53FF;
-    --signal-strip-wash:rgba(125,83,255,.9);
-    --signal-strip-line:rgba(125,83,255,.9)
+    --signal-strip-wash:rgba(125,83,255,.85);
+    --signal-strip-line:rgba(125,83,255,.85)
   }
   .contact-email:hover .contact-stroke,
-  .contact-email:focus-visible .contact-stroke{opacity:.9}
+  .contact-email:focus-visible .contact-stroke{opacity:.85}
   .note-body mark,
   .about-copy mark,
   .email-highlight-text,
