@@ -55,42 +55,11 @@
 
   function initEnvironmentBanner() {
     if (location.hostname !== 'staging.rosslauda.com') return;
-    const styles = [
-      { id: 'stroke', label: 'Text stroke' },
-      { id: 'square', label: 'Squared' },
-      { id: 'felt', label: 'Felt marker' },
-      { id: 'hybrid', label: 'Hybrid' }
-    ];
-    const params = new URLSearchParams(location.search);
-    const requestedStyle = params.get('highlight');
-    let savedStyle = '';
-    try { savedStyle = localStorage.getItem('portfolio-highlight-style') || ''; } catch (_) {}
-    const initialStyle = styles.some((style) => style.id === requestedStyle)
-      ? requestedStyle
-      : styles.some((style) => style.id === savedStyle) ? savedStyle : 'hybrid';
-    document.documentElement.dataset.highlightStyle = initialStyle;
-
     const banner = document.createElement('aside');
     banner.className = 'environment-banner';
-    banner.setAttribute('role', 'region');
-    banner.setAttribute('aria-label', 'Staging controls');
-    banner.innerHTML = `<span class="environment-banner-copy">this is a staging environment</span><div class="highlight-lab" role="group" aria-label="Highlight style">${styles.map((style) => `<button type="button" data-highlight-style="${style.id}">${style.label}</button>`).join('')}</div>`;
+    banner.setAttribute('role', 'status');
+    banner.textContent = 'this is a staging environment';
     document.body.prepend(banner);
-
-    const buttons = [...banner.querySelectorAll('[data-highlight-style]')];
-    const selectStyle = (style, updateUrl = true) => {
-      document.documentElement.dataset.highlightStyle = style;
-      buttons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.highlightStyle === style)));
-      try { localStorage.setItem('portfolio-highlight-style', style); } catch (_) {}
-      if (updateUrl) {
-        const url = new URL(location.href);
-        url.searchParams.set('highlight', style);
-        history.replaceState(null, '', url);
-      }
-      window.dispatchEvent(new Event('highlightstylechange'));
-    };
-    buttons.forEach((button) => button.addEventListener('click', () => selectStyle(button.dataset.highlightStyle)));
-    selectStyle(initialStyle, false);
   }
 
   function noteArrow(direction) {

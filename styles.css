@@ -972,3 +972,82 @@ html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rota
   .highlight-lab{justify-content:flex-start;width:100%}
   .highlight-lab button{flex:1 1 calc(50% - 3px)}
 }
+
+/* Final staging direction: one clean, squared highlight system. */
+.environment-banner{display:block;text-align:center}
+.note-marker-art{display:none!important}
+.note-body mark,.about-copy mark{
+  color:inherit;
+  font:inherit;
+  letter-spacing:inherit;
+  background:var(--signal-strip-wash)!important;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  padding:.25em .12em;
+  margin:-.25em -.08em;
+  -webkit-text-stroke:0;
+  text-shadow:none;
+  box-decoration-break:clone;
+  -webkit-box-decoration-break:clone
+}
+.email-highlight::before,.note-link-reveal::before{
+  top:50%;
+  height:calc(100% - 10px);
+  background:var(--signal-strip-wash);
+  border:0;
+  border-radius:0;
+  transform:translateY(-50%)
+}
+.email-highlight-text,.note-link-highlight-text{
+  color:inherit;
+  font:inherit;
+  letter-spacing:inherit;
+  -webkit-text-stroke:0;
+  text-shadow:none
+}
+.principle-arrow::before{
+  background:var(--signal-strip-wash);
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  -webkit-mask:none;
+  mask:none;
+  transform:none
+}
+.principle-arrow.next::before{transform:none}
+
+/* Contact gets two squared marker passes: broad and high first, offset low second. */
+.contact-highlight::before,.contact-highlight::after{
+  content:"";
+  position:absolute;
+  background:var(--signal-strip-wash);
+  border:0;
+  border-radius:0;
+  clip-path:inset(0 100% 0 0);
+  transform:translateY(-50%)
+}
+.contact-highlight::before{
+  left:24px;
+  right:24px;
+  top:38px;
+  height:32px;
+  transition:clip-path 520ms cubic-bezier(.65,0,.35,1)
+}
+.contact-highlight::after{
+  left:34px;
+  right:14px;
+  top:58px;
+  height:20px;
+  transition:clip-path 480ms 100ms cubic-bezier(.65,0,.35,1)
+}
+.contact-email:hover .contact-highlight::before,
+.contact-email:focus-visible .contact-highlight::before,
+.contact-email:hover .contact-highlight::after,
+.contact-email:focus-visible .contact-highlight::after{clip-path:inset(0)}
+
+@media(max-width:700px){
+  .environment-banner{display:block;text-align:center}
+  .contact-highlight::before{top:38px;height:26px}
+  .contact-highlight::after{left:32px;right:16px;top:54px;height:16px}
+}
