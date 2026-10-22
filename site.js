@@ -499,9 +499,9 @@
     let resizeFrame;
 
     const profiles = [
-      { y: .58, bend: -1.2, tilt: 1.1, width: .84, left: 1, right: 8, opacity: .46 },
-      { y: .62, bend: 1.5, tilt: -.8, width: .9, left: 1.4, right: 5, opacity: .42 },
-      { y: .56, bend: -.7, tilt: 1.6, width: .8, left: .8, right: 9, opacity: .45 }
+      { y: .86, bend: -.8, tilt: .7, width: .23, left: 1, right: 6, opacity: .78 },
+      { y: .89, bend: 1.1, tilt: -.6, width: .27, left: 2, right: 4, opacity: .72 },
+      { y: .84, bend: -.5, tilt: 1, width: .21, left: .5, right: 7, opacity: .76 }
     ];
 
     const draw = () => {
@@ -523,8 +523,8 @@
 
           fragments.forEach((rect, index) => {
             const profile = profiles[(index + fragments.length - 1) % profiles.length];
-            const x1 = rect.left - paragraphRect.left - profile.left + 8;
-            const x2 = rect.right - paragraphRect.left + profile.right - 8;
+            const x1 = rect.left - paragraphRect.left - profile.left + 2;
+            const x2 = rect.right - paragraphRect.left + profile.right - 2;
             const width = x2 - x1;
             const centerY = rect.top - paragraphRect.top + rect.height * profile.y;
             const startY = centerY - profile.tilt;
@@ -532,9 +532,18 @@
             const path = document.createElementNS(svgNamespace, 'path');
             path.classList.add('note-marker-stroke');
             path.setAttribute('d', `M ${x1} ${startY} C ${x1 + width * .28} ${centerY + profile.bend}, ${x1 + width * .72} ${centerY - profile.bend}, ${x2} ${endY}`);
-            path.setAttribute('stroke-width', String(Math.min(29, rect.height * profile.width * 1.3)));
+            const strokeWidth = Math.min(8, rect.height * profile.width * 1.3);
+            path.setAttribute('stroke-width', String(strokeWidth));
             path.style.opacity = profile.opacity;
             svg.appendChild(path);
+
+            const grain = document.createElementNS(svgNamespace, 'path');
+            grain.classList.add('note-marker-stroke', 'note-marker-grain');
+            grain.setAttribute('d', path.getAttribute('d'));
+            grain.setAttribute('stroke-width', String(Math.max(1.2, strokeWidth * .24)));
+            grain.setAttribute('transform', 'translate(0 1.4)');
+            grain.style.opacity = '.24';
+            svg.appendChild(grain);
           });
 
           paragraph.appendChild(svg);

@@ -865,14 +865,15 @@ html[data-highlight-style="square"] .principle-arrow::before{
 html[data-highlight-style="square"] .principle-arrow::before{transform:none}
 html[data-highlight-style="square"] .principle-arrow.next::before{transform:none}
 
-/* 3. A soft felt-marker pass, drawn fragment-by-fragment behind multiline copy. */
+/* 3. A quick felt-marker underline, drawn fragment-by-fragment beneath multiline copy. */
 html[data-highlight-style="felt"] .note-marker-art{display:block!important}
 html[data-highlight-style="felt"] .note-marker-stroke{
   stroke:var(--email-highlight);
   stroke-linecap:round;
   stroke-linejoin:round;
-  filter:blur(.18px)
+  filter:blur(.12px)
 }
+html[data-highlight-style="felt"] .note-marker-grain{stroke-dasharray:11 2 4 1.5;filter:none}
 html[data-highlight-style="felt"] .note-body mark,
 html[data-highlight-style="felt"] .about-copy mark{
   color:var(--ink);
@@ -885,20 +886,34 @@ html[data-highlight-style="felt"] .about-copy mark{
 }
 html[data-highlight-style="felt"] .email-highlight::before,
 html[data-highlight-style="felt"] .note-link-reveal::before{
-  background:repeating-linear-gradient(176deg,var(--signal-strip-wash) 0 4px,color-mix(in srgb,var(--signal-strip-wash) 78%,transparent) 4px 7px);
+  top:72%;
+  height:7px;
+  background:repeating-linear-gradient(176deg,var(--signal-strip-line) 0 2px,color-mix(in srgb,var(--signal-strip-line) 72%,transparent) 2px 4px);
   border:0;
-  border-radius:40% 13% 38% 18% / 22% 35% 24% 40%;
-  clip-path:polygon(1% 10%,99% 1%,100% 87%,2% 100%);
+  border-radius:70% 16% 65% 18% / 45% 58% 40% 55%;
+  clip-path:polygon(0 20%,99% 0,100% 75%,1% 100%);
   transform:translateY(-50%) rotate(-1deg)
 }
-html[data-highlight-style="felt"] .contact-highlight::before,
-html[data-highlight-style="felt"] .principle-arrow::before{
-  background:repeating-linear-gradient(176deg,var(--signal-strip-wash) 0 4px,color-mix(in srgb,var(--signal-strip-wash) 78%,transparent) 4px 7px);
+html[data-highlight-style="felt"] .contact-highlight::before{
+  top:70%;
+  height:9px;
+  background:repeating-linear-gradient(176deg,var(--signal-strip-line) 0 3px,color-mix(in srgb,var(--signal-strip-line) 72%,transparent) 3px 5px);
   border:0;
-  border-radius:40% 13% 38% 18% / 22% 35% 24% 40%
+  border-radius:70% 16% 65% 18% / 45% 58% 40% 55%;
+  transform:translateY(-50%) rotate(-1deg)
+}
+html[data-highlight-style="felt"] .principle-arrow::before{
+  inset:auto 6px 12px;
+  height:7px;
+  background:repeating-linear-gradient(176deg,var(--signal-strip-line) 0 2px,color-mix(in srgb,var(--signal-strip-line) 72%,transparent) 2px 4px);
+  border:0;
+  border-radius:70% 16% 65% 18% / 45% 58% 40% 55%;
+  clip-path:inset(0 100% 0 0)
 }
 html[data-highlight-style="felt"] .principle-arrow::before{transform:rotate(-4deg)}
 html[data-highlight-style="felt"] .principle-arrow.next::before{transform:rotate(4deg)}
+html[data-highlight-style="felt"] .principle-arrow:not(:disabled):hover::before,
+html[data-highlight-style="felt"] .principle-arrow:not(:disabled):focus-visible::before{clip-path:inset(0)}
 
 /* 4. Hybrid: a disciplined block with a subtly uneven marker grain and ink rail. */
 html[data-highlight-style="hybrid"] .note-marker-art{display:none!important}
