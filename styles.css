@@ -1040,11 +1040,11 @@ html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rota
 @media(prefers-color-scheme:dark){
   :root{
     --email-highlight:#7D53FF;
-    --signal-strip-wash:#7D53FF;
-    --signal-strip-line:#7D53FF
+    --signal-strip-wash:rgba(125,83,255,.9);
+    --signal-strip-line:rgba(125,83,255,.9)
   }
   .contact-email:hover .contact-stroke,
-  .contact-email:focus-visible .contact-stroke{opacity:1}
+  .contact-email:focus-visible .contact-stroke{opacity:.9}
   .note-body mark,
   .about-copy mark,
   .email-highlight-text,
