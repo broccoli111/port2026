@@ -1026,3 +1026,14 @@ html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rota
 @media(max-width:700px){
   .environment-banner{display:block;text-align:center}
 }
+
+/* Staging dark-mode accent experiment: solid electric violet. */
+@media(prefers-color-scheme:dark){
+  :root{
+    --email-highlight:#7D53FF;
+    --signal-strip-wash:#7D53FF;
+    --signal-strip-line:#7D53FF
+  }
+  .contact-email:hover .contact-stroke,
+  .contact-email:focus-visible .contact-stroke{opacity:1}
+}
