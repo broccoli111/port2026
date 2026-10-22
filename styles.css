@@ -1044,12 +1044,12 @@ html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rota
   .environment-banner{display:block;text-align:center}
 }
 
-/* Staging dark-mode accent experiment: solid electric violet. */
+/* Staging dark-mode accent experiment: warm editorial yellow. */
 @media(prefers-color-scheme:dark){
   :root{
-    --email-highlight:#7D53FF;
-    --signal-strip-wash:rgba(125,83,255,.85);
-    --signal-strip-line:rgba(125,83,255,.85)
+    --email-highlight:#FFD000;
+    --signal-strip-wash:rgba(255,208,0,.85);
+    --signal-strip-line:rgba(255,208,0,.85)
   }
   .contact-email:hover .contact-stroke,
   .contact-email:focus-visible .contact-stroke{opacity:.85}
