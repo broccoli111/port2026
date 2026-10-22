@@ -1023,6 +1023,15 @@ html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rota
 .contact-highlight::before,.contact-highlight::after{content:none;display:none}
 .contact-email:hover .contact-highlight,.contact-email:focus-visible .contact-highlight{opacity:1;transition-duration:0ms}
 
+/* Highlights sit on the lowest local layer; copy and headings always paint above them. */
+.email-highlight::before,.note-link-reveal::before,.principle-arrow::before{z-index:0}
+.email-highlight-text,.note-link-highlight-text,.principle-arrow svg{z-index:1}
+.contact-section{position:relative;isolation:isolate}
+.contact-section h2{position:relative;z-index:2}
+.contact-email{z-index:1}
+.contact-highlight{z-index:-1}
+.contact-email-text,.contact-copy-icon{z-index:1}
+
 @media(max-width:700px){
   .environment-banner{display:block;text-align:center}
 }
@@ -1036,4 +1045,10 @@ html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rota
   }
   .contact-email:hover .contact-stroke,
   .contact-email:focus-visible .contact-stroke{opacity:1}
+  .note-body mark,
+  .about-copy mark,
+  .email-highlight-text,
+  .note-link-highlight-text,
+  .contact-email:hover .contact-email-text,
+  .contact-email:focus-visible .contact-email-text{color:var(--ink)}
 }
