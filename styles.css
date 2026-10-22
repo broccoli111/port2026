@@ -710,10 +710,10 @@ html,body{overflow-x:clip}
 .note-body mark,.about-copy mark{
   color:var(--ink);
   background:
-    linear-gradient(180deg,transparent 0 24%,var(--signal-strip-wash) 24% 89%,transparent 89%),
-    linear-gradient(var(--signal-strip-line),var(--signal-strip-line)) left 92%/100% 1px no-repeat!important;
-  padding:0 .12em .05em;
-  margin:0 -.08em;
+    linear-gradient(var(--signal-strip-wash),var(--signal-strip-wash)),
+    linear-gradient(var(--signal-strip-line),var(--signal-strip-line)) left bottom/100% 1px no-repeat!important;
+  padding:.25em .12em;
+  margin:-.25em -.08em;
   border-radius:2px;
   box-decoration-break:clone;
   -webkit-box-decoration-break:clone;
