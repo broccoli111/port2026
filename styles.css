@@ -976,9 +976,9 @@ html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rota
 /* Final staging direction: one clean, squared highlight system. */
 :root{
   --signal-highlight-height:95%;
-  --email-highlight:#FFD000;
-  --signal-strip-wash:rgba(255,208,0,.85);
-  --signal-strip-line:rgba(255,208,0,.85)
+  --email-highlight:#03634c;
+  --signal-strip-wash:rgba(3,99,76,.85);
+  --signal-strip-line:rgba(3,99,76,.85)
 }
 .environment-banner{display:block;text-align:center}
 .note-marker-art{display:none!important}
@@ -1069,6 +1069,11 @@ html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rota
 .contact-email:focus-visible .contact-email-text{color:var(--ink)}
 
 @media(prefers-color-scheme:dark){
+  :root{
+    --email-highlight:#2cc295;
+    --signal-strip-wash:rgba(44,194,149,.85);
+    --signal-strip-line:rgba(44,194,149,.85)
+  }
   .contact-email:hover .contact-stroke,
   .contact-email:focus-visible .contact-stroke{opacity:.85}
 }
