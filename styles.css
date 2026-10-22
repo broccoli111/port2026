@@ -1017,37 +1017,12 @@ html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rota
 }
 .principle-arrow.next::before{transform:none}
 
-/* Contact gets two squared marker passes: broad and high first, offset low second. */
-.contact-highlight::before,.contact-highlight::after{
-  content:"";
-  position:absolute;
-  background:var(--signal-strip-wash);
-  border:0;
-  border-radius:0;
-  clip-path:inset(0 100% 0 0);
-  transform:translateY(-50%)
-}
-.contact-highlight::before{
-  left:24px;
-  right:24px;
-  top:38px;
-  height:32px;
-  transition:clip-path 520ms cubic-bezier(.65,0,.35,1)
-}
-.contact-highlight::after{
-  left:34px;
-  right:14px;
-  top:58px;
-  height:20px;
-  transition:clip-path 480ms 100ms cubic-bezier(.65,0,.35,1)
-}
-.contact-email:hover .contact-highlight::before,
-.contact-email:focus-visible .contact-highlight::before,
-.contact-email:hover .contact-highlight::after,
-.contact-email:focus-visible .contact-highlight::after{clip-path:inset(0)}
+/* Contact is intentionally restored to the production three-stroke SVG treatment. */
+.contact-highlight{opacity:0;transition:opacity 240ms cubic-bezier(.22,1,.36,1)}
+.contact-highlight svg{display:block}
+.contact-highlight::before,.contact-highlight::after{content:none;display:none}
+.contact-email:hover .contact-highlight,.contact-email:focus-visible .contact-highlight{opacity:1;transition-duration:0ms}
 
 @media(max-width:700px){
   .environment-banner{display:block;text-align:center}
-  .contact-highlight::before{top:38px;height:26px}
-  .contact-highlight::after{left:32px;right:16px;top:54px;height:16px}
 }
