@@ -810,9 +810,10 @@ html[data-highlight-style] .about-copy mark{
 html[data-highlight-style="stroke"] .note-marker-art{display:none!important}
 html[data-highlight-style="stroke"] .note-body mark,
 html[data-highlight-style="stroke"] .about-copy mark{
-  color:var(--ink);
-  font-family:var(--serif);
-  font-weight:400;
+  color:inherit;
+  font-family:NewYorkMediumItalic,Georgia,serif;
+  font-weight:500;
+  font-style:normal;
   letter-spacing:0;
   background:none!important;
   border:0;
@@ -829,9 +830,10 @@ html[data-highlight-style="stroke"] .contact-highlight::before,
 html[data-highlight-style="stroke"] .principle-arrow::before{display:none}
 html[data-highlight-style="stroke"] .email-highlight-text,
 html[data-highlight-style="stroke"] .note-link-highlight-text{
-  color:var(--ink);
-  font-family:var(--serif);
-  font-weight:400;
+  color:inherit;
+  font-family:NewYorkMediumItalic,Georgia,serif;
+  font-weight:500;
+  font-style:normal;
   letter-spacing:0;
   text-decoration:none;
   -webkit-text-stroke:calc(.28em + 2px) var(--stroke-option,#a9bac4);
@@ -843,8 +845,9 @@ html[data-highlight-style="stroke"] .contact-email:focus-visible .contact-email-
   paint-order:stroke fill
 }
 html[data-highlight-style="stroke"] .contact-email-text{
-  font-family:var(--serif);
-  font-weight:400;
+  font-family:NewYorkMediumItalic,Georgia,serif;
+  font-weight:500;
+  font-style:normal;
   letter-spacing:0
 }
 html[data-highlight-style="stroke"] .principle-arrow:not(:disabled):hover svg,
