@@ -1038,7 +1038,10 @@ html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rota
 .contact-section h2{position:relative;z-index:2}
 .contact-email{z-index:1}
 .contact-highlight{z-index:-1}
-.contact-email-text,.contact-copy-icon{z-index:1}
+.contact-email-text,.contact-copy-icon{
+  z-index:1;
+  transition:color 500ms cubic-bezier(.22,1,.36,1)
+}
 
 @media(max-width:700px){
   .environment-banner{display:block;text-align:center}
