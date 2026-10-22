@@ -595,3 +595,106 @@ html,body{overflow-x:clip}
 .home-page .contact-section{width:100vw;margin-inline:calc(50% - 50vw)}
 .contact-copy{max-width:none;margin:0 0 32px;color:var(--muted);font-size:20px;line-height:28px;letter-spacing:.4px;text-align:center;white-space:nowrap}
 @media(max-width:700px){.work-grid--non-meta{grid-template-rows:repeat(3,180px)}.work-grid--non-meta .work-4{grid-area:1/1}.work-grid--non-meta .work-5{grid-area:1/2}.work-grid--non-meta .work-6{grid-area:2/1/3/3}.work-grid--non-meta .work-7{grid-area:3/1}.work-grid--non-meta .work-8{grid-area:3/2}.home-page .contact-section{width:auto;margin-inline:0}.contact-section h2{margin-bottom:12px}.contact-copy{max-width:300px;margin-bottom:20px;font-size:14px;line-height:20px;letter-spacing:.28px;white-space:normal}}
+
+/* Final highlight system: squared treatments throughout, while the homepage
+   contact callout keeps its original three-stroke SVG treatment. */
+:root{
+  --signal-highlight-height:95%;
+  --email-highlight:#2cc295;
+  --signal-strip-wash:rgba(44,194,149,.85);
+  --signal-strip-line:rgba(44,194,149,.85)
+}
+.note-marker-art{display:none!important}
+.note-body mark,.about-copy mark{
+  color:inherit;
+  font:inherit;
+  letter-spacing:inherit;
+  background:linear-gradient(var(--signal-strip-wash),var(--signal-strip-wash)) center/100% var(--signal-highlight-height) no-repeat!important;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  padding:0 .12em;
+  margin:0 -.08em;
+  -webkit-text-stroke:0;
+  text-shadow:none;
+  box-decoration-break:clone;
+  -webkit-box-decoration-break:clone
+}
+.email-highlight{transform:translate(-50%,-50%)}
+.note-link-reveal{transform:none}
+.email-highlight::before,.note-link-reveal::before{
+  top:50%;
+  height:var(--signal-highlight-height);
+  background:var(--signal-strip-wash);
+  border:0;
+  border-radius:0;
+  transform:translateY(-50%)
+}
+.email-highlight-text,.note-link-highlight-text{
+  color:inherit;
+  font:inherit;
+  letter-spacing:inherit;
+  -webkit-text-stroke:0;
+  text-shadow:none
+}
+.principle-arrow::before{
+  inset-inline:0;
+  top:50%;
+  bottom:auto;
+  height:var(--signal-highlight-height);
+  background:var(--signal-strip-wash);
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  -webkit-mask:none;
+  mask:none;
+  clip-path:inset(50% 50%);
+  transform:translateY(-50%)
+}
+.principle-arrow.next::before{transform:translateY(-50%)}
+.principle-arrow:not(:disabled):hover::before,
+.principle-arrow:not(:disabled):focus-visible::before{clip-path:inset(0)}
+
+/* Contact is intentionally retained as the production three-stroke SVG. */
+.contact-highlight{opacity:0;transition:opacity 240ms cubic-bezier(.22,1,.36,1)}
+.contact-highlight svg{display:block}
+.contact-highlight::before,.contact-highlight::after{content:none;display:none}
+.contact-email:hover .contact-highlight,.contact-email:focus-visible .contact-highlight{opacity:1;transition-duration:0ms}
+
+/* Highlight layers stay behind the copy and headings. */
+.email-highlight::before,.note-link-reveal::before,.principle-arrow::before{z-index:0;opacity:1}
+.email-highlight-text,.note-link-highlight-text,.principle-arrow svg{z-index:1}
+.contact-section{position:relative;isolation:isolate}
+.contact-section h2{position:relative;z-index:2}
+.contact-email{z-index:1}
+.contact-highlight{z-index:-1}
+.contact-email-text,.contact-copy-icon{
+  z-index:1;
+  transition:color 500ms cubic-bezier(.22,1,.36,1)
+}
+
+/* Highlighted copy and icons always use the theme's primary text color. */
+.text-list a:hover .note-arrow,
+.text-list a:focus-visible .note-arrow,
+.detail-nav a:hover .detail-nav-arrow,
+.detail-nav a:focus-visible .detail-nav-arrow,
+.principle-arrow:not(:disabled):hover,
+.principle-arrow:not(:disabled):focus-visible,
+.contact-email:hover .contact-copy-icon,
+.contact-email:focus-visible .contact-copy-icon{color:var(--ink)}
+.note-body mark,
+.about-copy mark,
+.email-highlight-text,
+.note-link-highlight-text,
+.contact-email:hover .contact-email-text,
+.contact-email:focus-visible .contact-email-text{color:var(--ink)}
+.contact-email:hover .contact-stroke,
+.contact-email:focus-visible .contact-stroke{opacity:.9}
+
+@media(prefers-color-scheme:dark){
+  :root{
+    --email-highlight:#0b453a;
+    --signal-strip-wash:rgba(11,69,58,.95);
+    --signal-strip-line:rgba(11,69,58,.95)
+  }
+}
