@@ -1046,6 +1046,10 @@ html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rota
   }
   .contact-email:hover .contact-stroke,
   .contact-email:focus-visible .contact-stroke{opacity:.85}
+  .text-list a:hover .note-arrow,
+  .text-list a:focus-visible .note-arrow,
+  .detail-nav a:hover .detail-nav-arrow,
+  .detail-nav a:focus-visible .detail-nav-arrow{color:var(--ink)}
   .note-body mark,
   .about-copy mark,
   .email-highlight-text,
