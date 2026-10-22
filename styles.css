@@ -806,40 +806,40 @@ html[data-highlight-style] .about-copy mark{
   -webkit-box-decoration-break:clone
 }
 
-/* 1. A lightly imperfect drawn contour, inspired by editorial text annotation. */
+/* 1. A true glyph stroke: the accent follows the letterforms themselves. */
 html[data-highlight-style="stroke"] .note-marker-art{display:none!important}
 html[data-highlight-style="stroke"] .note-body mark,
 html[data-highlight-style="stroke"] .about-copy mark{
-  color:var(--signal-strip-line);
+  color:var(--ink);
   background:none!important;
-  border:1.5px solid var(--signal-strip-line);
-  border-radius:52% 44% 49% 42% / 48% 55% 45% 52%;
-  box-shadow:.055em .045em 0 color-mix(in srgb,var(--signal-strip-line) 42%,transparent);
-  padding:.05em .18em .1em;
-  margin:-.05em -.14em -.1em
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  padding:0;
+  margin:0;
+  -webkit-text-stroke:.28em var(--email-highlight);
+  paint-order:stroke fill
 }
 html[data-highlight-style="stroke"] .email-highlight::before,
-html[data-highlight-style="stroke"] .note-link-reveal::before{
-  height:calc(100% - 7px);
-  background:transparent;
-  border:1.5px solid var(--signal-strip-line);
-  border-radius:52% 44% 49% 42% / 48% 55% 45% 52%;
-  transform:translateY(-50%) rotate(-1deg)
+html[data-highlight-style="stroke"] .note-link-reveal::before,
+html[data-highlight-style="stroke"] .contact-highlight::before,
+html[data-highlight-style="stroke"] .principle-arrow::before{display:none}
+html[data-highlight-style="stroke"] .email-highlight-text,
+html[data-highlight-style="stroke"] .note-link-highlight-text{
+  color:var(--ink);
+  text-decoration:none;
+  -webkit-text-stroke:.28em var(--email-highlight);
+  paint-order:stroke fill
 }
-html[data-highlight-style="stroke"] .contact-highlight::before{
-  height:46px;
-  background:transparent;
-  border:2px solid var(--signal-strip-line);
-  border-radius:51% 46% 52% 43% / 48% 55% 45% 52%;
-  transform:translateY(-50%) rotate(-1deg)
+html[data-highlight-style="stroke"] .contact-email:hover .contact-email-text,
+html[data-highlight-style="stroke"] .contact-email:focus-visible .contact-email-text{
+  -webkit-text-stroke:.22em var(--email-highlight);
+  paint-order:stroke fill
 }
-html[data-highlight-style="stroke"] .principle-arrow::before{
-  background:transparent;
-  border:1.5px solid var(--signal-strip-line);
-  border-radius:50% 44% 52% 46%;
-  transform:rotate(-4deg)
+html[data-highlight-style="stroke"] .principle-arrow:not(:disabled):hover svg,
+html[data-highlight-style="stroke"] .principle-arrow:not(:disabled):focus-visible svg{
+  filter:drop-shadow(2px 0 0 var(--email-highlight)) drop-shadow(-2px 0 0 var(--email-highlight)) drop-shadow(0 2px 0 var(--email-highlight)) drop-shadow(0 -2px 0 var(--email-highlight))
 }
-html[data-highlight-style="stroke"] .principle-arrow.next::before{transform:rotate(4deg)}
 
 /* 2. A clean, squared block that intentionally meets adjacent lines. */
 html[data-highlight-style="square"] .note-marker-art{display:none!important}
@@ -947,5 +947,4 @@ html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rota
   .environment-banner-copy{white-space:normal}
   .highlight-lab{justify-content:flex-start;width:100%}
   .highlight-lab button{flex:1 1 calc(50% - 3px)}
-  html[data-highlight-style="stroke"] .contact-highlight::before{height:34px}
 }
