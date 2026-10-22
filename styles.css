@@ -976,9 +976,9 @@ html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rota
 /* Final staging direction: one clean, squared highlight system. */
 :root{
   --signal-highlight-height:95%;
-  --email-highlight:#03634c;
-  --signal-strip-wash:rgba(3,99,76,.85);
-  --signal-strip-line:rgba(3,99,76,.85)
+  --email-highlight:#2cc295;
+  --signal-strip-wash:rgba(44,194,149,.85);
+  --signal-strip-line:rgba(44,194,149,.85)
 }
 .environment-banner{display:block;text-align:center}
 .note-marker-art{display:none!important}
