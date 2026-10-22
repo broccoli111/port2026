@@ -974,7 +974,7 @@ html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rota
 }
 
 /* Final staging direction: one clean, squared highlight system. */
-:root{--signal-highlight-height:85%}
+:root{--signal-highlight-height:95%}
 .environment-banner{display:block;text-align:center}
 .note-marker-art{display:none!important}
 .note-body mark,.about-copy mark{
@@ -1008,15 +1008,22 @@ html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rota
   text-shadow:none
 }
 .principle-arrow::before{
+  inset-inline:0;
+  top:50%;
+  bottom:auto;
+  height:var(--signal-highlight-height);
   background:var(--signal-strip-wash);
   border:0;
   border-radius:0;
   box-shadow:none;
   -webkit-mask:none;
   mask:none;
-  transform:none
+  clip-path:inset(50% 50%);
+  transform:translateY(-50%)
 }
-.principle-arrow.next::before{transform:none}
+.principle-arrow.next::before{transform:translateY(-50%)}
+.principle-arrow:not(:disabled):hover::before,
+.principle-arrow:not(:disabled):focus-visible::before{clip-path:inset(0)}
 
 /* Contact is intentionally restored to the production three-stroke SVG treatment. */
 .contact-highlight{opacity:0;transition:opacity 240ms cubic-bezier(.22,1,.36,1)}
