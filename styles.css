@@ -1052,6 +1052,24 @@ html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rota
   .environment-banner{display:block;text-align:center}
 }
 
+/* Highlighted content uses the primary text color in light mode. */
+@media(prefers-color-scheme:light){
+  .text-list a:hover .note-arrow,
+  .text-list a:focus-visible .note-arrow,
+  .detail-nav a:hover .detail-nav-arrow,
+  .detail-nav a:focus-visible .detail-nav-arrow,
+  .principle-arrow:not(:disabled):hover,
+  .principle-arrow:not(:disabled):focus-visible,
+  .contact-email:hover .contact-copy-icon,
+  .contact-email:focus-visible .contact-copy-icon{color:var(--ink)}
+  .note-body mark,
+  .about-copy mark,
+  .email-highlight-text,
+  .note-link-highlight-text,
+  .contact-email:hover .contact-email-text,
+  .contact-email:focus-visible .contact-email-text{color:var(--ink)}
+}
+
 /* Highlighted content uses the page background color in dark mode. */
 @media(prefers-color-scheme:dark){
   .contact-email:hover .contact-stroke,
