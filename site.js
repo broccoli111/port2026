@@ -940,8 +940,8 @@
       ['.site-header .brand, .case-header-overlay .brand', 0],
       ['.site-header .email-link, .case-header-overlay .email-link', 1],
       ['.home-intro .motion-heading, .case-intro .motion-heading, .note-heading .motion-heading, .gate-card .motion-heading', 1],
-      ['.home-intro p, .case-intro .case-company, .case-intro > p:last-child, .note-heading p, .gate-card > p', 3],
-      ['.selected-work, .home-columns > div, .principles, .about-copy, .portrait-wrap', 0],
+      ['.hero-meta, .hero-footer, .case-intro .case-company, .case-intro > p:last-child, .note-heading p, .gate-card > p', 3],
+      ['.selected-work-heading, .work-tile, .home-columns > div, .principles, .about-copy, .portrait-wrap', 0],
       ['.case-facts > div, .case-gallery-figure, .note-body > *, .contact-section > *, .footer-nav, .home-page > footer', 0]
     ];
 
@@ -1022,6 +1022,18 @@
     window.addEventListener('scroll', requestScrollMotion, { passive: true });
     window.addEventListener('resize', requestScrollMotion, { passive: true });
 
+    const selectedWork = document.querySelector('.selected-work');
+    if (selectedWork) {
+      const setProjectAccent = (tile) => {
+        const accent = tile?.dataset.projectAccent;
+        if (accent) selectedWork.style.setProperty('--project-accent', accent);
+      };
+      selectedWork.querySelectorAll('.work-tile').forEach((tile) => {
+        tile.addEventListener('pointerenter', () => setProjectAccent(tile));
+        tile.addEventListener('focusin', () => setProjectAccent(tile));
+      });
+    }
+
     if (!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
 
     document.querySelectorAll('.work-tile').forEach((tile) => {
@@ -1029,14 +1041,12 @@
         const rect = tile.getBoundingClientRect();
         const x = (event.clientX - rect.left) / rect.width;
         const y = (event.clientY - rect.top) / rect.height;
-        tile.style.setProperty('--tilt-x', `${(y - .5) * -2.4}deg`);
-        tile.style.setProperty('--tilt-y', `${(x - .5) * 3.2}deg`);
         tile.style.setProperty('--pointer-x', `${x * 100}%`);
         tile.style.setProperty('--pointer-y', `${y * 100}%`);
       });
       tile.addEventListener('pointerleave', () => {
-        tile.style.setProperty('--tilt-x', '0deg');
-        tile.style.setProperty('--tilt-y', '0deg');
+        tile.style.setProperty('--pointer-x', '50%');
+        tile.style.setProperty('--pointer-y', '50%');
       });
     });
   }
@@ -1051,6 +1061,7 @@
       history.replaceState(null, '', `case-study.html?id=${id}`);
     }
     const caseStudy = data.cases[id];
+    const projectNumber = ids.indexOf(id) + 1;
     const nextId = ids[(ids.indexOf(id) + 1) % ids.length];
     const darkHero = ['feelmore-confidence', 'citi-platform', 'citi-guidance', 'meta-consistency', 'meta-inevitable', 'meta-clutter'].includes(id);
     document.title = `${caseStudy.title} — ${caseStudy.company}`;
@@ -1059,9 +1070,11 @@
       <section class="case-hero${id.startsWith('meta-') ? ' meta' : ''}${id === 'citi-platform' ? '' : ' case-hero-inset'}${id === 'feelmore-confidence' ? ' case-hero-bottom' : ''}" style="--case-color:${caseStudy.color}">
         <header class="case-header-overlay${darkHero ? ' on-dark' : ''}">
           <a class="brand" href="home.html"><svg class="brand-mark" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M22.6436 20.25H1.36523L12.0723 3.40332L22.6436 20.25ZM6.27344 17.6328H17.7529L12.084 8.50098L6.27344 17.6328Z" fill="currentColor"/></svg><span>Ross Lauda</span></a>
+          <span class="case-project-count">Project ${String(projectNumber).padStart(2, '0')} / ${String(ids.length).padStart(2, '0')}</span>
           <button class="email-link js-copy-email" type="button"><span class="email-highlight" aria-hidden="true"><svg viewBox="0 0 166 38" preserveAspectRatio="none"><path d="M31.3395 36.0282C27.2552 32.5186 3.5453 38.8592 1.45078 37.8999C-0.161991 36.6833 -0.41332 12.327 0.612991 8.60686C0.990004 7.29663 1.51362 7.03926 2.896 7.4838C4.55067 8.16232 24.9931 5.05051 31.7374 4.11463C32.1563 4.83994 33.036 2.24287 33.2873 3.15535C33.79 4.48898 79.9321 0.956035 81.2307 0.909241C83.4928 0.815653 81.7334 2.28967 84.3725 1.72814C90.0067 0.558286 102.364 1.9855 106.616 0.815653C110.051 -0.120228 110.784 -0.143624 114.073 0.862448C116.942 1.72814 135.269 1.72814 137.406 0.230727C137.929 -0.190419 138.306 -0.00324255 138.285 0.534889C138.285 0.581683 144.527 1.37718 144.569 1.37718C147.711 1.79833 150.852 2.31306 150.873 2.52364C150.936 3.06177 151.313 3.34253 151.69 3.01497C152.36 2.45344 165.87 1.84512 165.975 3.43612C166.31 7.99854 163.231 26.8799 161.451 31.3722C159.587 36.1451 151.585 29.6876 144.506 32.0975C108.774 29.5238 113.486 30.1321 105.946 31.8869C105.171 30.2257 102.197 34.1564 100.354 31.2786C99.5996 30.1087 94.1749 29.8279 92.981 30.9978C92.4783 31.4891 85.2732 30.9978 77.8795 30.9276C70.465 30.8574 62.82 31.2552 61.4795 32.893C55.7615 30.0853 34.1461 35.49 31.2976 36.0282H31.3395Z"/></svg></span><span class="email-text">hello@rosslauda.com</span></button>
         </header>
         <img src="${id === 'citi-platform' ? `assets/cases/citi-platform/Blue/citi-platform-hero.png?v=${galleryAssetVersions[id]}` : `assets/cases/${id}/${id}-hero.png`}"${id === 'citi-platform' ? ' data-citi-theme-asset data-citi-file="citi-platform-hero.png"' : ''} alt="${escapeHTML(caseStudy.company)} — ${escapeHTML(caseStudy.title)}">
+        <span class="case-hero-scroll${darkHero ? ' on-dark' : ''}" aria-hidden="true">Scroll</span>
       </section>
       <div class="case-content" style="--case-color:${caseStudy.color}">
         <section class="case-intro">
@@ -1070,9 +1083,9 @@
           <p>${escapeHTML(caseStudy.dek)}</p>
         </section>
         <section class="case-facts">
-          <div><h2>Challenge</h2><p>${escapeHTML(caseStudy.challenge)}</p></div>
-          <div><h2>Approach</h2><p>${escapeHTML(caseStudy.approach)}</p></div>
-          <div><h2>Impact</h2><p>${escapeHTML(caseStudy.impact)}</p></div>
+          <div><span class="case-fact-index">01</span><h2>Challenge</h2><p>${escapeHTML(caseStudy.challenge)}</p></div>
+          <div><span class="case-fact-index">02</span><h2>Approach</h2><p>${escapeHTML(caseStudy.approach)}</p></div>
+          <div><span class="case-fact-index">03</span><h2>Impact</h2><p>${escapeHTML(caseStudy.impact)}</p></div>
         </section>
         <div class="case-gallery${id === 'citi-platform' ? ' has-citi-theme-switcher' : ''}">${id === 'citi-platform' ? citiThemeSwitcherMarkup() : ''}${galleryMarkup(caseStudy, id)}</div>
         <nav class="case-bottom-nav detail-nav footer-nav" aria-label="Project navigation">
