@@ -53,15 +53,6 @@
     })[character]);
   }
 
-  function initEnvironmentBanner() {
-    if (location.hostname !== 'staging.rosslauda.com') return;
-    const banner = document.createElement('aside');
-    banner.className = 'environment-banner';
-    banner.setAttribute('role', 'status');
-    banner.textContent = 'this is a staging environment';
-    document.body.prepend(banner);
-  }
-
   function noteArrow(direction) {
     const directionClass = direction === 'forward' ? ' is-forward' : ' is-back';
     return `<svg class="detail-nav-arrow${directionClass}" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M10.3358 16.75L7.04289 13.4571C6.65237 13.0666 6.65237 12.4334 7.04289 12.0429L10.3358 8.75M7.33579 12.75H17.3358" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`;
@@ -164,97 +155,12 @@
       ticking = true;
       requestAnimationFrame(update);
     };
+
     update();
     window.addEventListener('scroll', requestUpdate, { passive: true });
     window.addEventListener('resize', requestUpdate, { passive: true });
     window.addEventListener('pageshow', requestUpdate);
     window.addEventListener('load', requestUpdate, { once: true });
-  }
-
-  function initMobileCaseGalleryHeader() {
-    const header = document.querySelector('.case-header-overlay');
-    const gallery = document.querySelector('.case-gallery');
-    const firstPanel = gallery?.querySelector('[data-case-id="feelmore-wellness"] .case-gallery-item');
-    if (!header || !firstPanel) return;
-
-    const root = document.documentElement;
-    let ticking = false;
-    let bottomSnapTimer = 0;
-    let lastScrollY = window.scrollY;
-    let scrollDirection = 0;
-    let wasBeforeGallery = firstPanel.getBoundingClientRect().top > 0;
-    const appScreenHeight = () => window.innerWidth * (812 / 375);
-    const deviceScreenBottom = () => Math.max(window.innerHeight, appScreenHeight());
-    const pinFirstPanel = () => {
-      const firstPanelBottom = firstPanel.getBoundingClientRect().bottom;
-      const targetY = window.scrollY + firstPanelBottom - deviceScreenBottom();
-      root.style.scrollBehavior = 'auto';
-      window.scrollTo(0, targetY);
-      root.style.removeProperty('scroll-behavior');
-      root.classList.add('feelmore-gallery-snap-active');
-      root.classList.add('feelmore-gallery-snap-at-start');
-      wasBeforeGallery = false;
-    };
-    const snapNearestPanelBottom = () => {
-      if (window.innerWidth > 700 || !root.classList.contains('feelmore-gallery-snap-active')) return;
-      const cardPanel = gallery.querySelector('[data-case-id="feelmore-wellness"][data-gallery-group="1"]');
-      const panels = [
-        ...gallery.querySelectorAll('[data-case-id="feelmore-wellness"] .case-gallery-item:not(.onboard-card)'),
-        ...(cardPanel ? [cardPanel] : [])
-      ].filter((panel) => {
-        const rect = panel.getBoundingClientRect();
-        return rect.height > 0 && rect.bottom > 0 && rect.top < window.innerHeight;
-      });
-      if (!panels.length) return;
-      const screenBottom = deviceScreenBottom();
-      const target = panels.reduce((nearest, panel) => {
-        const distance = Math.abs(panel.getBoundingClientRect().bottom - screenBottom);
-        const nearestDistance = Math.abs(nearest.getBoundingClientRect().bottom - screenBottom);
-        return distance < nearestDistance ? panel : nearest;
-      });
-      const delta = target.getBoundingClientRect().bottom - screenBottom;
-      if (target === firstPanel && delta > 1 && scrollDirection < 0) return;
-      if (Math.abs(delta) <= 1) return;
-      root.style.scrollSnapType = 'none';
-      window.scrollTo(0, window.scrollY + delta);
-      requestAnimationFrame(() => root.style.removeProperty('scroll-snap-type'));
-    };
-    const update = () => {
-      const rect = gallery.getBoundingClientRect();
-      const firstPanelTop = firstPanel.getBoundingClientRect().top;
-      const firstPanelBottomOffset = firstPanel.getBoundingClientRect().bottom - deviceScreenBottom();
-      const isMobile = window.innerWidth <= 700;
-      const isImmersive = isMobile && rect.top <= 72 && rect.bottom > 0;
-
-      if (!isMobile || firstPanelTop > 1) {
-        root.classList.remove('feelmore-gallery-snap-active');
-        root.classList.remove('feelmore-gallery-snap-at-start');
-        wasBeforeGallery = true;
-      } else {
-        if (wasBeforeGallery) pinFirstPanel();
-        else {
-          root.classList.add('feelmore-gallery-snap-active');
-          root.classList.toggle('feelmore-gallery-snap-at-start', firstPanelBottomOffset >= -1);
-        }
-      }
-
-      header.classList.toggle('is-gallery-immersive', isImmersive);
-      ticking = false;
-    };
-    const requestUpdate = () => {
-      const currentScrollY = window.scrollY;
-      const nextDirection = Math.sign(currentScrollY - lastScrollY);
-      if (nextDirection) scrollDirection = nextDirection;
-      lastScrollY = currentScrollY;
-      window.clearTimeout(bottomSnapTimer);
-      bottomSnapTimer = window.setTimeout(snapNearestPanelBottom, 120);
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener('scroll', requestUpdate, { passive: true });
-    window.addEventListener('resize', requestUpdate, { passive: true });
   }
 
   function initNoteHighlights() {
@@ -391,9 +297,20 @@
       window.clearTimeout(timer);
       section.classList.remove('is-timing');
       updateDots(index);
+      if (reducedMotion || document.hidden) return;
       void section.offsetWidth;
       section.classList.add('is-timing');
       timer = window.setTimeout(() => goTo(current + 1), autoplayDuration);
+    }
+
+    function pause() {
+      window.clearTimeout(timer);
+      section.classList.add('is-paused');
+    }
+
+    function resume() {
+      section.classList.remove('is-paused');
+      restart(current);
     }
 
     previousButton.addEventListener('click', () => goTo(current - 1));
@@ -430,6 +347,22 @@
 
     section.addEventListener('pointercancel', () => {
       swipeStart = null;
+    });
+
+    section.addEventListener('mouseenter', pause);
+    section.addEventListener('mouseleave', resume);
+    section.addEventListener('focusin', pause);
+    section.addEventListener('focusout', (event) => {
+      if (!section.contains(event.relatedTarget)) resume();
+    });
+    section.addEventListener('keydown', (event) => {
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+      event.preventDefault();
+      goTo(current + (event.key === 'ArrowRight' ? 1 : -1));
+    });
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) pause();
+      else resume();
     });
 
     updateControls(current);
@@ -469,13 +402,15 @@
     let resizeFrame;
 
     const profiles = [
-      { y: .86, bend: -.8, tilt: .7, width: .23, left: 1, right: 6, opacity: .78 },
-      { y: .89, bend: 1.1, tilt: -.6, width: .27, left: 2, right: 4, opacity: .72 },
-      { y: .84, bend: -.5, tilt: 1, width: .21, left: .5, right: 7, opacity: .76 }
+      { y: .58, bend: -1.2, tilt: 1.1, width: .84, left: 1, right: 8, opacity: .46 },
+      { y: .62, bend: 1.5, tilt: -.8, width: .9, left: 1.4, right: 5, opacity: .42 },
+      { y: .56, bend: -.7, tilt: 1.6, width: .8, left: .8, right: 9, opacity: .45 }
     ];
 
     const draw = () => {
       bodies.forEach((body) => {
+        const isHomepageHighlight = body.classList.contains('about-copy');
+        const verticalScale = isHomepageHighlight ? .9 : 1;
         body.querySelectorAll('.note-marker-art').forEach((art) => art.remove());
 
         body.querySelectorAll('mark').forEach((mark) => {
@@ -493,8 +428,8 @@
 
           fragments.forEach((rect, index) => {
             const profile = profiles[(index + fragments.length - 1) % profiles.length];
-            const x1 = rect.left - paragraphRect.left - profile.left + 2;
-            const x2 = rect.right - paragraphRect.left + profile.right - 2;
+            const x1 = rect.left - paragraphRect.left - profile.left + 8;
+            const x2 = rect.right - paragraphRect.left + profile.right - 8;
             const width = x2 - x1;
             const centerY = rect.top - paragraphRect.top + rect.height * profile.y;
             const startY = centerY - profile.tilt;
@@ -502,18 +437,9 @@
             const path = document.createElementNS(svgNamespace, 'path');
             path.classList.add('note-marker-stroke');
             path.setAttribute('d', `M ${x1} ${startY} C ${x1 + width * .28} ${centerY + profile.bend}, ${x1 + width * .72} ${centerY - profile.bend}, ${x2} ${endY}`);
-            const strokeWidth = Math.min(8, rect.height * profile.width * 1.3);
-            path.setAttribute('stroke-width', String(strokeWidth));
+            path.setAttribute('stroke-width', String(Math.min(29, rect.height * profile.width * 1.3) * verticalScale));
             path.style.opacity = profile.opacity;
             svg.appendChild(path);
-
-            const grain = document.createElementNS(svgNamespace, 'path');
-            grain.classList.add('note-marker-stroke', 'note-marker-grain');
-            grain.setAttribute('d', path.getAttribute('d'));
-            grain.setAttribute('stroke-width', String(Math.max(1.2, strokeWidth * .24)));
-            grain.setAttribute('transform', 'translate(0 1.4)');
-            grain.style.opacity = '.24';
-            svg.appendChild(grain);
           });
 
           paragraph.appendChild(svg);
@@ -527,10 +453,6 @@
       cancelAnimationFrame(resizeFrame);
       resizeFrame = requestAnimationFrame(draw);
     }, { passive: true });
-    window.addEventListener('highlightstylechange', () => {
-      cancelAnimationFrame(resizeFrame);
-      resizeFrame = requestAnimationFrame(draw);
-    });
   }
 
   function renderNote() {
@@ -679,16 +601,6 @@
       initViewportVideos();
       initOnboardingCardReveal();
     };
-
-    const shouldHydrateFeelmoreMobile = window.matchMedia('(max-width:700px)').matches
-      && figures.some((figure) => figure.dataset.caseId === 'feelmore-wellness');
-    if (shouldHydrateFeelmoreMobile) {
-      figures.forEach((figure) => {
-        figure.classList.add('is-render-active');
-        hydrate(figure);
-      });
-      return;
-    }
 
     if (!('IntersectionObserver' in window)) {
       figures.forEach((figure) => {
@@ -1002,6 +914,133 @@
     }, { passive: true });
   }
 
+  function initMotionSystem() {
+    document.documentElement.classList.add('motion-ready');
+
+    const splitHeading = (heading) => {
+      if (!heading || heading.dataset.motionSplit === 'true') return;
+      const lines = heading.innerHTML.split(/<br\s*\/?\s*>/i);
+      heading.dataset.motionSplit = 'true';
+      heading.classList.add('motion-heading');
+      heading.innerHTML = lines.map((line, index) => (
+        `<span class="motion-line"><span style="--line-index:${index}">${line}</span></span>`
+      )).join('');
+    };
+
+    document.querySelectorAll([
+      '.home-intro h1',
+      '.about-copy h2',
+      '.contact-section h2',
+      '.case-intro h1',
+      '.note-heading h1',
+      '.gate-card h1'
+    ].join(',')).forEach(splitHeading);
+
+    const revealGroups = [
+      ['.site-header .brand, .case-header-overlay .brand', 0],
+      ['.site-header .email-link, .case-header-overlay .email-link', 1],
+      ['.home-intro .motion-heading, .case-intro .motion-heading, .note-heading .motion-heading, .gate-card .motion-heading', 1],
+      ['.home-intro p, .case-intro .case-company, .case-intro > p:last-child, .note-heading p, .gate-card > p', 3],
+      ['.selected-work, .home-columns > div, .principles, .about-copy, .portrait-wrap', 0],
+      ['.case-facts > div, .case-gallery-figure, .note-body > *, .contact-section > *, .footer-nav, .home-page > footer', 0]
+    ];
+
+    const revealItems = [];
+    revealGroups.forEach(([selector, baseDelay]) => {
+      document.querySelectorAll(selector).forEach((element, index) => {
+        if (element.classList.contains('reveal-item')) return;
+        element.classList.add('reveal-item');
+        element.style.setProperty('--reveal-delay', `${(baseDelay + (index % 4)) * 70}ms`);
+        revealItems.push(element);
+      });
+    });
+
+    const reveal = (element) => element.classList.add('is-visible');
+    const immediatelyVisible = revealItems.filter((element) => element.getBoundingClientRect().top < window.innerHeight * .94);
+    requestAnimationFrame(() => requestAnimationFrame(() => immediatelyVisible.forEach(reveal)));
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          reveal(entry.target);
+          observer.unobserve(entry.target);
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: .08 });
+      revealItems.filter((element) => !immediatelyVisible.includes(element)).forEach((element) => observer.observe(element));
+    } else {
+      revealItems.forEach(reveal);
+    }
+
+    const progress = document.createElement('span');
+    progress.className = 'scroll-progress';
+    progress.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(progress);
+
+    if (reducedMotion) {
+      document.documentElement.classList.add('motion-reduced');
+      revealItems.forEach(reveal);
+      return;
+    }
+
+    const portrait = document.querySelector('.portrait-art');
+    const portraitSection = portrait?.closest('.about-section');
+    const caseHeroImage = document.querySelector('.case-hero > img');
+    const caseHero = caseHeroImage?.closest('.case-hero');
+    const principleNumber = document.querySelector('.principle-number');
+    let scrollFrame = 0;
+
+    const updateScrollMotion = () => {
+      const scrollRange = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      progress.style.transform = `scaleX(${Math.min(1, Math.max(0, window.scrollY / scrollRange))})`;
+
+      if (portrait && portraitSection) {
+        const rect = portraitSection.getBoundingClientRect();
+        const travel = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+        portrait.style.setProperty('--portrait-parallax', `${(Math.min(1, Math.max(0, travel)) - .5) * 54}px`);
+      }
+
+      if (caseHeroImage && caseHero) {
+        const travel = Math.min(caseHero.offsetHeight, Math.max(0, -caseHero.getBoundingClientRect().top));
+        caseHeroImage.style.setProperty('--case-parallax', `${travel * .1}px`);
+      }
+
+      if (principleNumber) {
+        const rect = principleNumber.closest('.principles').getBoundingClientRect();
+        const progressThrough = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+        principleNumber.style.setProperty('--number-parallax', `${(Math.min(1, Math.max(0, progressThrough)) - .5) * 28}px`);
+      }
+      scrollFrame = 0;
+    };
+
+    const requestScrollMotion = () => {
+      if (scrollFrame) return;
+      scrollFrame = requestAnimationFrame(updateScrollMotion);
+    };
+
+    updateScrollMotion();
+    window.addEventListener('scroll', requestScrollMotion, { passive: true });
+    window.addEventListener('resize', requestScrollMotion, { passive: true });
+
+    if (!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+
+    document.querySelectorAll('.work-tile').forEach((tile) => {
+      tile.addEventListener('pointermove', (event) => {
+        const rect = tile.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width;
+        const y = (event.clientY - rect.top) / rect.height;
+        tile.style.setProperty('--tilt-x', `${(y - .5) * -2.4}deg`);
+        tile.style.setProperty('--tilt-y', `${(x - .5) * 3.2}deg`);
+        tile.style.setProperty('--pointer-x', `${x * 100}%`);
+        tile.style.setProperty('--pointer-y', `${y * 100}%`);
+      });
+      tile.addEventListener('pointerleave', () => {
+        tile.style.setProperty('--tilt-x', '0deg');
+        tile.style.setProperty('--tilt-y', '0deg');
+      });
+    });
+  }
+
   function renderCase() {
     const root = document.querySelector('#case-root');
     if (!root) return;
@@ -1012,13 +1051,12 @@
       history.replaceState(null, '', `case-study.html?id=${id}`);
     }
     const caseStudy = data.cases[id];
-    document.documentElement.classList.toggle('feelmore-mobile-snap', id === 'feelmore-wellness');
     const nextId = ids[(ids.indexOf(id) + 1) % ids.length];
     const darkHero = ['feelmore-confidence', 'citi-platform', 'citi-guidance', 'meta-consistency', 'meta-inevitable', 'meta-clutter'].includes(id);
     document.title = `${caseStudy.title} — ${caseStudy.company}`;
 
     root.innerHTML = `
-      <section class="case-hero${id.startsWith('meta-') ? ' meta' : ''}">
+      <section class="case-hero${id.startsWith('meta-') ? ' meta' : ''}${id === 'citi-platform' ? '' : ' case-hero-inset'}${id === 'feelmore-confidence' ? ' case-hero-bottom' : ''}" style="--case-color:${caseStudy.color}">
         <header class="case-header-overlay${darkHero ? ' on-dark' : ''}">
           <a class="brand" href="home.html"><svg class="brand-mark" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M22.6436 20.25H1.36523L12.0723 3.40332L22.6436 20.25ZM6.27344 17.6328H17.7529L12.084 8.50098L6.27344 17.6328Z" fill="currentColor"/></svg><span>Ross Lauda</span></a>
           <button class="email-link js-copy-email" type="button"><span class="email-highlight" aria-hidden="true"><svg viewBox="0 0 166 38" preserveAspectRatio="none"><path d="M31.3395 36.0282C27.2552 32.5186 3.5453 38.8592 1.45078 37.8999C-0.161991 36.6833 -0.41332 12.327 0.612991 8.60686C0.990004 7.29663 1.51362 7.03926 2.896 7.4838C4.55067 8.16232 24.9931 5.05051 31.7374 4.11463C32.1563 4.83994 33.036 2.24287 33.2873 3.15535C33.79 4.48898 79.9321 0.956035 81.2307 0.909241C83.4928 0.815653 81.7334 2.28967 84.3725 1.72814C90.0067 0.558286 102.364 1.9855 106.616 0.815653C110.051 -0.120228 110.784 -0.143624 114.073 0.862448C116.942 1.72814 135.269 1.72814 137.406 0.230727C137.929 -0.190419 138.306 -0.00324255 138.285 0.534889C138.285 0.581683 144.527 1.37718 144.569 1.37718C147.711 1.79833 150.852 2.31306 150.873 2.52364C150.936 3.06177 151.313 3.34253 151.69 3.01497C152.36 2.45344 165.87 1.84512 165.975 3.43612C166.31 7.99854 163.231 26.8799 161.451 31.3722C159.587 36.1451 151.585 29.6876 144.506 32.0975C108.774 29.5238 113.486 30.1321 105.946 31.8869C105.171 30.2257 102.197 34.1564 100.354 31.2786C99.5996 30.1087 94.1749 29.8279 92.981 30.9978C92.4783 31.4891 85.2732 30.9978 77.8795 30.9276C70.465 30.8574 62.82 31.2552 61.4795 32.893C55.7615 30.0853 34.1461 35.49 31.2976 36.0282H31.3395Z"/></svg></span><span class="email-text">hello@rosslauda.com</span></button>
@@ -1045,7 +1083,6 @@
       </div>`;
   }
 
-  initEnvironmentBanner();
   initPrinciples();
   renderNote();
   initArticleHighlights();
@@ -1056,7 +1093,7 @@
   initViewportVideos();
   initStickyHeader();
   initCaseHeader();
-  initMobileCaseGalleryHeader();
   initEmailHighlights();
   initNoteHighlights();
+  initMotionSystem();
 })();

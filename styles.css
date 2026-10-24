@@ -15,6 +15,9 @@
 
 @keyframes copyOut{to{opacity:0}}@keyframes copyIn{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}@keyframes numberOut{to{transform:translateX(110%);opacity:0}}@keyframes numberIn{to{transform:translateX(0);opacity:1}}
 @media(max-width:700px){
+  .case-hero.case-hero-inset{background:var(--case-color)}
+  .case-hero.case-hero-inset>img{width:210%;max-width:none;height:100%;margin-left:-55%;object-fit:contain;object-position:center}
+  .case-hero.case-hero-bottom>img{object-position:center bottom}
   .page{width:calc(100% - 48px)}.site-header{margin-top:40px}.home-intro{padding:48px 0 32px}.home-intro h1{font-size:72px;line-height:72px;letter-spacing:-.7px}.home-intro p{font-size:20px;line-height:26px;margin-top:16px;letter-spacing:.4px}.selected-work{padding:32px 0 48px}.work-grid{grid-template-columns:1fr 1fr;grid-template-rows:repeat(5,180px)}.work-1{grid-area:1/1}.work-3{grid-area:1/2}.work-2{grid-area:2/1/2/3}.work-4{grid-area:3/1}.work-5{grid-area:3/2}.work-6{grid-area:4/1/4/3}.work-7{grid-area:5/1}.work-8{grid-area:5/2}.home-columns{grid-template-columns:1fr;gap:64px;padding:32px 0 48px}.home-columns .section-label{margin-bottom:20px}.text-list{gap:14px}.text-list a{font-size:14px;line-height:20px;gap:10px}.experience-list{display:grid;gap:18px}.experience-list p{font-size:14px;line-height:20px}.principles{height:456px}.principles-label{position:static;transform:none;padding-top:32px}.principle-number{display:none}.principle-copy{left:0;top:114px;width:100%;height:276px}.principle-copy h3{margin:52px 0 0;font-size:40px;line-height:40px;letter-spacing:-.3px}.principle-copy p{width:100%;margin-top:16px;font-size:14px;line-height:20px}.principle-copy .quote{font-size:64px;line-height:64px}.principle-arrow{display:none}.principle-dots{bottom:32px}.about-section{height:880px}.portrait-wrap{left:-21px;right:auto;top:-48px;width:384px;height:440px}.portrait-color{left:78px;right:auto;width:343px;height:441px}.portrait-photo{left:-210px;right:auto;top:18px;width:760px;height:430px}.about-copy{left:0;top:432px;width:100%}.about-copy h2{font-size:40px;line-height:40px;letter-spacing:-.2px;margin-bottom:16px}.about-copy p{font-size:14px;line-height:20px;letter-spacing:.28px}.contact-section{height:256px}.contact-section h2{font-size:40px;line-height:40px;margin-bottom:24px}.contact-email{font-size:20px;line-height:32px;letter-spacing:.4px}footer{font-size:14px;line-height:20px;padding:48px 0 80px}
   .note-article{width:100%;margin-top:48px}.note-heading h1{font-size:24px;line-height:32px}.note-heading p{margin-bottom:64px}.note-body{font-size:16px;line-height:24px}.detail-nav{margin-top:48px}
   .case-header-overlay{top:40px}.case-hero{height:620px}.case-content{margin-top:48px}.case-intro h1{font-size:56px;line-height:56px;letter-spacing:-.5px}.case-intro>p{font-size:20px;line-height:26px;margin-bottom:48px}.case-facts{grid-template-columns:1fr;gap:48px;padding:48px 0}.case-facts h2{margin-bottom:16px}.case-gallery{gap:48px;padding:48px 0}.case-art{min-height:360px}.case-device-row{min-height:530px;justify-content:flex-start;gap:28px;padding:0 34px}.device{width:205px;height:444px;border-width:6px;border-radius:24px;flex:0 0 auto}.case-stage{height:620px}.screen{width:88%;height:330px;border-width:5px}.screen:first-child{left:-12%;top:36px}.screen:last-child{right:-12%;bottom:36px}.case-bottom-nav{padding:48px 0 80px}
@@ -82,8 +85,8 @@
 .note-article.dropcap-o .note-dropcap{letter-spacing:-.18em}
 .note-article.dropcap-shift-left .note-dropcap{left:-8px}
 .note-editorial-quote{color:var(--ink);font-family:NewYorkMediumItalic,Georgia,serif;font-size:16px;font-weight:500;font-style:normal;line-height:24px}
-.note-body p{position:relative;isolation:isolate}
-.note-body mark{color:var(--ink);background:none!important;padding:0;margin:0;position:relative}
+.note-body p,.about-copy p{position:relative;isolation:isolate}
+.note-body mark,.about-copy mark{color:var(--ink);background:none!important;padding:0;margin:0;position:relative}
 .note-steps{margin:0 0 24px;padding-left:24px;color:var(--muted)}
 .note-steps li{padding-left:4px}
 .note-marker-art{position:absolute;z-index:-1;inset:0;display:block;width:100%;height:100%;overflow:visible;pointer-events:none}
@@ -348,13 +351,13 @@ html,body{overflow-x:clip}
   .principles{touch-action:pan-y;overscroll-behavior-x:contain}
   .about-divider-top{background:transparent}
   .about-section{height:800px}
-  .portrait-wrap{left:-21px;right:auto;top:-48px;width:384px;height:440px}
-  .portrait-art{transform:translateX(16px)}
-  .portrait-art .portrait-photo{width:100%;height:100%;object-fit:cover;object-position:center}
-  .portrait-wrap::before,.portrait-wrap::after{content:"";position:absolute;left:21px;width:342px;height:1px;background:var(--line)}
+  .portrait-wrap{left:calc(50% - 50vw);right:auto;top:-48px;width:100vw;height:auto;aspect-ratio:2613/2883}
+  .portrait-art{transform:translateX(12px)}
+  .portrait-art .portrait-photo{width:100%;height:100%;object-fit:contain;object-position:center}
+  .portrait-wrap::before,.portrait-wrap::after{content:"";position:absolute;left:24px;width:calc(100% - 48px);height:1px;background:var(--line)}
   .portrait-wrap::before{top:0}
   .portrait-wrap::after{bottom:0}
-  .about-copy{left:0;right:0;top:432px;width:100%;max-width:none}
+  .about-copy{left:0;right:0;top:clamp(432px,calc(100vw + 36px),472px);width:100%;max-width:none}
 }
 
 /* Personal notes use the shared bottom navigation/footer row. */
@@ -490,103 +493,6 @@ html,body{overflow-x:clip}
 @media(prefers-reduced-motion:reduce){.case-device-frame,.case-gallery-image,.onboard-card{transition:none}.case-gallery-figure:not(.is-onboarding-revealed) .onboard-card{transform:none}}
 @media(max-width:700px){.case-device-frame.is-landscape{--device-radius:12px}}
 
-/* The onboarding cards sit over the actual session screen, without the
-   decorative radial artwork used in the original composition. */
-.case-gallery-figure[data-case-id="feelmore-wellness"][data-gallery-group="1"] .case-composition-inner>.case-gallery-image:first-child{display:none}
-
-/* Feelmore's app screens become viewport-sized chapters on mobile. The page
-   moves through them vertically; only the onboarding cards swipe sideways. */
-@media(max-width:700px){
-  html.feelmore-mobile-snap{scroll-snap-type:none}
-  html.feelmore-mobile-snap .case-hero{background:#cfeaf1}
-  html.feelmore-mobile-snap .case-hero>img{
-    width:160%;
-    max-width:none;
-    margin-left:-30%;
-    object-fit:contain
-  }
-  html.feelmore-mobile-snap.feelmore-gallery-snap-active{scroll-snap-type:y mandatory}
-  html.feelmore-mobile-snap.feelmore-gallery-snap-active.feelmore-gallery-snap-at-start{scroll-snap-type:y proximity}
-  html.feelmore-mobile-snap.feelmore-gallery-snap-active .case-bottom-nav{scroll-snap-align:end;scroll-snap-stop:always}
-  .case-header-overlay.is-gallery-immersive{
-    opacity:0;
-    pointer-events:none;
-    transform:translateY(-100%);
-    transition:opacity 220ms ease,transform 360ms cubic-bezier(.22,1,.36,1)
-  }
-  .case-gallery-figure[data-case-id="feelmore-wellness"]{
-    width:100vw;
-    margin-inline:calc(50% - 50vw);
-    aspect-ratio:auto!important;
-    height:auto;
-    overflow:visible
-  }
-  .case-gallery-figure[data-case-id="feelmore-wellness"] .case-composition-inner{
-    position:static;
-    display:block;
-    left:auto!important;
-    width:100%!important;
-    height:auto
-  }
-  .case-gallery-figure[data-case-id="feelmore-wellness"] .case-gallery-item{
-    position:relative;
-    inset:auto;
-    display:block;
-    width:100vw;
-    height:calc(100vw * 812 / 375);
-    aspect-ratio:375 / 812;
-    max-width:none!important;
-    scroll-snap-align:end;
-    scroll-snap-stop:always;
-    filter:none!important
-  }
-  .case-gallery-figure[data-case-id="feelmore-wellness"] .case-device-frame{
-    --device-border:0px;
-    --device-radius:0;
-    border-radius:0;
-    corner-shape:initial;
-    background-color:transparent;
-    box-shadow:none
-  }
-  .case-gallery-figure[data-case-id="feelmore-wellness"] .case-device-frame>img,
-  .case-gallery-figure[data-case-id="feelmore-wellness"] .case-layered-device>*{object-fit:contain}
-
-  .case-gallery-figure[data-case-id="feelmore-wellness"][data-gallery-group="1"]{
-    height:calc(100vw * 812 / 375);
-    aspect-ratio:375 / 812!important;
-    overflow-x:auto;
-    overflow-y:hidden;
-    overscroll-behavior-inline:contain;
-    background:#a9e7ed url("assets/cases/feelmore-wellness/gallery-02-device.png") center top/100vw calc(100vw * 812 / 375) no-repeat;
-    scroll-snap-align:end;
-    scroll-snap-stop:always;
-    scroll-snap-type:x mandatory;
-    scroll-padding-inline:calc((100vw - min(78vw,340px))/2);
-    scrollbar-width:none;
-    -webkit-overflow-scrolling:touch
-  }
-  .case-gallery-figure[data-case-id="feelmore-wellness"][data-gallery-group="1"]::-webkit-scrollbar{display:none}
-  .case-gallery-figure[data-case-id="feelmore-wellness"][data-gallery-group="1"] .case-composition-inner{
-    display:flex;
-    align-items:center;
-    gap:16px;
-    width:max-content!important;
-    height:100%;
-    padding-inline:calc((100vw - min(78vw,340px))/2)
-  }
-  .case-gallery-figure[data-case-id="feelmore-wellness"][data-gallery-group="1"] .case-gallery-item:not(.onboard-card){display:none}
-  .case-gallery-figure[data-case-id="feelmore-wellness"][data-gallery-group="1"] .onboard-card{
-    flex:0 0 min(78vw,340px);
-    width:min(78vw,340px);
-    height:auto;
-    transform:none!important;
-    transition:none;
-    object-fit:contain;
-    scroll-snap-align:center;
-    scroll-snap-stop:always
-  }
-}
-
 /* Citi Platform theme control and image transition. */
 .case-gallery.has-citi-theme-switcher{position:relative}
 .citi-theme-switcher-anchor{
@@ -690,297 +596,14 @@ html,body{overflow-x:clip}
 .contact-copy{max-width:none;margin:0 0 32px;color:var(--muted);font-size:20px;line-height:28px;letter-spacing:.4px;text-align:center;white-space:nowrap}
 @media(max-width:700px){.work-grid--non-meta{grid-template-rows:repeat(3,180px)}.work-grid--non-meta .work-4{grid-area:1/1}.work-grid--non-meta .work-5{grid-area:1/2}.work-grid--non-meta .work-6{grid-area:2/1/3/3}.work-grid--non-meta .work-7{grid-area:3/1}.work-grid--non-meta .work-8{grid-area:3/2}.home-page .contact-section{width:auto;margin-inline:0}.contact-section h2{margin-bottom:12px}.contact-copy{max-width:300px;margin-bottom:20px;font-size:14px;line-height:20px;letter-spacing:.28px;white-space:normal}}
 
-/* Rendered only when site.js confirms the staging hostname. */
-.environment-banner{width:min(1180px,calc(100% - 48px));margin:24px auto 0;padding:12px 16px;border:1px solid #ff9900;border-radius:8px;background:hsl(36,100%,95%);color:#ff9900;text-align:center}
-
-/* Staging concept: a quiet editorial signal strip shared by static and interactive highlights. */
-:root{
-  --signal-strip-wash:color-mix(in srgb,var(--email-highlight) 52%,transparent);
-  --signal-strip-line:color-mix(in srgb,var(--email-highlight) 76%,var(--ink) 24%)
-}
-@media(prefers-color-scheme:dark){
-  :root{
-    --signal-strip-wash:color-mix(in srgb,var(--email-highlight) 58%,transparent);
-    --signal-strip-line:color-mix(in srgb,var(--email-highlight) 82%,var(--ink) 18%)
-  }
-}
-
-/* Static homepage and article highlights: a soft field plus a precise lower rail. */
-.note-marker-art{display:none!important}
-.note-body mark,.about-copy mark{
-  color:var(--ink);
-  background:
-    linear-gradient(var(--signal-strip-wash),var(--signal-strip-wash)),
-    linear-gradient(var(--signal-strip-line),var(--signal-strip-line)) left bottom/100% 1px no-repeat!important;
-  padding:.25em .12em;
-  margin:-.25em -.08em;
-  border-radius:2px;
-  box-decoration-break:clone;
-  -webkit-box-decoration-break:clone;
-  position:relative
-}
-
-/* Header email and note/navigation links reveal the same signal strip from left to right. */
-.email-highlight{transform:translate(-50%,-50%)}
-.note-link-reveal{transform:none}
-.email-highlight::before,.note-link-reveal::before{
-  top:50%;
-  height:calc(100% - 10px);
-  background:var(--signal-strip-wash);
-  border-bottom:1px solid var(--signal-strip-line);
-  border-radius:3px 1px 3px 1px;
-  opacity:1;
-  transform:translateY(-50%) skewX(-3deg)
-}
-.email-highlight-text{color:var(--ink);transform:translate(-50%,-50%)}
-.note-link-highlight-text{color:var(--ink)}
-@media(prefers-color-scheme:dark){.email-highlight-text,.note-link-highlight-text{color:var(--ink)}}
-
-/* Contact uses the same strip, sized to its larger display type. */
-.contact-highlight{opacity:1;transition:none}
-.contact-highlight svg{display:none}
-.contact-highlight::before{
-  content:"";
-  position:absolute;
-  left:24px;
-  right:24px;
-  top:50%;
-  height:42px;
-  background:var(--signal-strip-wash);
-  border-bottom:1px solid var(--signal-strip-line);
-  border-radius:4px 1px 4px 1px;
-  clip-path:inset(0 100% 0 0);
-  transform:translateY(-50%) skewX(-3deg);
-  transition:clip-path 560ms cubic-bezier(.65,0,.35,1)
-}
-.contact-email:hover .contact-highlight::before,.contact-email:focus-visible .contact-highlight::before{clip-path:inset(0 0 0 0)}
-
-/* Principle controls use a compact signal chip instead of a hand-drawn marker blob. */
-.principle-arrow::before{
-  background:var(--signal-strip-wash);
-  border-bottom:1px solid var(--signal-strip-line);
-  border-radius:4px 1px 4px 1px;
-  box-shadow:none;
-  -webkit-mask:none;
-  mask:none;
-  clip-path:inset(50% 50% 50% 50% round 2px);
-  transform:rotate(-3deg);
-  transition:clip-path 560ms cubic-bezier(.22,1,.36,1)
-}
-.principle-arrow.next::before{transform:rotate(3deg)}
-.principle-arrow:not(:disabled):hover::before,.principle-arrow:not(:disabled):focus-visible::before{clip-path:inset(13px 9px round 2px)}
-.principle-arrow:not(:disabled):hover,.principle-arrow:not(:disabled):focus-visible{color:var(--ink)}
-
-@media(max-width:700px){.contact-highlight::before{height:30px}}
-
-/* Staging highlight lab: compare four editorial treatments without affecting production. */
-.environment-banner{
-  position:relative;
-  z-index:1100;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:18px;
-  text-align:left
-}
-.environment-banner-copy{white-space:nowrap}
-.highlight-lab{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px}
-.highlight-lab button{
-  min-height:30px;
-  padding:4px 10px;
-  border:1px solid color-mix(in srgb,#ff9900 58%,transparent);
-  border-radius:999px;
-  background:transparent;
-  color:inherit;
-  font:600 12px/20px var(--sans);
-  letter-spacing:.01em;
-  cursor:pointer
-}
-.highlight-lab button:hover,.highlight-lab button:focus-visible{border-color:#ff9900;outline:none}
-.highlight-lab button[aria-pressed="true"]{background:#ff9900;color:#241700}
-.about-copy p{position:relative;isolation:isolate}
-html[data-highlight-style] .note-body mark,
-html[data-highlight-style] .about-copy mark{
-  box-decoration-break:clone;
-  -webkit-box-decoration-break:clone
-}
-
-/* 1. A true glyph stroke: the accent follows the letterforms themselves. */
-:root{
-  --stroke-option:#a9bac4;
-  --stroke-halo:
-    3px 0 0 var(--stroke-option),2.77px 1.15px 0 var(--stroke-option),2.12px 2.12px 0 var(--stroke-option),1.15px 2.77px 0 var(--stroke-option),
-    0 3px 0 var(--stroke-option),-1.15px 2.77px 0 var(--stroke-option),-2.12px 2.12px 0 var(--stroke-option),-2.77px 1.15px 0 var(--stroke-option),
-    -3px 0 0 var(--stroke-option),-2.77px -1.15px 0 var(--stroke-option),-2.12px -2.12px 0 var(--stroke-option),-1.15px -2.77px 0 var(--stroke-option),
-    0 -3px 0 var(--stroke-option),1.15px -2.77px 0 var(--stroke-option),2.12px -2.12px 0 var(--stroke-option),2.77px -1.15px 0 var(--stroke-option)
-}
-html[data-highlight-style="stroke"] .note-marker-art{display:none!important}
-html[data-highlight-style="stroke"] .note-body mark,
-html[data-highlight-style="stroke"] .about-copy mark{
-  color:inherit;
-  font-family:NewYorkMediumItalic,Georgia,serif;
-  font-weight:500;
-  font-style:normal;
-  letter-spacing:0;
-  background:none!important;
-  border:0;
-  border-radius:0;
-  box-shadow:none;
-  padding:0;
-  margin:0;
-  -webkit-text-stroke:1px var(--stroke-option,#a9bac4);
-  text-shadow:var(--stroke-halo);
-  paint-order:stroke fill
-}
-html[data-highlight-style="stroke"] .email-highlight::before,
-html[data-highlight-style="stroke"] .note-link-reveal::before,
-html[data-highlight-style="stroke"] .contact-highlight::before,
-html[data-highlight-style="stroke"] .principle-arrow::before{display:none}
-html[data-highlight-style="stroke"] .email-highlight-text,
-html[data-highlight-style="stroke"] .note-link-highlight-text{
-  color:inherit;
-  font-family:NewYorkMediumItalic,Georgia,serif;
-  font-weight:500;
-  font-style:normal;
-  letter-spacing:0;
-  text-decoration:none;
-  -webkit-text-stroke:1px var(--stroke-option,#a9bac4);
-  text-shadow:var(--stroke-halo);
-  paint-order:stroke fill
-}
-html[data-highlight-style="stroke"] .contact-email:hover .contact-email-text,
-html[data-highlight-style="stroke"] .contact-email:focus-visible .contact-email-text{
-  -webkit-text-stroke:1px var(--stroke-option,#a9bac4);
-  text-shadow:var(--stroke-halo);
-  paint-order:stroke fill
-}
-html[data-highlight-style="stroke"] .contact-email-text{
-  font-family:NewYorkMediumItalic,Georgia,serif;
-  font-weight:500;
-  font-style:normal;
-  letter-spacing:0
-}
-html[data-highlight-style="stroke"] .principle-arrow:not(:disabled):hover svg,
-html[data-highlight-style="stroke"] .principle-arrow:not(:disabled):focus-visible svg{
-  filter:drop-shadow(2px 0 0 var(--stroke-option,#a9bac4)) drop-shadow(-2px 0 0 var(--stroke-option,#a9bac4)) drop-shadow(0 2px 0 var(--stroke-option,#a9bac4)) drop-shadow(0 -2px 0 var(--stroke-option,#a9bac4))
-}
-
-/* 2. A clean, squared block that intentionally meets adjacent lines. */
-html[data-highlight-style="square"] .note-marker-art{display:none!important}
-html[data-highlight-style="square"] .note-body mark,
-html[data-highlight-style="square"] .about-copy mark{
-  color:var(--ink);
-  background:var(--signal-strip-wash)!important;
-  border:0;
-  border-radius:0;
-  box-shadow:none;
-  padding:.25em .12em;
-  margin:-.25em -.08em
-}
-html[data-highlight-style="square"] .email-highlight::before,
-html[data-highlight-style="square"] .note-link-reveal::before,
-html[data-highlight-style="square"] .contact-highlight::before,
-html[data-highlight-style="square"] .principle-arrow::before{
-  background:var(--signal-strip-wash);
-  border:0;
-  border-radius:0;
-  transform:translateY(-50%)
-}
-html[data-highlight-style="square"] .principle-arrow::before{transform:none}
-html[data-highlight-style="square"] .principle-arrow.next::before{transform:none}
-
-/* 3. A quick felt-marker underline, drawn fragment-by-fragment beneath multiline copy. */
-html[data-highlight-style="felt"] .note-marker-art{display:block!important}
-html[data-highlight-style="felt"] .note-marker-stroke{
-  stroke:var(--email-highlight);
-  stroke-linecap:round;
-  stroke-linejoin:round;
-  filter:blur(.12px)
-}
-html[data-highlight-style="felt"] .note-marker-grain{stroke-dasharray:11 2 4 1.5;filter:none}
-html[data-highlight-style="felt"] .note-body mark,
-html[data-highlight-style="felt"] .about-copy mark{
-  color:var(--ink);
-  background:none!important;
-  border:0;
-  border-radius:0;
-  box-shadow:none;
-  padding:0;
-  margin:0
-}
-html[data-highlight-style="felt"] .email-highlight::before,
-html[data-highlight-style="felt"] .note-link-reveal::before{
-  top:72%;
-  height:7px;
-  background:repeating-linear-gradient(176deg,var(--signal-strip-line) 0 2px,color-mix(in srgb,var(--signal-strip-line) 72%,transparent) 2px 4px);
-  border:0;
-  border-radius:70% 16% 65% 18% / 45% 58% 40% 55%;
-  clip-path:polygon(0 20%,99% 0,100% 75%,1% 100%);
-  transform:translateY(-50%) rotate(-1deg)
-}
-html[data-highlight-style="felt"] .contact-highlight::before{
-  top:70%;
-  height:9px;
-  background:repeating-linear-gradient(176deg,var(--signal-strip-line) 0 3px,color-mix(in srgb,var(--signal-strip-line) 72%,transparent) 3px 5px);
-  border:0;
-  border-radius:70% 16% 65% 18% / 45% 58% 40% 55%;
-  transform:translateY(-50%) rotate(-1deg)
-}
-html[data-highlight-style="felt"] .principle-arrow::before{
-  inset:auto 6px 12px;
-  height:7px;
-  background:repeating-linear-gradient(176deg,var(--signal-strip-line) 0 2px,color-mix(in srgb,var(--signal-strip-line) 72%,transparent) 2px 4px);
-  border:0;
-  border-radius:70% 16% 65% 18% / 45% 58% 40% 55%;
-  clip-path:inset(0 100% 0 0)
-}
-html[data-highlight-style="felt"] .principle-arrow::before{transform:rotate(-4deg)}
-html[data-highlight-style="felt"] .principle-arrow.next::before{transform:rotate(4deg)}
-html[data-highlight-style="felt"] .principle-arrow:not(:disabled):hover::before,
-html[data-highlight-style="felt"] .principle-arrow:not(:disabled):focus-visible::before{clip-path:inset(0)}
-
-/* 4. Hybrid: a disciplined block with a subtly uneven marker grain and ink rail. */
-html[data-highlight-style="hybrid"] .note-marker-art{display:none!important}
-html[data-highlight-style="hybrid"] .note-body mark,
-html[data-highlight-style="hybrid"] .about-copy mark{
-  color:var(--ink);
-  background:
-    repeating-linear-gradient(178deg,var(--signal-strip-wash) 0 4px,color-mix(in srgb,var(--signal-strip-wash) 82%,transparent) 4px 6px),
-    linear-gradient(var(--signal-strip-line),var(--signal-strip-line)) left bottom/100% 1px no-repeat!important;
-  border:0;
-  border-radius:2px 0 2px 1px;
-  box-shadow:none;
-  padding:.25em .12em;
-  margin:-.25em -.08em
-}
-html[data-highlight-style="hybrid"] .email-highlight::before,
-html[data-highlight-style="hybrid"] .note-link-reveal::before,
-html[data-highlight-style="hybrid"] .contact-highlight::before,
-html[data-highlight-style="hybrid"] .principle-arrow::before{
-  background:repeating-linear-gradient(178deg,var(--signal-strip-wash) 0 4px,color-mix(in srgb,var(--signal-strip-wash) 82%,transparent) 4px 6px);
-  border:0;
-  border-bottom:1px solid var(--signal-strip-line);
-  border-radius:3px 0 3px 1px;
-  transform:translateY(-50%) skewX(-2deg)
-}
-html[data-highlight-style="hybrid"] .principle-arrow::before{transform:rotate(-3deg)}
-html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rotate(3deg)}
-
-@media(max-width:700px){
-  .environment-banner{align-items:flex-start;flex-direction:column;gap:10px}
-  .environment-banner-copy{white-space:normal}
-  .highlight-lab{justify-content:flex-start;width:100%}
-  .highlight-lab button{flex:1 1 calc(50% - 3px)}
-}
-
-/* Final staging direction: one clean, squared highlight system. */
+/* Final highlight system: squared treatments throughout, while the homepage
+   contact callout keeps its original three-stroke SVG treatment. */
 :root{
   --signal-highlight-height:95%;
   --email-highlight:#2cc295;
   --signal-strip-wash:rgba(44,194,149,.85);
   --signal-strip-line:rgba(44,194,149,.85)
 }
-.environment-banner{display:block;text-align:center}
 .note-marker-art{display:none!important}
 .note-body mark,.about-copy mark{
   color:inherit;
@@ -997,6 +620,8 @@ html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rota
   box-decoration-break:clone;
   -webkit-box-decoration-break:clone
 }
+.email-highlight{transform:translate(-50%,-50%)}
+.note-link-reveal{transform:none}
 .email-highlight::before,.note-link-reveal::before{
   top:50%;
   height:var(--signal-highlight-height);
@@ -1030,14 +655,14 @@ html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rota
 .principle-arrow:not(:disabled):hover::before,
 .principle-arrow:not(:disabled):focus-visible::before{clip-path:inset(0)}
 
-/* Contact is intentionally restored to the production three-stroke SVG treatment. */
+/* Contact is intentionally retained as the production three-stroke SVG. */
 .contact-highlight{opacity:0;transition:opacity 240ms cubic-bezier(.22,1,.36,1)}
 .contact-highlight svg{display:block}
 .contact-highlight::before,.contact-highlight::after{content:none;display:none}
 .contact-email:hover .contact-highlight,.contact-email:focus-visible .contact-highlight{opacity:1;transition-duration:0ms}
 
-/* Highlights sit on the lowest local layer; copy and headings always paint above them. */
-.email-highlight::before,.note-link-reveal::before,.principle-arrow::before{z-index:0}
+/* Highlight layers stay behind the copy and headings. */
+.email-highlight::before,.note-link-reveal::before,.principle-arrow::before{z-index:0;opacity:1}
 .email-highlight-text,.note-link-highlight-text,.principle-arrow svg{z-index:1}
 .contact-section{position:relative;isolation:isolate}
 .contact-section h2{position:relative;z-index:2}
@@ -1048,11 +673,7 @@ html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rota
   transition:color 500ms cubic-bezier(.22,1,.36,1)
 }
 
-@media(max-width:700px){
-  .environment-banner{display:block;text-align:center}
-}
-
-/* Highlighted content always uses the current theme's primary text color. */
+/* Highlighted copy and icons always use the theme's primary text color. */
 .text-list a:hover .note-arrow,
 .text-list a:focus-visible .note-arrow,
 .detail-nav a:hover .detail-nav-arrow,
@@ -1082,4 +703,103 @@ html[data-highlight-style="hybrid"] .principle-arrow.next::before{transform:rota
 .note-body p{
   text-wrap:pretty;
   overflow-wrap:break-word
+}
+
+/* Progressive motion layer: restrained depth and choreography without changing layout. */
+@view-transition{navigation:auto}
+::view-transition-old(root){animation:pageOut 260ms cubic-bezier(.4,0,1,1) both}
+::view-transition-new(root){animation:pageIn 620ms cubic-bezier(.16,1,.3,1) both}
+@keyframes pageOut{to{opacity:0;transform:translateY(-8px)}}
+@keyframes pageIn{from{opacity:0;transform:translateY(12px)}}
+
+.brand{view-transition-name:portfolio-brand}
+.motion-heading{overflow:visible}
+.motion-line{display:block;overflow:hidden;margin:-.12em 0;padding:.12em 0}
+.motion-line>span{display:block}
+.motion-ready .motion-heading.reveal-item:not(.is-visible) .motion-line>span{transform:translateY(112%) rotate(1.2deg)}
+.motion-ready .motion-heading .motion-line>span{
+  transform:translateY(0) rotate(0);
+  transition:transform 980ms cubic-bezier(.16,1,.3,1);
+  transition-delay:calc(var(--reveal-delay,0ms) + var(--line-index,0) * 95ms);
+  will-change:transform
+}
+.motion-ready .reveal-item:not(.motion-heading){
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity 760ms cubic-bezier(.16,1,.3,1),transform 900ms cubic-bezier(.16,1,.3,1);
+  transition-delay:var(--reveal-delay,0ms)
+}
+.motion-ready .reveal-item.is-visible:not(.motion-heading){opacity:1;transform:translateY(0)}
+
+.scroll-progress{
+  position:fixed;
+  z-index:1001;
+  top:0;
+  left:0;
+  width:100%;
+  height:2px;
+  background:var(--email-highlight);
+  transform:scaleX(0);
+  transform-origin:left center;
+  pointer-events:none;
+  will-change:transform
+}
+
+.work-grid{perspective:1200px}
+.work-tile{
+  --tilt-x:0deg;
+  --tilt-y:0deg;
+  --pointer-x:50%;
+  --pointer-y:50%;
+  transform:perspective(900px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transform-style:preserve-3d;
+  transition:transform 480ms cubic-bezier(.16,1,.3,1),box-shadow 480ms cubic-bezier(.16,1,.3,1);
+  will-change:transform
+}
+.work-tile::before{
+  content:"";
+  position:absolute;
+  z-index:1;
+  inset:0;
+  background:radial-gradient(circle at var(--pointer-x) var(--pointer-y),rgba(255,255,255,.2),transparent 42%);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 360ms ease
+}
+.work-tile:hover,.work-tile:focus-visible{z-index:2;box-shadow:0 22px 55px rgba(0,0,0,.14)}
+.work-tile:hover::before,.work-tile:focus-visible::before{opacity:1}
+.work-tile:hover img,.work-tile:focus-visible img{transform:scale(1.045)}
+.work-tile.work-4:hover img,.work-tile.work-4:focus-visible img{transform:translate(-2px,-2px) scale(1.045)}
+.work-tile-title{transform:translateY(12px) scale(.985)}
+.work-tile:hover .work-tile-title,.work-tile:focus-visible .work-tile-title{transform:translateY(0) scale(1)}
+
+.portrait-art{
+  transform:translate3d(0,var(--portrait-parallax,0),0);
+  transition:transform 80ms linear;
+  will-change:transform
+}
+.principle-number{translate:0 var(--number-parallax,0);will-change:translate}
+.case-hero>img{
+  transform:translate3d(0,var(--case-parallax,0),0) scale(1.035);
+  transform-origin:center center;
+  will-change:transform
+}
+.case-gallery-figure.reveal-item{transition-duration:900ms,1100ms}
+
+a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset:5px}
+
+@media(max-width:700px){
+  .motion-ready .reveal-item:not(.motion-heading){transform:translateY(16px)}
+  .motion-ready .reveal-item.is-visible:not(.motion-heading){transform:translateY(0)}
+  .portrait-art{transform:translate3d(12px,var(--portrait-parallax,0),0)}
+  .work-tile{transform:none}
+}
+
+@media(prefers-reduced-motion:reduce){
+  ::view-transition-old(root),::view-transition-new(root){animation:none}
+  .motion-ready .reveal-item,.motion-ready .motion-line>span{opacity:1!important;transform:none!important;transition:none!important}
+  .scroll-progress{display:none}
+  .portrait-art,.case-hero>img{transform:none!important;transition:none!important}
+  .principle-number{translate:none!important}
+  .work-tile{transform:none!important;transition:none!important}
 }
