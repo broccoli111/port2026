@@ -561,3 +561,52 @@ Object.assign(window.PORTFOLIO_DATA.cases['weight-watchers'], {
   title: 'Bringing a new brand to life across existing products.',
   dek: 'Translating a bold new identity into cohesive, accessible experiences across web and mobile.'
 });
+
+Object.assign(window.PORTFOLIO_DATA.cases['meta-inevitable'], {
+  role: 'Staff Product Designer',
+  scope: ['Product infrastructure', 'Design systems', 'Organizational change'],
+  signals: [{value:'76%',label:'adoption across Facebook'}, {value:'System-wide',label:'foundation for product teams'}, {value:'Durable',label:'contribution and governance model'}],
+  takeaway: 'A design system becomes infrastructure when teams trust the reasoning behind it—not simply the components inside it.'
+});
+Object.assign(window.PORTFOLIO_DATA.cases['citi-platform'], {
+  role: 'Senior Product Designer',
+  scope: ['Platform strategy', 'Design systems', 'Multi-market scale'],
+  signals: [{value:'3×',label:'design velocity'}, {value:'Up to 400%',label:'implementation-time improvement'}, {value:'First',label:'shared design system at Citi'}],
+  takeaway: 'The right platform does not erase difference. It standardizes the decisions that should be shared and protects the flexibility that creates value.'
+});
+Object.assign(window.PORTFOLIO_DATA.cases['feelmore-wellness'], {
+  role: 'Product Design Lead',
+  scope: ['0→1 product', 'Product strategy', 'Behavior change'],
+  signals: [{value:'5,000+',label:'customers supported'}, {value:'180,000+',label:'wellness sessions completed'}, {value:'Launch',label:'prototype to production'}],
+  takeaway: 'The feature suite worked because it was designed as one behavior-change system: learn, use, reflect, and return.'
+});
+Object.assign(window.PORTFOLIO_DATA.cases['meta-consistency'], {
+  role: 'Staff Product Designer',
+  scope: ['Experience systems', 'Accessibility', 'Cross-product alignment'],
+  signals: [{value:'100%',label:'migration across target surfaces'}, {value:'~23%',label:'increase in system adoption'}, {value:'Shared',label:'identity foundation'}],
+  takeaway: 'Consistency is not sameness. The work was finding the stable identity model that could support many products without flattening their needs.'
+});
+Object.assign(window.PORTFOLIO_DATA.cases['feelmore-confidence'], {
+  role: 'Product Design Lead',
+  scope: ['Growth strategy', 'Commerce', 'Customer education'],
+  signals: [{value:'24%+',label:'increase in conversion'}, {value:'Trust-first',label:'progressive disclosure model'}, {value:'Launch',label:'go-to-market foundation'}],
+  takeaway: 'For an unfamiliar product, confidence is the conversion strategy. The experience earned commitment by answering the next important question at the right moment.'
+});
+Object.assign(window.PORTFOLIO_DATA.cases['citi-guidance'], {
+  role: 'Senior Product Designer',
+  scope: ['Product ecosystem', 'Financial guidance', 'Cross-team alignment'],
+  signals: [{value:'~2,500',label:'new accounts opened'}, {value:'~2,000',label:'initial launch target'}, {value:'Shared',label:'guidance experience language'}],
+  takeaway: 'A cohesive product ecosystem begins before a formal system exists. Shared critique and patterns can create the foundation while the product is still taking shape.'
+});
+Object.assign(window.PORTFOLIO_DATA.cases['meta-clutter'], {
+  role: 'Staff Product Designer',
+  scope: ['Experience simplification', 'Systems adoption', 'Product strategy'],
+  signals: [{value:'Neutral',label:'topline performance maintained'}, {value:'Shared',label:'notification foundation'}, {value:'Scaled',label:'across subsequent improvements'}],
+  takeaway: 'System adoption became valuable when it stopped being the goal and became the mechanism for making a complex experience meaningfully simpler.'
+});
+Object.assign(window.PORTFOLIO_DATA.cases['weight-watchers'], {
+  role: 'Visual Designer',
+  scope: ['Product expression', 'Digital rebrand', 'Accessibility'],
+  signals: [{value:'Web + mobile',label:'cohesive product expression'}, {value:'Shared',label:'standard for visual quality'}, {value:'Accessible',label:'brand translated into product'}],
+  takeaway: 'Brand becomes real in product when teams share principles for applying it—not when every surface copies the same visual treatment.'
+});

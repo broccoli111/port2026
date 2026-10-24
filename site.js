@@ -5,10 +5,13 @@
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const caseGalleries = window.PORTFOLIO_CASE_GALLERIES || {};
   const visibleCaseIds = [
+    'meta-inevitable',
+    'citi-platform',
     'feelmore-wellness',
+    'meta-consistency',
     'feelmore-confidence',
     'citi-guidance',
-    'citi-platform',
+    'meta-clutter',
     'weight-watchers'
   ];
   const galleryAssetVersions = {
@@ -464,6 +467,7 @@
     const note = data.notes[id];
     const nextId = ids[(ids.indexOf(id) + 1) % ids.length];
     document.title = `${note.title} — Ross Lauda`;
+    document.body.classList.add('note-v3');
 
     const numberedSteps = ['Understand the user', 'Explore solutions', 'Build alignment', 'Ship', 'Measure', 'Repeat'];
     const numberedStepsBlock = numberedSteps.join('\n');
@@ -929,6 +933,7 @@
 
     document.querySelectorAll([
       '.home-intro h1',
+      '.v3-hero h1',
       '.about-copy h2',
       '.contact-section h2',
       '.case-intro h1',
@@ -939,9 +944,9 @@
     const revealGroups = [
       ['.site-header .brand, .case-header-overlay .brand', 0],
       ['.site-header .email-link, .case-header-overlay .email-link', 1],
-      ['.home-intro .motion-heading, .case-intro .motion-heading, .note-heading .motion-heading, .gate-card .motion-heading', 1],
-      ['.hero-meta, .hero-footer, .case-intro .case-company, .case-intro > p:last-child, .note-heading p, .gate-card > p', 3],
-      ['.selected-work-heading, .work-tile, .home-columns > div, .principles, .about-copy, .portrait-wrap', 0],
+      ['.home-intro .motion-heading, .v3-hero .motion-heading, .case-intro .motion-heading, .note-heading .motion-heading, .gate-card .motion-heading', 1],
+      ['.hero-meta, .hero-footer, .v3-eyebrow, .v3-hero-bottom, .v3-proof > div, .case-intro .case-company, .case-intro > p:last-child, .note-heading p, .gate-card > p', 3],
+      ['.selected-work-heading, .work-tile, .v3-section-header, .flagship-project, .more-project, .approach-grid article, .approach-statement, .v3-about-portrait, .v3-about-copy, .writing-grid a, .v3-contact > *, .home-columns > div, .principles, .about-copy, .portrait-wrap', 0],
       ['.case-facts > div, .case-gallery-figure, .note-body > *, .contact-section > *, .footer-nav, .home-page > footer', 0]
     ];
 
@@ -1036,7 +1041,7 @@
 
     if (!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
 
-    document.querySelectorAll('.work-tile').forEach((tile) => {
+    document.querySelectorAll('.work-tile, .flagship-project').forEach((tile) => {
       tile.addEventListener('pointermove', (event) => {
         const rect = tile.getBoundingClientRect();
         const x = (event.clientX - rect.left) / rect.width;
@@ -1051,6 +1056,31 @@
     });
   }
 
+  function initStaffNavigation() {
+    const dock = document.querySelector('.mobile-dock');
+    const navigationLinks = [...document.querySelectorAll('.site-nav a[href^="#"], .mobile-dock a[href^="#"]')];
+    const sections = [...document.querySelectorAll('#work, #approach, #about, #writing')];
+    if (!dock && !navigationLinks.length) return;
+
+    const updateDock = () => {
+      if (dock) dock.classList.toggle('is-visible', window.scrollY > window.innerHeight * .58);
+    };
+    updateDock();
+    window.addEventListener('scroll', updateDock, { passive: true });
+
+    if (!('IntersectionObserver' in window) || !sections.length) return;
+    const sectionObserver = new IntersectionObserver((entries) => {
+      const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      navigationLinks.forEach((link) => {
+        const isCurrent = link.getAttribute('href') === `#${visible.target.id}`;
+        if (isCurrent) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    }, { rootMargin: '-20% 0px -62% 0px', threshold: [0, .25, .5] });
+    sections.forEach((section) => sectionObserver.observe(section));
+  }
+
   function renderCase() {
     const root = document.querySelector('#case-root');
     if (!root) return;
@@ -1063,8 +1093,13 @@
     const caseStudy = data.cases[id];
     const projectNumber = ids.indexOf(id) + 1;
     const nextId = ids[(ids.indexOf(id) + 1) % ids.length];
+    const nextCase = data.cases[nextId];
     const darkHero = ['feelmore-confidence', 'citi-platform', 'citi-guidance', 'meta-consistency', 'meta-inevitable', 'meta-clutter'].includes(id);
     document.title = `${caseStudy.title} — ${caseStudy.company}`;
+    document.body.classList.add('case-v3');
+
+    const scopeMarkup = (caseStudy.scope || []).map((item) => `<span>${escapeHTML(item)}</span>`).join('');
+    const signalsMarkup = (caseStudy.signals || []).map((signal) => `<div><strong>${escapeHTML(signal.value)}</strong><span>${escapeHTML(signal.label)}</span></div>`).join('');
 
     root.innerHTML = `
       <section class="case-hero${id.startsWith('meta-') ? ' meta' : ''}${id === 'citi-platform' ? '' : ' case-hero-inset'}${id === 'feelmore-confidence' ? ' case-hero-bottom' : ''}" style="--case-color:${caseStudy.color}">
@@ -1077,21 +1112,30 @@
         <span class="case-hero-scroll${darkHero ? ' on-dark' : ''}" aria-hidden="true">Scroll</span>
       </section>
       <div class="case-content" style="--case-color:${caseStudy.color}">
-        <section class="case-intro">
-          <p class="case-company">${escapeHTML(caseStudy.company)}</p>
-          <h1>${escapeHTML(caseStudy.title)}</h1>
-          <p>${escapeHTML(caseStudy.dek)}</p>
+        <section class="case-intro case-intro-v3">
+          <div class="case-intro-meta">
+            <p class="case-company">${escapeHTML(caseStudy.company)}</p>
+            <p>${escapeHTML(caseStudy.role || 'Product Designer')}</p>
+            <div class="case-scope">${scopeMarkup}</div>
+          </div>
+          <div class="case-intro-story">
+            <h1>${escapeHTML(caseStudy.title)}</h1>
+            <p>${escapeHTML(caseStudy.dek)}</p>
+          </div>
         </section>
+        <section class="case-signals" aria-label="Selected outcomes">${signalsMarkup}</section>
+        <section class="case-thesis"><p>What this case demonstrates</p><blockquote>${escapeHTML(caseStudy.takeaway || caseStudy.impact)}</blockquote></section>
         <section class="case-facts">
-          <div><span class="case-fact-index">01</span><h2>Challenge</h2><p>${escapeHTML(caseStudy.challenge)}</p></div>
-          <div><span class="case-fact-index">02</span><h2>Approach</h2><p>${escapeHTML(caseStudy.approach)}</p></div>
-          <div><span class="case-fact-index">03</span><h2>Impact</h2><p>${escapeHTML(caseStudy.impact)}</p></div>
+          <div><span class="case-fact-index">01</span><h2>The situation</h2><p>${escapeHTML(caseStudy.challenge)}</p></div>
+          <div><span class="case-fact-index">02</span><h2>The leadership move</h2><p>${escapeHTML(caseStudy.approach)}</p></div>
+          <div><span class="case-fact-index">03</span><h2>Why it mattered</h2><p>${escapeHTML(caseStudy.impact)}</p></div>
         </section>
+        <header class="case-gallery-heading"><p>Selected evidence</p><span>Product moments, systems, and shipped craft</span></header>
         <div class="case-gallery${id === 'citi-platform' ? ' has-citi-theme-switcher' : ''}">${id === 'citi-platform' ? citiThemeSwitcherMarkup() : ''}${galleryMarkup(caseStudy, id)}</div>
         <nav class="case-bottom-nav detail-nav footer-nav" aria-label="Project navigation">
           <a class="home-back" href="home.html">${noteArrow('back')}Home</a>
           <span class="nav-copyright">© 2026&nbsp; · &nbsp;Ross Lauda, All rights reserved</span>
-          <a href="case-study.html?id=${nextId}">Next${noteArrow('forward')}</a>
+          <a href="case-study.html?id=${nextId}"><span class="next-project-label"><small>Next case</small>${escapeHTML(nextCase.company)}</span>${noteArrow('forward')}</a>
         </nav>
       </div>`;
   }
@@ -1108,5 +1152,6 @@
   initCaseHeader();
   initEmailHighlights();
   initNoteHighlights();
+  initStaffNavigation();
   initMotionSystem();
 })();
