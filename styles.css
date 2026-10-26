@@ -562,7 +562,7 @@ html,body{overflow-x:clip}
   height:0;
   box-sizing:content-box;
   border:12px solid;
-  border-radius:50%;
+  border-radius:1000px;
   transform:translate(-50%,-50%);
   will-change:width,height
 }
