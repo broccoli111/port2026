@@ -562,7 +562,7 @@ html,body{overflow-x:clip}
   height:0;
   box-sizing:content-box;
   border:12px solid;
-  border-radius:1000px;
+  border-radius:50%;
   transform:translate(-50%,-50%);
   will-change:width,height
 }
@@ -642,7 +642,7 @@ html,body{overflow-x:clip}
   height:auto;
   background:var(--signal-strip-wash);
   border:0;
-  border-radius:50%;
+  border-radius:1000px;
   box-shadow:none;
   -webkit-mask:none;
   mask:none;
