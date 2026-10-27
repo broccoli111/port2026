@@ -189,8 +189,8 @@
 .email-highlight path,.note-link-reveal path{stroke:var(--email-highlight);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
 
 /* Match native text selection to the site's light/dark marker colors. */
-::selection{background:var(--email-highlight);color:#333}
-::-moz-selection{background:var(--email-highlight);color:#333}
+::selection{background:var(--signal-strip-wash);color:#333}
+::-moz-selection{background:var(--signal-strip-wash);color:#333}
 @media(prefers-color-scheme:dark){::selection{color:var(--bg)}::-moz-selection{color:var(--bg)}}
 
 /* Experiment: a thick line-through band, revealed by the existing draw-on clip. */
@@ -337,7 +337,7 @@ html,body{overflow-x:clip}
 .password-field input::-webkit-credentials-auto-fill-button{visibility:hidden}
 .gate-submit{position:relative;isolation:isolate;flex:0 0 44px;width:44px;height:44px;padding:0;display:grid;place-items:center;background:transparent;color:var(--ink);cursor:pointer}
 .gate-submit svg{position:relative;z-index:1;display:block;transform:rotate(180deg)}
-.gate-submit::before{content:"";position:absolute;z-index:0;inset:0;background:var(--email-highlight);opacity:.7;clip-path:circle(0 at 50% 50%);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 72'%3E%3Cpath d='M36 1C47 1 57 4 64 12C70 20 72 29 70 39C70 50 65 61 55 67C45 73 31 72 21 68C11 63 4 54 2 43C0 32 4 21 12 13C19 6 27 2 36 1Z' fill='black'/%3E%3C/svg%3E") center/100% 100% no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 72'%3E%3Cpath d='M36 1C47 1 57 4 64 12C70 20 72 29 70 39C70 50 65 61 55 67C45 73 31 72 21 68C11 63 4 54 2 43C0 32 4 21 12 13C19 6 27 2 36 1Z' fill='black'/%3E%3C/svg%3E") center/100% 100% no-repeat;transform:rotate(3deg);transition:clip-path 560ms cubic-bezier(.22,1,.36,1)}
+.gate-submit::before{content:"";position:absolute;z-index:0;inset:0;background:var(--email-highlight);opacity:.75;clip-path:circle(0 at 50% 50%);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 72'%3E%3Cpath d='M36 1C47 1 57 4 64 12C70 20 72 29 70 39C70 50 65 61 55 67C45 73 31 72 21 68C11 63 4 54 2 43C0 32 4 21 12 13C19 6 27 2 36 1Z' fill='black'/%3E%3C/svg%3E") center/100% 100% no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 72'%3E%3Cpath d='M36 1C47 1 57 4 64 12C70 20 72 29 70 39C70 50 65 61 55 67C45 73 31 72 21 68C11 63 4 54 2 43C0 32 4 21 12 13C19 6 27 2 36 1Z' fill='black'/%3E%3C/svg%3E") center/100% 100% no-repeat;transform:rotate(3deg);transition:clip-path 560ms cubic-bezier(.22,1,.36,1)}
 .gate-submit:hover::before,.gate-submit:focus-visible::before{clip-path:circle(50% at 50% 50%)}
 .gate-submit:hover,.gate-submit:focus-visible{color:#222;outline:0}
 .password-error{min-height:24px;margin:12px 0 0!important;color:var(--ink)!important;font-size:14px;line-height:24px}
@@ -596,13 +596,13 @@ html,body{overflow-x:clip}
 .contact-copy{max-width:none;margin:0 0 32px;color:var(--muted);font-size:20px;line-height:28px;letter-spacing:.4px;text-align:center;white-space:nowrap}
 @media(max-width:700px){.work-grid--non-meta{grid-template-rows:repeat(3,180px)}.work-grid--non-meta .work-4{grid-area:1/1}.work-grid--non-meta .work-5{grid-area:1/2}.work-grid--non-meta .work-6{grid-area:2/1/3/3}.work-grid--non-meta .work-7{grid-area:3/1}.work-grid--non-meta .work-8{grid-area:3/2}.home-page .contact-section{width:auto;margin-inline:0}.contact-section h2{margin-bottom:12px}.contact-copy{max-width:300px;margin-bottom:20px;font-size:14px;line-height:20px;letter-spacing:.28px;white-space:normal}}
 
-/* Final highlight system: squared treatments throughout, while the homepage
-   contact callout keeps its original three-stroke SVG treatment. */
+/* Final highlight system: squared text treatments with circular principle
+   controls; the homepage contact callout keeps its original three-stroke SVG. */
 :root{
   --signal-highlight-height:95%;
   --email-highlight:#2cc295;
-  --signal-strip-wash:rgba(44,194,149,.85);
-  --signal-strip-line:rgba(44,194,149,.85)
+  --signal-strip-wash:rgba(44,194,149,.75);
+  --signal-strip-line:rgba(44,194,149,.75)
 }
 .note-marker-art{display:none!important}
 .note-body mark,.about-copy mark{
@@ -637,23 +637,22 @@ html,body{overflow-x:clip}
   -webkit-text-stroke:0;
   text-shadow:none
 }
+.principle-arrow{border-radius:1000px}
 .principle-arrow::before{
-  inset-inline:0;
-  top:50%;
-  bottom:auto;
-  height:var(--signal-highlight-height);
+  inset:0;
+  height:auto;
   background:var(--signal-strip-wash);
   border:0;
-  border-radius:0;
+  border-radius:1000px;
   box-shadow:none;
   -webkit-mask:none;
   mask:none;
-  clip-path:inset(50% 50%);
-  transform:translateY(-50%)
+  clip-path:circle(0 at 50% 50%);
+  transform:none
 }
-.principle-arrow.next::before{transform:translateY(-50%)}
+.principle-arrow.next::before{transform:none}
 .principle-arrow:not(:disabled):hover::before,
-.principle-arrow:not(:disabled):focus-visible::before{clip-path:inset(0)}
+.principle-arrow:not(:disabled):focus-visible::before{clip-path:circle(50% at 50% 50%)}
 
 /* Contact is intentionally retained as the production three-stroke SVG. */
 .contact-highlight{opacity:0;transition:opacity 240ms cubic-bezier(.22,1,.36,1)}
