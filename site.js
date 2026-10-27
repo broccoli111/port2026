@@ -13,7 +13,7 @@
   ];
   const galleryAssetVersions = {
     'feelmore-confidence': '20260830-1',
-    'citi-platform': '20260830-3',
+    'citi-platform': '20261027-2',
     'citi-guidance': '20260831-1',
     'weight-watchers': '20260831-1'
   };
@@ -704,6 +704,33 @@
       image.addEventListener('load', decode, { once: true });
       image.addEventListener('error', () => reject(new Error('Image load failed')), { once: true });
     });
+
+    const themeImageCache = new Map();
+    const themeFiles = [...new Set([
+      'citi-platform-hero.png',
+      ...(caseGalleries['citi-platform'] || []).flatMap((group) => group.items)
+        .map((item) => item.src?.split('/').pop())
+        .filter(Boolean)
+    ])];
+
+    const preloadTheme = (theme, fetchPriority) => Promise.all(themeFiles.map((fileName) => {
+      const source = themedSource(fileName, theme);
+      const cached = new Image();
+      cached.decoding = 'async';
+      cached.loading = 'eager';
+      cached.fetchPriority = fetchPriority;
+      cached.src = source;
+      themeImageCache.set(source, cached);
+      return waitForImage(cached).catch(() => null);
+    }));
+
+    const preloadAllThemes = async () => {
+      await preloadTheme('Blue', 'high');
+      await preloadTheme('Priority', 'auto');
+      await preloadTheme('Gold', 'low');
+    };
+
+    preloadAllThemes();
 
     const createRevealRing = (image, overlay, origin, color) => {
       const host = document.createElement('span');
