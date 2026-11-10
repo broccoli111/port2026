@@ -130,3 +130,34 @@ body.note-v3.gt-interior .gi-note-sticker{font-size:28px}
 body.note-v3.gt-interior .note-body{font-size:17px;line-height:1.8}
 }
 @media(prefers-reduced-motion:reduce){.gt-interior *{scroll-behavior:auto!important;animation:none!important}}
+
+
+/* Original artifact collages / restrained editorial presentation */
+.gt-interior .gi-composition{margin:4px 0 130px;position:relative}
+.gt-interior .gi-composition-head{display:flex;justify-content:space-between;gap:20px;border-top:1px solid #151515;padding:20px 0 24px}
+.gt-interior .gi-composition-stage{height:clamp(560px,67vw,830px);overflow:hidden;position:relative;isolation:isolate;background:#e1e2fb}
+.gt-interior .gi-composition-big{position:absolute;left:-.02em;top:6%;font:900 clamp(95px,14vw,220px)/.84 Impact,"Arial Narrow",sans-serif;text-transform:uppercase;letter-spacing:-.055em;color:#201dc9;max-width:95%;z-index:1;mix-blend-mode:multiply;opacity:.9;pointer-events:none}
+.gt-interior .gi-composition-layer{position:absolute;z-index:2;overflow:hidden;box-shadow:0 38px 72px #1112242b;transform:rotate(var(--r,0deg));transition:transform .8s cubic-bezier(.2,.8,.2,1),box-shadow .8s}
+.gt-interior .gi-composition-layer img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 15px 16px #0002)}
+.gt-interior .gi-composition-layer--one{left:6%;top:30%;width:40%;height:62%;--r:-10deg;background:#fbfaf5}
+.gt-interior .gi-composition-layer--two{left:37%;top:17%;width:34%;height:69%;--r:7deg;background:#f2f1e9}
+.gt-interior .gi-composition-layer--three{right:5%;top:38%;width:30%;height:49%;--r:-7deg;background:#f8f8f8}
+.gt-interior .gi-composition-stage:hover .gi-composition-layer--one{transform:translate(-10px,-15px) rotate(-12deg)}
+.gt-interior .gi-composition-stage:hover .gi-composition-layer--two{transform:translateY(-20px) rotate(9deg)}
+.gt-interior .gi-composition-stage:hover .gi-composition-layer--three{transform:translate(10px,-9px) rotate(-10deg)}
+.gt-interior .gi-composition-tag{position:absolute;left:30px;bottom:24px;background:#e2ff1a;color:#151515;z-index:5;padding:12px 15px;transform:rotate(-3deg)}
+.gt-interior .gi-composition-foot{font-size:13px;color:#686861;max-width:560px;line-height:1.6;margin:20px 0 0}
+.gt-interior .gi-composition--meta-inevitable .gi-composition-stage,.gt-interior .gi-composition--meta-consistency .gi-composition-stage,.gt-interior .gi-composition--meta-clutter .gi-composition-stage{background:linear-gradient(138deg,#c7c1ff,#eef0ff 50%,#e2ff1a)}
+.gt-interior .gi-composition--citi-platform .gi-composition-stage,.gt-interior .gi-composition--citi-guidance .gi-composition-stage{background:linear-gradient(135deg,#091d58 5%,#173aab 55%,#74abff)}
+.gt-interior .gi-composition--citi-platform .gi-composition-big,.gt-interior .gi-composition--citi-guidance .gi-composition-big{color:#e2ff1a;mix-blend-mode:normal;opacity:.9}
+.gt-interior .gi-composition--citi-platform .gi-composition-layer,.gt-interior .gi-composition--citi-guidance .gi-composition-layer{background:#f2f5ff}
+.gt-interior .gi-composition--feelmore-wellness .gi-composition-stage,.gt-interior .gi-composition--feelmore-confidence .gi-composition-stage{background:linear-gradient(145deg,#f9dce7,#fbf5ee 45%,#ff9ebd)}
+.gt-interior .gi-composition--feelmore-wellness .gi-composition-big,.gt-interior .gi-composition--feelmore-confidence .gi-composition-big{color:#f34ca5;opacity:.55}
+.gt-interior .gi-composition--feelmore-wellness .gi-composition-layer{border:7px solid #202020;border-radius:34px;background:#f8f7f3;box-shadow:0 28px 60px #77254344}
+.gt-interior .gi-composition--feelmore-wellness .gi-composition-layer--one{width:22%;height:67%;left:14%;top:26%}
+.gt-interior .gi-composition--feelmore-wellness .gi-composition-layer--two{width:22%;height:69%;left:42%;top:19%}
+.gt-interior .gi-composition--feelmore-wellness .gi-composition-layer--three{width:22%;height:64%;right:11%;top:32%}
+.gt-interior .gi-composition--weight-watchers .gi-composition-stage{background:linear-gradient(130deg,#faebe0,#ddc9ff 65%,#ff6030)}
+.gt-interior .gi-composition--weight-watchers .gi-composition-big{color:#ff6030}
+@media(max-width:760px){.gt-interior .gi-composition{margin-bottom:85px}.gt-interior .gi-composition-head span:last-child{display:none}.gt-interior .gi-composition-stage{height:540px}.gt-interior .gi-composition-big{font-size:23vw;top:9%}.gt-interior .gi-composition-layer--one{left:4%;top:34%;width:51%;height:49%}.gt-interior .gi-composition-layer--two{left:33%;top:26%;width:45%;height:55%}.gt-interior .gi-composition-layer--three{right:1%;top:45%;width:34%;height:40%}.gt-interior .gi-composition--feelmore-wellness .gi-composition-layer--one{width:31%;left:3%;top:38%;height:46%}.gt-interior .gi-composition--feelmore-wellness .gi-composition-layer--two{width:31%;left:36%;top:31%;height:47%}.gt-interior .gi-composition--feelmore-wellness .gi-composition-layer--three{width:31%;right:2%;top:41%;height:43%}.gt-interior .gi-composition-tag{left:16px;bottom:20px;font-size:9px}}
+@media(prefers-reduced-motion:reduce){.gt-interior .gi-composition-layer{transition:none!important}}
