@@ -59,3 +59,32 @@ const nav=document.querySelector('.detail-nav');if(nav)nav.querySelectorAll('a')
 }
 function escapeText(t){return String(t).replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]))}
 })();
+
+
+/* Art-directed studies built entirely from existing case-study assets. */
+(() => {
+const root=document.getElementById('case-root');
+if(!root)return;
+const id=new URLSearchParams(location.search).get('id')||'meta-inevitable';
+const assets={
+ 'meta-inevitable':['gallery-01-item-01.png','gallery-02-item-01.png','gallery-03-item-01.png'],
+ 'meta-consistency':['gallery-01-item-01.png','gallery-02-item-01.png','gallery-03-item-01.png'],
+ 'meta-clutter':['gallery-01-item-01.png','gallery-02-item-01.png','gallery-03-item-01.png'],
+ 'citi-platform':['gallery-01-item-01.png','gallery-01-item-05.png','gallery-01-item-11.png'],
+ 'citi-guidance':['gallery-01-item-01.png','gallery-01-item-02.png','gallery-01-item-03.png'],
+ 'feelmore-wellness':['screen-01.png','screen-02.png','screen-03.png'],
+ 'feelmore-confidence':['gallery-01-item-01.png','gallery-02-item-01.png','gallery-03-item-01.png'],
+ 'weight-watchers':['gallery-01-item-01.png','gallery-02-item-01.png','gallery-03-item-01.png']
+};
+const selections=assets[id];if(!selections)return;
+const company=(document.querySelector('.case-company')?.textContent||'Selected project').trim();
+const label=(id.startsWith('meta')?'COMPONENTS INTO CULTURE':id.startsWith('citi')?'A PLATFORM FOR POSSIBILITIES':id.startsWith('feelmore')?'DESIGNED FOR REAL LIFE':'ONE EXPERIENCE, MANY MOMENTS');
+const asset=(file)=>'assets/cases/'+id+'/'+file;
+const fig=document.createElement('section');
+fig.className='gi-composition gi-composition--'+id;
+fig.setAttribute('aria-label','Art-directed composition using original '+company+' case-study artwork');
+fig.innerHTML='<div class="gi-composition-head"><span class="gi-mono">A NEW PERSPECTIVE / ORIGINAL PROJECT ASSETS</span><span class="gi-mono">DESIGN STUDY 01</span></div><div class="gi-composition-stage"><span class="gi-composition-big" aria-hidden="true">'+label+'</span><div class="gi-composition-layer gi-composition-layer--one"><img loading="lazy" decoding="async" alt="" src="'+asset(selections[0])+'"></div><div class="gi-composition-layer gi-composition-layer--two"><img loading="lazy" decoding="async" alt="" src="'+asset(selections[1])+'"></div><div class="gi-composition-layer gi-composition-layer--three"><img loading="lazy" decoding="async" alt="" src="'+asset(selections[2])+'"></div><div class="gi-composition-tag gi-mono">'+company.toUpperCase()+' / VISUAL EXPLORATION</div></div><p class="gi-composition-foot">Original project material, reframed to reveal new relationships. Explore the full artifacts and evidence below.</p>';
+const gallery=document.querySelector('.case-gallery-heading');
+if(gallery){gallery.parentNode.insertBefore(fig,gallery)}
+fig.querySelectorAll('img').forEach(image=>image.addEventListener('error',()=>{const parent=image.closest('.gi-composition-layer');if(parent)parent.hidden=true}));
+})();
