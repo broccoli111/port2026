@@ -132,32 +132,78 @@ body.note-v3.gt-interior .note-body{font-size:17px;line-height:1.8}
 @media(prefers-reduced-motion:reduce){.gt-interior *{scroll-behavior:auto!important;animation:none!important}}
 
 
-/* Original artifact collages / restrained editorial presentation */
-.gt-interior .gi-composition{margin:4px 0 130px;position:relative}
-.gt-interior .gi-composition-head{display:flex;justify-content:space-between;gap:20px;border-top:1px solid #151515;padding:20px 0 24px}
-.gt-interior .gi-composition-stage{height:clamp(560px,67vw,830px);overflow:hidden;position:relative;isolation:isolate;background:#e1e2fb}
-.gt-interior .gi-composition-big{position:absolute;left:-.02em;top:6%;font:900 clamp(95px,14vw,220px)/.84 Impact,"Arial Narrow",sans-serif;text-transform:uppercase;letter-spacing:-.055em;color:#201dc9;max-width:95%;z-index:1;mix-blend-mode:multiply;opacity:.9;pointer-events:none}
-.gt-interior .gi-composition-layer{position:absolute;z-index:2;overflow:hidden;box-shadow:0 38px 72px #1112242b;transform:rotate(var(--r,0deg));transition:transform .8s cubic-bezier(.2,.8,.2,1),box-shadow .8s}
-.gt-interior .gi-composition-layer img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 15px 16px #0002)}
-.gt-interior .gi-composition-layer--one{left:6%;top:30%;width:40%;height:62%;--r:-10deg;background:#fbfaf5}
-.gt-interior .gi-composition-layer--two{left:37%;top:17%;width:34%;height:69%;--r:7deg;background:#f2f1e9}
-.gt-interior .gi-composition-layer--three{right:5%;top:38%;width:30%;height:49%;--r:-7deg;background:#f8f8f8}
-.gt-interior .gi-composition-stage:hover .gi-composition-layer--one{transform:translate(-10px,-15px) rotate(-12deg)}
-.gt-interior .gi-composition-stage:hover .gi-composition-layer--two{transform:translateY(-20px) rotate(9deg)}
-.gt-interior .gi-composition-stage:hover .gi-composition-layer--three{transform:translate(10px,-9px) rotate(-10deg)}
-.gt-interior .gi-composition-tag{position:absolute;left:30px;bottom:24px;background:#e2ff1a;color:#151515;z-index:5;padding:12px 15px;transform:rotate(-3deg)}
-.gt-interior .gi-composition-foot{font-size:13px;color:#686861;max-width:560px;line-height:1.6;margin:20px 0 0}
-.gt-interior .gi-composition--meta-inevitable .gi-composition-stage,.gt-interior .gi-composition--meta-consistency .gi-composition-stage,.gt-interior .gi-composition--meta-clutter .gi-composition-stage{background:linear-gradient(138deg,#c7c1ff,#eef0ff 50%,#e2ff1a)}
-.gt-interior .gi-composition--citi-platform .gi-composition-stage,.gt-interior .gi-composition--citi-guidance .gi-composition-stage{background:linear-gradient(135deg,#091d58 5%,#173aab 55%,#74abff)}
-.gt-interior .gi-composition--citi-platform .gi-composition-big,.gt-interior .gi-composition--citi-guidance .gi-composition-big{color:#e2ff1a;mix-blend-mode:normal;opacity:.9}
-.gt-interior .gi-composition--citi-platform .gi-composition-layer,.gt-interior .gi-composition--citi-guidance .gi-composition-layer{background:#f2f5ff}
-.gt-interior .gi-composition--feelmore-wellness .gi-composition-stage,.gt-interior .gi-composition--feelmore-confidence .gi-composition-stage{background:linear-gradient(145deg,#f9dce7,#fbf5ee 45%,#ff9ebd)}
-.gt-interior .gi-composition--feelmore-wellness .gi-composition-big,.gt-interior .gi-composition--feelmore-confidence .gi-composition-big{color:#f34ca5;opacity:.55}
-.gt-interior .gi-composition--feelmore-wellness .gi-composition-layer{border:7px solid #202020;border-radius:34px;background:#f8f7f3;box-shadow:0 28px 60px #77254344}
-.gt-interior .gi-composition--feelmore-wellness .gi-composition-layer--one{width:22%;height:67%;left:14%;top:26%}
-.gt-interior .gi-composition--feelmore-wellness .gi-composition-layer--two{width:22%;height:69%;left:42%;top:19%}
-.gt-interior .gi-composition--feelmore-wellness .gi-composition-layer--three{width:22%;height:64%;right:11%;top:32%}
-.gt-interior .gi-composition--weight-watchers .gi-composition-stage{background:linear-gradient(130deg,#faebe0,#ddc9ff 65%,#ff6030)}
-.gt-interior .gi-composition--weight-watchers .gi-composition-big{color:#ff6030}
-@media(max-width:760px){.gt-interior .gi-composition{margin-bottom:85px}.gt-interior .gi-composition-head span:last-child{display:none}.gt-interior .gi-composition-stage{height:540px}.gt-interior .gi-composition-big{font-size:23vw;top:9%}.gt-interior .gi-composition-layer--one{left:4%;top:34%;width:51%;height:49%}.gt-interior .gi-composition-layer--two{left:33%;top:26%;width:45%;height:55%}.gt-interior .gi-composition-layer--three{right:1%;top:45%;width:34%;height:40%}.gt-interior .gi-composition--feelmore-wellness .gi-composition-layer--one{width:31%;left:3%;top:38%;height:46%}.gt-interior .gi-composition--feelmore-wellness .gi-composition-layer--two{width:31%;left:36%;top:31%;height:47%}.gt-interior .gi-composition--feelmore-wellness .gi-composition-layer--three{width:31%;right:2%;top:41%;height:43%}.gt-interior .gi-composition-tag{left:16px;bottom:20px;font-size:9px}}
-@media(prefers-reduced-motion:reduce){.gt-interior .gi-composition-layer{transition:none!important}}
+
+/* Good Trouble art direction: visual essays rather than device galleries. */
+.gt-interior .gi-art-story{margin:20px 0 155px;position:relative}
+.gt-interior .gi-art-heading{display:flex;justify-content:space-between;gap:15px;border-top:1px solid #151515;padding:22px 0 26px}
+.gt-interior .gi-art-canvas{height:clamp(610px,70vw,850px);isolation:isolate;overflow:hidden;position:relative;background:#e3e0ff}
+.gt-interior .gi-art-noise{position:absolute;inset:0;pointer-events:none;opacity:.14;background-image:radial-gradient(#161616 0.65px,transparent 0.65px);background-size:7px 7px;z-index:3}
+.gt-interior .gi-art-outline{position:absolute;left:4%;top:7%;font:900 clamp(105px,15vw,220px)/.82 Impact,"Arial Narrow",sans-serif;letter-spacing:-.06em;z-index:4;color:#242aff;max-width:95%;text-transform:uppercase;pointer-events:none;mix-blend-mode:multiply}
+.gt-interior .gi-art-vector{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;stroke:#262aff;stroke-width:1.3;fill:none;opacity:.4}
+.gt-interior .gi-art-vector circle{fill:#e2ff1a;stroke:#151515;stroke-width:2}
+.gt-interior .gi-art-media{position:absolute;overflow:hidden;margin:0;background:transparent;z-index:1;transition:transform .7s cubic-bezier(.2,.8,.2,1);transform:translate3d(0,0,0)}
+.gt-interior .gi-art-media img{width:100%;height:100%;display:block;object-fit:cover;object-position:center;filter:saturate(1.05)}
+.gt-interior .gi-art-media.gi-asset-missing{display:none}
+.gt-interior .gi-art-counter{position:absolute;bottom:28px;left:30px;z-index:6}
+.gt-interior .gi-art-shape{position:absolute;z-index:2;width:260px;height:260px;border:60px solid #ff6030;border-radius:50%;right:5%;bottom:-14%;transform:rotate(-16deg)}
+.gt-interior .gi-art-caption{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;padding:26px 0 0}
+.gt-interior .gi-art-caption h2{margin:0;font:900 clamp(72px,10vw,150px)/.85 Impact,"Arial Narrow",sans-serif;letter-spacing:-.04em;text-transform:uppercase}
+.gt-interior .gi-art-caption p{font-size:clamp(18px,2vw,29px);line-height:1.3;letter-spacing:-.035em;max-width:550px;margin:0 0 6px}
+.gt-interior .gi-art-story--system .gi-art-canvas{background:linear-gradient(132deg,#d0d0ff 0%,#e8e6ff 54%,#c1ffc2 100%)}
+.gt-interior .gi-art-story--system .gi-art-primary{width:92%;height:43%;left:4%;bottom:8%;clip-path:polygon(0 0,100% 0,96% 100%,5% 100%);box-shadow:none;transform:skewY(-3deg)}
+.gt-interior .gi-art-story--system .gi-art-primary img{object-fit:cover;object-position:center 35%;filter:contrast(1.05) saturate(1.1)}
+.gt-interior .gi-art-story--system .gi-art-secondary{height:33%;width:30%;top:7%;right:7%;clip-path:circle(49% at 50% 50%);mix-blend-mode:multiply}
+.gt-interior .gi-art-story--system .gi-art-tertiary{height:27%;width:23%;top:42%;left:-3%;border-radius:50%;clip-path:circle(50% at 50% 50%);mix-blend-mode:multiply}
+.gt-interior .gi-art-story--system .gi-art-outline{z-index:3}
+.gt-interior .gi-art-story--architecture .gi-art-canvas{background:#0a2369}
+.gt-interior .gi-art-story--architecture .gi-art-outline{color:#e2ff1a;mix-blend-mode:normal;z-index:5}
+.gt-interior .gi-art-story--architecture .gi-art-vector{stroke:#9ecbff;opacity:.55}
+.gt-interior .gi-art-story--architecture .gi-art-primary{width:58%;height:72%;left:23%;bottom:-6%;clip-path:polygon(6% 0,100% 8%,93% 100%,0 91%);transform:perspective(900px) rotateY(-11deg);border:10px solid #e3efff}
+.gt-interior .gi-art-story--architecture .gi-art-secondary{width:29%;height:45%;right:-3%;top:22%;clip-path:polygon(0 10%,100% 0,96% 100%,8% 96%);border:5px solid #e3efff}
+.gt-interior .gi-art-story--architecture .gi-art-tertiary{width:29%;height:42%;left:-4%;bottom:10%;clip-path:polygon(0 0,97% 4%,100% 100%,4% 92%);border:5px solid #e3efff}
+.gt-interior .gi-art-story--architecture .gi-art-counter{color:white}
+.gt-interior .gi-art-story--architecture .gi-art-shape{background:transparent;border-color:#ff6030;right:8%;bottom:-19%;width:340px;height:340px}
+.gt-interior .gi-art-story--ritual .gi-art-canvas{background:radial-gradient(ellipse at 50% 40%,#fff7ed,#fbdce5 55%,#f3b8d5 110%)}
+.gt-interior .gi-art-story--ritual .gi-art-outline{color:#ec43a4;mix-blend-mode:normal;font-size:clamp(110px,18vw,255px);opacity:.88;top:10%;left:4%}
+.gt-interior .gi-art-story--ritual .gi-art-vector{stroke:#e55fa5;opacity:.23}
+.gt-interior .gi-art-story--ritual .gi-art-primary{width:49%;height:49%;top:37%;left:25%;clip-path:ellipse(49% 45% at 50% 50%);transform:rotate(-12deg);filter:drop-shadow(0 15px 22px #a5227733)}
+.gt-interior .gi-art-story--ritual .gi-art-secondary{width:29%;height:37%;top:28%;left:1%;clip-path:ellipse(47% 49% at 50% 50%);transform:rotate(14deg)}
+.gt-interior .gi-art-story--ritual .gi-art-tertiary{width:30%;height:37%;top:53%;right:-2%;clip-path:ellipse(46% 48% at 50% 50%);transform:rotate(8deg)}
+.gt-interior .gi-art-story--ritual .gi-art-shape{border-color:#ff5fae;right:25%;bottom:-23%;width:460px;height:460px;opacity:.45}
+.gt-interior .gi-art-story--identity .gi-art-canvas{background:linear-gradient(115deg,#ffe6d4,#e1d3ff 62%,#ffbfa2)}
+.gt-interior .gi-art-story--identity .gi-art-outline{color:#fe5623}
+.gt-interior .gi-art-story--identity .gi-art-primary{width:67%;height:53%;left:15%;bottom:6%;transform:rotate(-4deg);border:12px solid #f8f7f3}
+.gt-interior .gi-art-story--identity .gi-art-secondary{width:34%;height:34%;right:0;top:14%;clip-path:circle(49%)}
+.gt-interior .gi-art-story--identity .gi-art-tertiary{width:27%;height:39%;left:0;top:30%;clip-path:polygon(0 0,100% 0,78% 100%,0 85%)}
+.gt-interior .gi-original-gallery{margin:20px 0 110px;border-top:1px solid #151515;border-bottom:1px solid #151515}
+.gt-interior .gi-original-gallery summary{cursor:pointer;list-style:none;display:grid;grid-template-columns:1fr auto 30px;gap:28px;align-items:center;min-height:175px;padding:38px 8px}
+.gt-interior .gi-original-gallery summary::-webkit-details-marker{display:none}
+.gt-interior .gi-original-gallery summary strong{font:900 clamp(38px,5.5vw,75px)/.9 Impact,"Arial Narrow",sans-serif;text-transform:uppercase;letter-spacing:-.025em}
+.gt-interior .gi-original-gallery summary .gi-icon{transition:transform .25s}
+.gt-interior .gi-original-gallery[open] summary .gi-icon{transform:rotate(90deg)}
+.gt-interior .gi-original-gallery .case-gallery-heading{padding-top:30px}
+.gt-interior .gi-original-gallery .case-gallery{padding-bottom:70px}
+@media(max-width:760px){
+.gt-interior .gi-art-story{margin:10px 0 95px}
+.gt-interior .gi-art-heading span:last-child{display:none}
+.gt-interior .gi-art-canvas{height:530px}
+.gt-interior .gi-art-outline{font-size:clamp(86px,19vw,140px);top:12%;left:3%}
+.gt-interior .gi-art-story--ritual .gi-art-outline{font-size:clamp(100px,21vw,150px)}
+.gt-interior .gi-art-caption{display:block}
+.gt-interior .gi-art-caption h2{font-size:clamp(70px,17vw,110px)}
+.gt-interior .gi-art-caption p{font-size:19px;line-height:1.4;margin:26px 0 0}
+.gt-interior .gi-art-counter{left:17px;bottom:17px;font-size:9px}
+.gt-interior .gi-art-story--system .gi-art-primary{height:44%;width:100%;left:0}
+.gt-interior .gi-art-story--system .gi-art-secondary{height:24%;width:44%;top:29%;right:0}
+.gt-interior .gi-art-story--system .gi-art-tertiary{height:21%;width:37%;top:49%}
+.gt-interior .gi-art-story--architecture .gi-art-primary{width:83%;height:62%;left:12%;bottom:1%}
+.gt-interior .gi-art-story--architecture .gi-art-secondary{width:42%;height:35%;right:-12%;top:35%}
+.gt-interior .gi-art-story--architecture .gi-art-tertiary{width:40%;height:34%;left:-10%;bottom:14%}
+.gt-interior .gi-art-story--ritual .gi-art-primary{height:42%;width:75%;left:13%;top:41%}
+.gt-interior .gi-art-story--ritual .gi-art-secondary{height:30%;width:43%;top:32%;left:-7%}
+.gt-interior .gi-art-story--ritual .gi-art-tertiary{height:30%;width:46%;top:60%;right:-13%}
+.gt-interior .gi-original-gallery summary{display:flex;flex-wrap:wrap;gap:10px;min-height:150px;padding:29px 2px}
+.gt-interior .gi-original-gallery summary .gi-mono{width:100%;font-size:10px}
+.gt-interior .gi-original-gallery summary strong{font-size:44px;flex:1}
+}
+@media(prefers-reduced-motion:reduce){.gt-interior .gi-art-media,.gt-interior .gi-original-gallery summary .gi-icon{transition:none!important}}
