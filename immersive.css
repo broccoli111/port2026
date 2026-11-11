@@ -68,3 +68,18 @@ html{
  html.i-controlled{scroll-behavior:auto!important;scroll-snap-type:none!important}
  html.i-controlled .i-scene{scroll-snap-align:none;scroll-snap-stop:normal}
 }
+
+
+/* Touch scene navigation uses native smooth scrolling to the selected scene.
+   Disable snap competition only on supported mobile gesture devices. */
+@media(max-width:760px){
+ html.i-touch-scenes{scroll-snap-type:none}
+ html.i-touch-scenes .i-scene{scroll-snap-align:none}
+}
+/* Short mobile viewports must not force hidden content into a fixed frame. */
+@media(max-width:760px) and (max-height:700px){
+ .i-scene{height:auto;min-height:100svh}
+}
+@media(prefers-reduced-motion:reduce){
+ html.i-touch-scenes{scroll-snap-type:none}
+}
