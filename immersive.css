@@ -30,3 +30,34 @@
 @media(max-width:440px){.i-nav{padding:0 20px}.i-logo{font-size:14px}.i-links{font-size:11px;gap:15px}.i-hero h1{font-size:clamp(76px,19vw,112px)}.i-hero-sub p{font-size:18px}.i-project-copy h2{font-size:clamp(57px,13vw,78px)}.i-project-art{height:32vh;min-height:245px}.i-project-art .i-art-frame{width:94%;height:92%}.i-breath h2{font-size:clamp(69px,16vw,92px)}.i-outro h2{font-size:clamp(72px,17vw,110px)}.i-outro-link{font-size:20px}}
 @media(max-height:700px){.i-scene{min-height:700px}.i-project-art{height:min(65vh,520px)}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;scroll-snap-type:none}.i-sculpture-ring{animation:none}.i-enhanced .i-reveal{opacity:1;transform:none;transition:none}.i-art-frame,.i-sculpture{transition:none}}
+
+
+/* CINEMATIC SCENE SNAP V2
+   Native, compositor-friendly scroll settling. No wheel/touch interception. */
+html{
+  scroll-behavior:smooth;
+  scroll-snap-type:y mandatory;
+  overscroll-behavior-y:auto;
+}
+.i-scene{
+  min-height:100svh;
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+  scroll-margin-top:0;
+}
+@media(min-width:761px) and (min-height:701px){
+  .i-scene{height:100svh}
+}
+@media(max-width:760px){
+  /* Mobile screens can grow if the content needs more than one viewport. */
+  html{scroll-snap-type:y proximity}
+  .i-scene{height:auto;min-height:100svh;scroll-snap-stop:normal}
+}
+@media(max-height:700px){
+  html{scroll-snap-type:y proximity}
+  .i-scene{height:auto;min-height:700px;scroll-snap-stop:normal}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;scroll-snap-type:none}
+  .i-scene{scroll-snap-stop:normal}
+}
