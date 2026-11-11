@@ -49,7 +49,7 @@ for(const old of [facts,signals,thesis])old?.remove();
 const archive=document.createElement('details');archive.className='gts-archive';
 const summary=document.createElement('summary');summary.innerHTML='<span class="gts-meta">OPTIONAL DEEP DIVE / ORIGINAL WORK</span><strong>EXPLORE THE ARTIFACTS</strong>'+arrow+'<span class="gts-archive-description">Detailed screens, intermediate explorations, and source project materials</span>';
 galleryHeading.before(archive);
-archive.append(summary,galleryHeading,gallery);
+archive.append(summary,gallery); galleryHeading.remove();
 archive.addEventListener('toggle',()=>{if(archive.open)requestAnimationFrame(()=>{window.dispatchEvent(new Event('resize'));window.dispatchEvent(new Event('scroll'))})});
 story.querySelectorAll('.gts-artifact img').forEach(img=>{
  const update=()=>{
