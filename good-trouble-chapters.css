@@ -351,3 +351,119 @@ body.case-v3.gt-interior .case-content{width:calc(100% - 40px)}
   }
   .gte-chapters .gte-artboard--two .gte-image--cut{box-shadow:8px 10px 0 var(--gte-accent);margin:0 10px 12px 0;width:calc(100% - 10px)}
 }
+
+
+/* ASPECT-TRUE ARTIFACT FRAMING / v4
+   Image dimensions determine the physical frame. Device treatments only
+   apply to portrait assets; wide diagrams remain wide product artifacts. */
+.gte-chapters .gte-artboard {
+  align-items:center;
+  justify-items:center;
+}
+.gte-chapters .gte-artboard .gte-image,
+.gte-chapters .gte-artboard--one .gte-image--hero,
+.gte-chapters .gte-artboard--one .gte-image--detail,
+.gte-chapters .gte-artboard--two .gte-image--cut,
+.gte-chapters .gte-artboard--two .gte-image--slice,
+.gte-chapters .gte-artboard--two .gte-image--floating {
+  --gte-ratio:1;
+  --gte-image-height:clamp(240px,39vw,510px);
+  display:block;
+  align-self:center;
+  justify-self:center;
+  width:min(100%,calc(var(--gte-ratio) * var(--gte-image-height)));
+  height:auto;
+  min-height:0;
+  max-width:100%;
+  max-height:none;
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+  outline:0;
+  transform:none;
+  clip-path:none;
+  overflow:visible;
+}
+.gte-chapters .gte-artboard--one .gte-image--detail,
+.gte-chapters .gte-artboard--two .gte-image--slice,
+.gte-chapters .gte-artboard--two .gte-image--floating {
+  --gte-image-height:clamp(190px,24vw,300px);
+}
+.gte-chapters .gte-artboard--two .gte-image--cut {--gte-image-height:clamp(250px,39vw,505px)}
+.gte-chapters .gte-artboard .gte-image img {
+  width:100%;
+  height:auto;
+  max-width:100%;
+  max-height:none;
+  display:block;
+  object-fit:contain;
+  object-position:center;
+  border-radius:inherit;
+  box-shadow:none;
+}
+.gte-chapters .gte-artboard--one .gte-image--hero:before {display:none}
+.gte-chapters .gte-artboard .gte-image.gte-portrait {
+  padding:7px;
+  border:clamp(7px,.8vw,12px) solid #171717;
+  border-radius:clamp(21px,2.4vw,34px);
+  background:#171717;
+  box-shadow:9px 13px 0 var(--gte-accent),0 19px 36px #1112;
+}
+.gte-chapters .gte-artboard .gte-image.gte-portrait img {border-radius:clamp(8px,1.1vw,18px);background:#fff}
+.gte-chapters .gte-artboard .gte-image.gte-landscape {
+  border:2px solid #16161622;
+  border-radius:8px;
+  background:white;
+  box-shadow:9px 13px 0 var(--gte-accent),0 15px 38px #17171717;
+}
+.gte-chapters .gte-artboard .gte-image.gte-square {
+  border:2px solid #17171733;
+  border-radius:14px;
+  background:white;
+  box-shadow:9px 13px 0 var(--gte-accent),0 15px 38px #17171717;
+}
+.gte-chapters .gte-artboard .gte-image.gte-portrait:before {
+  display:block;
+  content:"";
+  position:absolute;
+  width:21%;
+  height:5px;
+  top:-8px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#171717;
+  border-radius:0 0 8px 8px;
+  z-index:4;
+}
+.gte-chapters .gte-artboard .gte-image.gte-landscape:before,
+.gte-chapters .gte-artboard .gte-image.gte-square:before {display:none}
+.gte-chapters .gte-artboard .gte-image.gte-portrait img,
+.gte-chapters .gte-artboard .gte-image.gte-landscape img,
+.gte-chapters .gte-artboard .gte-image.gte-square img {filter:none!important}
+.gte-chapters.gte-architecture .gte-artboard .gte-image.gte-portrait{border-color:#12356f;background:#12356f}
+.gte-chapters.gte-human .gte-artboard .gte-image.gte-portrait{border-color:#713956;background:#713956}
+.gte-chapters.gte-brand .gte-artboard .gte-image.gte-portrait{border-color:#40256a;background:#40256a}
+.gte-chapters .gte-detail-strip .gte-detail-art {border-radius:10px;overflow:hidden}
+@media(max-width:760px) {
+  .gte-chapters .gte-artboard {align-items:center}
+  .gte-chapters .gte-artboard .gte-image,
+  .gte-chapters .gte-artboard--one .gte-image--hero,
+  .gte-chapters .gte-artboard--one .gte-image--detail,
+  .gte-chapters .gte-artboard--two .gte-image--cut,
+  .gte-chapters .gte-artboard--two .gte-image--slice,
+  .gte-chapters .gte-artboard--two .gte-image--floating {
+    --gte-image-height:min(96vw,490px);
+    width:min(100%,calc(var(--gte-ratio) * var(--gte-image-height)));
+    height:auto;
+    flex:none;
+    margin:0 0 14px 0;
+  }
+  .gte-chapters .gte-artboard--one .gte-image--detail,
+  .gte-chapters .gte-artboard--two .gte-image--slice,
+  .gte-chapters .gte-artboard--two .gte-image--floating {--gte-image-height:min(65vw,315px)}
+  .gte-chapters .gte-artboard .gte-image img {height:auto;max-height:none}
+  .gte-chapters .gte-artboard .gte-image.gte-portrait {box-shadow:7px 9px 0 var(--gte-accent)}
+}
