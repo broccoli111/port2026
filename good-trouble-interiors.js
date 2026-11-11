@@ -62,38 +62,3 @@ function escapeText(t){return String(t).replace(/[&<>"']/g,x=>({'&':'&amp;','<':
 
 
 
-/* Visual story — completely different from the original phone/image galleries. */
-(()=>{
-const root=document.getElementById('case-root');if(!root)return;
-const id=new URLSearchParams(location.search).get('id')||'meta-inevitable';
-const cases={
-'meta-inevitable':{family:'system',label:'A SYSTEM THAT SCALES',big:'ONE / MANY',descriptor:'The component is the start. The collective practice is the product.',files:['gallery-01-item-01.png','gallery-02-item-01.png','gallery-04-item-01.png']},
-'meta-consistency':{family:'system',label:'DESIGNING SHARED LANGUAGE',big:'SAME / DIFFERENT',descriptor:'A common grammar, without flattening what makes each experience distinct.',files:['gallery-01-item-01.png','gallery-02-item-01.png','gallery-04-item-01.png']},
-'meta-clutter':{family:'system',label:'LESS IS A DESIGN DECISION',big:'CUT / THROUGH',descriptor:'Making space for what actually needs attention.',files:['gallery-01-item-01.png','gallery-02-item-01.png','gallery-04-item-01.png']},
-'citi-platform':{family:'architecture',label:'MULTIPLE PRODUCTS, ONE FOUNDATION',big:'BUILT / TOGETHER',descriptor:'A repeatable structure for many distinct financial experiences.',files:['gallery-01-item-01.png','gallery-01-item-05.png','gallery-01-item-11.png']},
-'citi-guidance':{family:'architecture',label:'GUIDANCE THROUGH DESIGN',big:'MONEY / MADE CLEAR',descriptor:'An experience that helps people understand where to go next.',files:['gallery-01-item-01.png','gallery-02-item-01.png','gallery-03-item-device.png']},
-'feelmore-wellness':{family:'ritual',label:'FROM DEVICE TO DAILY RITUAL',big:'FEEL / MORE',descriptor:'A quieter, human-centered rhythm behind a new wellness habit.',files:['screen-01.png','screen-04-background.png','screen-08-background.png']},
-'feelmore-confidence':{family:'ritual',label:'TRUST BEFORE TRANSACTIONS',big:'MAKE / IT REAL',descriptor:'Turning curiosity into understanding, then understanding into confidence.',files:['gallery-01-item-01.png','gallery-02-item-01.png','gallery-03-item-01.png']},
-'weight-watchers':{family:'identity',label:'A BRAND IN EVERY INTERACTION',big:'FEEL / CONNECTED',descriptor:'The character of a brand should hold together across every touchpoint.',files:['gallery-01-item-01.png','gallery-02-item-01.png','gallery-04-item-01.png']}
-};
-const c=cases[id];if(!c)return;
-const url=file=>'assets/cases/'+id+'/'+file;
-const svgLines='<svg class="gi-art-vector" viewBox="0 0 800 620" preserveAspectRatio="none" aria-hidden="true"><path d="M20 510L236 152L526 395L765 62" /><path d="M37 78L236 152L493 65L765 62M236 152L390 570L526 395L780 546" /><circle cx="236" cy="152" r="9"/><circle cx="526" cy="395" r="9"/><circle cx="765" cy="62" r="9"/></svg>';
-const panel=(file,cls)=>'<figure class="gi-art-media '+cls+'"><img src="'+url(file)+'" alt="" loading="lazy" decoding="async"></figure>';
-const section=document.createElement('section');section.className='gi-art-story gi-art-story--'+c.family;section.setAttribute('aria-label','Art-directed presentation of original project visuals');
-section.innerHTML='<header class="gi-art-heading"><span class="gi-mono">VISUAL STORY / '+c.label+'</span><span class="gi-mono">COMPOSED FROM ORIGINAL WORK</span></header>'+
-'<div class="gi-art-canvas"><div class="gi-art-noise" aria-hidden="true"></div><span class="gi-art-outline" aria-hidden="true">'+c.big.replace(' / ','<br>')+'</span>'+svgLines+
-panel(c.files[0],'gi-art-primary')+panel(c.files[1],'gi-art-secondary')+panel(c.files[2],'gi-art-tertiary')+
-'<div class="gi-art-counter gi-mono">ARTIFACT STUDY<br>01 — 03</div><span class="gi-art-shape" aria-hidden="true"></span></div>'+
-'<div class="gi-art-caption"><h2>'+c.big.replace(' / ','<br>')+'</h2><p>'+c.descriptor+'</p></div>';
-const target=document.querySelector('.case-gallery-heading');if(!target)return;
-target.parentNode.insertBefore(section,target);
-section.querySelectorAll('img').forEach(img=>img.addEventListener('error',()=>{img.closest('.gi-art-media').classList.add('gi-asset-missing')},{once:true}));
-const gallery=document.querySelector('.case-gallery');
-if(gallery&&target){
-const details=document.createElement('details');details.className='gi-original-gallery';
-const summary=document.createElement('summary');summary.innerHTML='<span class="gi-mono">ORIGINAL ARTIFACTS / PROCESSES / SCREENS</span><strong>Explore the work in detail</strong><svg class="gi-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>';
-target.parentNode.insertBefore(details,target);details.appendChild(summary);details.appendChild(target);details.appendChild(gallery);
-details.addEventListener('toggle',()=>{if(details.open){dispatchEvent(new Event('resize'));requestAnimationFrame(()=>dispatchEvent(new Event('scroll')))}});
-}
-})();
