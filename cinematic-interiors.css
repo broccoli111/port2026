@@ -158,3 +158,6 @@ body.note-v3.ci-page #note-root>.detail-nav{width:calc(100% - 44px);flex-wrap:wr
 }
 @media(max-width:420px){body.ci-page .ci-nav .ci-links{gap:11px}body.ci-page .ci-nav .ci-links a{font-size:11px}body.case-v3.ci-page .ci-case-lead h1{font-size:clamp(59px,13vw,76px)}body.case-v3.ci-page .ci-case-lead p{font-size:17px}body.note-v3.ci-page .note-heading h1{font-size:clamp(55px,12vw,75px)}body.note-v3.ci-page .ci-note-sidebar{flex-direction:column;gap:10px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}body.ci-page.ci-ready .ci-fade{opacity:1;transform:none;transition:none}body.ci-page .gts-icon{transition:none}}
+
+/* Permanently suppress the legacy gallery on cinematic case studies. */
+body.case-v3.ci-page .case-gallery,body.case-v3.ci-page .case-gallery-heading,body.case-v3.ci-page .gts-archive{display:none!important}
