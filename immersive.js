@@ -25,79 +25,72 @@ document.querySelectorAll('.i-project-art').forEach(art=>art.addEventListener('p
 },{passive:true}));
 
 
-/* One transition engine for wheel, trackpad, and section links.
-   Desktop only: mobile retains native touch scrolling. */
-const desktopScenes=matchMedia('(min-width: 761px) and (min-height: 701px) and (pointer: fine)');
+/* All scene changes use the browser's SAME native smooth-scroll animation.
+   Wheel only selects the destination. It never applies its own easing curve. */
+const desktopScenes=matchMedia('(min-width:761px) and (min-height:701px) and (pointer:fine)');
 const transitionLinks=[...document.querySelectorAll('a[href^="#"]')];
-let animationFrame=0,transitioning=false,wheelBuffer=0,releaseAt=0,targetScene=0;
 const sceneFromHash=hash=>scenes.findIndex(s=>('#'+s.id)===hash);
-const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
-const sceneTop=i=>Math.round(scenes[i].getBoundingClientRect().top+window.scrollY);
-const nearestScene=()=>scenes.reduce((best,s,i)=>Math.abs(sceneTop(i)-window.scrollY)<Math.abs(sceneTop(best)-window.scrollY)?i:best,0);
+const sceneTop=i=>Math.round(scenes[i].getBoundingClientRect().top+scrollY);
+const nearestScene=()=>scenes.reduce((best,s,i)=>Math.abs(sceneTop(i)-scrollY)<Math.abs(sceneTop(best)-scrollY)?i:best,0);
 const controlled=()=>desktopScenes.matches&&!reduced;
-const setMode=()=>{
- document.documentElement.classList.toggle('i-controlled',controlled());
- if(!controlled()){cancelAnimationFrame(animationFrame);transitioning=false;wheelBuffer=0}
-};
-setMode();desktopScenes.addEventListener('change',setMode);
+let transitioning=false,wheelBuffer=0,transitionTimer=0,lastWheel=0,unlockAt=0;
+const setMode=()=>{document.documentElement.classList.toggle('i-controlled',controlled());if(!controlled()){transitioning=false;wheelBuffer=0;clearTimeout(transitionTimer)}};
+setMode();
+desktopScenes.addEventListener('change',setMode);
+const clearTransition=()=>{transitioning=false;wheelBuffer=0;unlockAt=performance.now()+230;clearTimeout(transitionTimer)};
 const goScene=(index,updateHash=false)=>{
  index=Math.max(0,Math.min(scenes.length-1,index));
  const target=scenes[index];
  if(!target)return;
- targetScene=index;
  if(updateHash&&location.hash!=='#'+target.id)history.pushState(null,'','#'+target.id);
- if(!controlled()){
-   target.scrollIntoView({behavior:reduced?'instant':'smooth',block:'start'});
-   mark(index);return;
+ // The same call is used for numbered links, header links, wheel and keyboard.
+ if(Math.abs(sceneTop(index)-scrollY)<3){mark(index);clearTransition();return}
+ transitioning=controlled();
+ wheelBuffer=0;mark(index);
+ target.scrollIntoView({behavior:reduced?'instant':'smooth',block:'start'});
+ clearTimeout(transitionTimer);
+ if(transitioning){
+   // This safety fallback covers browsers without scrollend.
+   transitionTimer=setTimeout(clearTransition,1150);
  }
- cancelAnimationFrame(animationFrame);
- const from=window.scrollY,to=sceneTop(index),delta=to-from;
- if(Math.abs(delta)<2){transitioning=false;mark(index);return}
- transitioning=true;wheelBuffer=0;
- const duration=Math.min(1050,Math.max(680,720+Math.abs(delta)/Math.max(1,innerHeight)*100));
- const start=performance.now();
- mark(index);
- const step=now=>{
-   const t=Math.min(1,(now-start)/duration);
-   window.scrollTo(0,from+delta*ease(t));
-   if(t<1){animationFrame=requestAnimationFrame(step)}
-   else{
-     transitioning=false;releaseAt=performance.now()+190;
-     window.scrollTo(0,to);
-     wheelBuffer=0;
-   }
- };
- animationFrame=requestAnimationFrame(step);
 };
+addEventListener('scrollend',()=>{
+ if(!transitioning)return;
+ const i=nearestScene();
+ if(Math.abs(sceneTop(i)-scrollY)<5)clearTransition();
+},{passive:true});
 transitionLinks.forEach(a=>{
  const i=sceneFromHash(a.getAttribute('href'));
- if(i===-1)return;
+ if(i<0)return;
  a.addEventListener('click',e=>{
-   // A modifier click retains the browser's usual link behavior.
    if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
-   e.preventDefault();goScene(i,true);
+   e.preventDefault();
+   goScene(i,true);
  });
 });
 addEventListener('wheel',e=>{
  if(!controlled()||e.ctrlKey)return;
  e.preventDefault();
- if(transitioning||performance.now()<releaseAt)return;
- // Accumulate small trackpad deltas but respond to ordinary wheel ticks.
+ if(transitioning||performance.now()<unlockAt)return;
  const delta=e.deltaY*(e.deltaMode===1?16:e.deltaMode===2?innerHeight:1);
  if(!delta)return;
- if(wheelBuffer&&Math.sign(wheelBuffer)!==Math.sign(delta))wheelBuffer=0;
+ // Treat a new trackpad gesture separately from its momentum tail.
+ const now=performance.now();
+ if(now-lastWheel>170||Math.sign(wheelBuffer)!==Math.sign(delta))wheelBuffer=0;
+ lastWheel=now;
  wheelBuffer=Math.max(-130,Math.min(130,wheelBuffer+delta));
- if(Math.abs(wheelBuffer)<32)return;
- const direction=Math.sign(wheelBuffer);wheelBuffer=0;
- const index=nearestScene()+direction;
- if(index>=0&&index<scenes.length)goScene(index);
- else releaseAt=performance.now()+120;
+ if(Math.abs(wheelBuffer)<45)return;
+ const direction=Math.sign(wheelBuffer);
+ wheelBuffer=0;
+ const i=nearestScene()+direction;
+ if(i>=0&&i<scenes.length)goScene(i);
+ else unlockAt=performance.now()+220;
 },{passive:false});
 addEventListener('keydown',e=>{
  if(!controlled()||e.defaultPrevented||e.altKey||e.metaKey||e.ctrlKey)return;
  if(/INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName||'')||document.activeElement?.isContentEditable)return;
- const direction=['ArrowDown','PageDown',' '].includes(e.key)?1:['ArrowUp','PageUp'].includes(e.key)?-1:0;
- if(direction){e.preventDefault();if(!transitioning)goScene(nearestScene()+direction);return}
+ const dir=['ArrowDown','PageDown',' '].includes(e.key)?1:['ArrowUp','PageUp'].includes(e.key)?-1:0;
+ if(dir){e.preventDefault();if(!transitioning)goScene(nearestScene()+dir);return}
  if(e.key==='Home'){e.preventDefault();goScene(0)}
  if(e.key==='End'){e.preventDefault();goScene(scenes.length-1)}
 });
