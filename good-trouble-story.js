@@ -20,7 +20,7 @@ const signals=document.querySelector('.case-signals');
 const thesis=document.querySelector('.case-thesis');
 const gallery=document.querySelector('.case-gallery');
 const galleryHeading=document.querySelector('.case-gallery-heading');
-if(!intro||!facts||!gallery||!galleryHeading)return;
+if(!intro||!facts)return;
 const factText=[...facts.querySelectorAll(':scope > div')].map(el=>el.querySelector('p')?.textContent?.trim()||'');
 const metrics=[...(signals?.querySelectorAll(':scope > div')||[])].map(el=>({value:el.querySelector('strong')?.textContent?.trim()||'',label:el.querySelector('span')?.textContent?.trim()||''})).filter(m=>m.value&&m.label);
 const thesisCopy=thesis?.querySelector('blockquote')?.textContent?.trim()||'';
@@ -46,11 +46,10 @@ chapter(0)+chapter(1)+chapter(2)+
 '</section>';
 intro.after(story);
 for(const old of [facts,signals,thesis])old?.remove();
-const archive=document.createElement('details');archive.className='gts-archive';
-const summary=document.createElement('summary');summary.innerHTML='<span class="gts-meta">OPTIONAL DEEP DIVE / ORIGINAL WORK</span><strong>EXPLORE THE ARTIFACTS</strong>'+arrow+'<span class="gts-archive-description">Detailed screens, intermediate explorations, and source project materials</span>';
-galleryHeading.before(archive);
-archive.append(summary,gallery); galleryHeading.remove();
-archive.addEventListener('toggle',()=>{if(archive.open)requestAnimationFrame(()=>{window.dispatchEvent(new Event('resize'));window.dispatchEvent(new Event('scroll'))})});
+// The curated three-chapter narrative is the case study. Remove the legacy
+// shotgun gallery entirely; no optional archive is rendered.
+gallery?.remove();
+galleryHeading?.remove();
 story.querySelectorAll('.gts-artifact img').forEach(img=>{
  const update=()=>{
    const shell=img.closest('.gts-artifact');
