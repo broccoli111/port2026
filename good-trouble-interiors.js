@@ -37,7 +37,7 @@ const position=Math.max(0,indexed.indexOf(id))+1;
 cover.innerHTML='<div class="gi-cover-top gi-mono"><span class="gi-dot"></span><span>'+String(position).padStart(2,'0')+' / '+String(indexed.length).padStart(2,'0')+'</span><span>PRODUCT DESIGN / SELECTED WORK</span></div><h2 class="gi-cover-title">'+words.map((w,i)=>'<span'+(i?' class="gi-accent"':'')+' style="display:block">'+escapeText(w)+'</span>').join('')+'</h2><div><p class="gi-cover-dek">'+escapeText(dek?.textContent||'')+'</p><div class="gi-cover-bottom gi-mono"><span>'+escapeText(company?.textContent||'')+' / CASE STUDY</span>'+star+'</div></div>';
 hero.insertBefore(cover,hero.firstChild);
 const label=document.createElement('span');label.className='gi-cover-art-label gi-mono';label.textContent='SELECTED PRODUCT WORK';hero.appendChild(label);
-const gh=document.querySelector('.case-gallery-heading p');if(gh)gh.textContent='The work, up close.';
+/* Legacy selected-evidence heading is removed by the guided-story renderer. */
 const thesis=document.querySelector('.case-thesis>p');if(thesis)thesis.textContent='02 / THE IDEA THAT MOVED THE WORK';
 const fs=document.querySelectorAll('.case-facts>div');fs.forEach((el,i)=>{let n=el.querySelector('.case-fact-index');if(n)n.textContent='0'+(i+3)+' / '+['CONTEXT','INTERVENTION','OUTCOME'][i]});
 const nav=document.querySelector('.case-bottom-nav');if(nav){nav.querySelectorAll('a').forEach((a,i)=>{const old=a.querySelector('svg');if(old)old.remove();a.insertAdjacentHTML(i===0?'afterbegin':'beforeend',i===0?back:arrow)})}
