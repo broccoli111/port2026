@@ -53,4 +53,18 @@ const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 if(!reduced&&'IntersectionObserver'in window){const nodes=[...chapters.querySelectorAll('.gte-reveal')];const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('gte-visible');obs.unobserve(e.target)}}),{threshold:.08,rootMargin:'0px 0px -50px 0px'});nodes.forEach(el=>obs.observe(el));}
 else chapters.querySelectorAll('.gte-reveal').forEach(el=>el.classList.add('gte-visible'));
 chapters.querySelectorAll('img').forEach(el=>el.addEventListener('error',()=>el.closest('.gte-image,.gte-detail-art')?.classList.add('gte-missing'),{once:true}));
+/* Match the visual frame to the source artwork's actual geometry. */
+chapters.querySelectorAll('.gte-image img,.gte-detail-art img').forEach(img=>{
+ const classify=()=>{
+   if(!img.naturalWidth||!img.naturalHeight)return;
+   const ratio=img.naturalWidth/img.naturalHeight;
+   const shell=img.closest('.gte-image,.gte-detail-art');
+   if(!shell)return;
+   shell.style.setProperty('--gte-ratio',String(ratio));
+   shell.classList.remove('gte-portrait','gte-landscape','gte-square');
+   shell.classList.add(ratio<.82?'gte-portrait':ratio>1.22?'gte-landscape':'gte-square');
+ };
+ if(img.complete)classify();
+ else img.addEventListener('load',classify,{once:true});
+});
 })();
