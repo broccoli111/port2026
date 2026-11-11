@@ -36,3 +36,136 @@ body.note-v3 .note-heading{padding-top:30px}body.case-v3 .scroll-progress,body.n
 
 /* Hand-drawn brand SVG iconography */
 .gt .gt-svg-icon{display:inline-block;width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round;flex:none;vertical-align:middle}.gt .gt-svg-star{width:1em;height:1em;stroke-width:2.4}.gt .gt-hero-type .gt-spark{font-size:clamp(40px,6vw,94px)}.gt .gt-art-asterisk .gt-svg-star{height:1em;width:1em}.gt .gt-circle-arrow .gt-svg-icon{width:26px;height:26px}.gt .gt-nav-cta .gt-svg-icon{width:16px;height:16px}.gt .gt-hero-side .gt-svg-icon{width:24px;height:24px}.gt .gt-contact-link .gt-svg-icon{width:clamp(22px,3vw,38px);height:clamp(22px,3vw,38px)}.gt .gt-hero-cta .gt-svg-icon{width:19px;height:19px}
+
+
+/* HOME NAV / v5: self-contained dimensions to resist legacy site styles */
+body.gt .gt-top{
+  box-sizing:border-box;
+  height:82px;
+  min-height:82px;
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  padding:0;
+}
+body.gt .gt-top .gt-logo{
+  position:relative;
+  display:block;
+  flex:0 0 auto;
+  width:auto;
+  max-width:none;
+  height:auto;
+  font:600 24px/.91 Visby,"Helvetica Neue",Arial,sans-serif;
+  letter-spacing:-.075em;
+  color:#151515;
+}
+body.gt .gt-top .gt-logo>span{display:block}
+body.gt .gt-top .gt-nav{
+  display:flex;
+  flex:0 1 auto;
+  width:auto;
+  height:auto;
+  min-width:0;
+  align-items:center;
+  justify-content:flex-end;
+  flex-wrap:nowrap;
+  gap:clamp(14px,2.5vw,35px);
+  margin:0;
+  padding:0;
+  font:600 13px/1 Visby,"Helvetica Neue",Arial,sans-serif;
+}
+body.gt .gt-top .gt-nav>a{
+  box-sizing:border-box;
+  display:inline-flex;
+  position:relative;
+  flex:none;
+  align-items:center;
+  justify-content:center;
+  width:auto;
+  height:auto;
+  min-height:40px;
+  padding:0;
+  margin:0;
+  background:none;
+  border:0;
+  border-radius:0;
+  font:inherit;
+  text-decoration:none;
+  white-space:nowrap;
+}
+body.gt .gt-top .gt-nav>a.gt-nav-cta{
+  position:relative;
+  display:inline-flex;
+  flex:0 0 auto;
+  width:auto;
+  max-width:none;
+  height:40px;
+  min-height:40px;
+  max-height:40px;
+  padding:0 15px;
+  margin:0;
+  gap:8px;
+  align-items:center;
+  justify-content:center;
+  background:#151515;
+  color:white!important;
+  border-radius:999px;
+  font:600 12px/1 Visby,"Helvetica Neue",Arial,sans-serif;
+  box-shadow:none;
+  overflow:hidden;
+  transform:none;
+}
+body.gt .gt-top .gt-nav>a.gt-nav-cta:hover{background:#242aff;transform:none}
+body.gt .gt-top .gt-nav>a.gt-nav-cta svg.gt-svg-icon {
+  display:block!important;
+  position:static!important;
+  box-sizing:content-box!important;
+  flex:0 0 15px!important;
+  width:15px!important;
+  height:15px!important;
+  min-width:15px!important;
+  min-height:15px!important;
+  max-width:15px!important;
+  max-height:15px!important;
+  margin:0!important;
+  padding:0!important;
+  stroke:#fff!important;
+  fill:none!important;
+  stroke-width:2!important;
+  transform:none!important;
+  overflow:visible!important;
+}
+body.gt .gt-top .gt-nav>a.gt-nav-cta svg.gt-svg-icon path{
+  fill:none!important;
+  stroke:currentColor!important;
+  stroke-width:2!important;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+@media(max-width:760px) {
+  body.gt .gt-top{
+    width:calc(100% - 40px);
+    height:66px;
+    min-height:66px;
+    gap:12px;
+  }
+  body.gt .gt-top .gt-logo{font-size:20px}
+  body.gt .gt-top .gt-nav{gap:14px}
+  body.gt .gt-top .gt-nav>a:not(.gt-nav-cta):not(:first-child){display:none!important}
+  body.gt .gt-top .gt-nav>a:first-child{display:inline-flex!important}
+  body.gt .gt-top .gt-nav>a.gt-nav-cta{
+    display:inline-flex!important;
+    height:38px;
+    min-height:38px;
+    max-height:38px;
+    padding:0 13px;
+    font-size:12px;
+  }
+}
+@media(max-width:370px){
+  body.gt .gt-top{width:calc(100% - 28px)}
+  body.gt .gt-top .gt-nav{gap:10px}
+  body.gt .gt-top .gt-nav>a.gt-nav-cta{padding-inline:11px}
+}
