@@ -97,53 +97,52 @@ addEventListener('keydown',e=>{
 addEventListener('popstate',()=>{const i=sceneFromHash(location.hash);if(i>=0)goScene(i)});
 
 
-/* Mobile scenes: a vertical swipe triggers the same goScene() native-smooth
-   journey as the navigation links. Avoid trapping taller content and controls. */
+/* Mobile: symmetrical swipe-to-scene navigation.
+   Fix: short viewport minimum heights previously disabled upward swipes.
+   The destination always uses goScene(), just like side navigation. */
 const touchScenes=matchMedia('(max-width:760px) and (pointer:coarse)');
 let gesture=null,gestureLock=0;
 const touchEnabled=()=>touchScenes.matches&&!reduced;
 const updateTouchMode=()=>document.documentElement.classList.toggle('i-touch-scenes',touchEnabled());
 updateTouchMode();
 touchScenes.addEventListener('change',updateTouchMode);
-const shouldLeaveNative=e=>{
- const element=e.target instanceof Element?e.target:null;
- if(!element||element.closest('a, button, input, textarea, select, [contenteditable], [role="slider"], [data-native-scroll]'))return true;
- const section=element.closest('.i-scene');
- if(!section)return true;
- // A tall section may need its own free scroll to expose all content.
- if(section.scrollHeight>innerHeight+24)return true;
- return false;
-};
+
+const interactiveGestureTarget=el=>!!el?.closest('a,button,input,textarea,select,[contenteditable],[role="slider"],[data-native-scroll]');
+const tallScene=section=>section.getBoundingClientRect().height>innerHeight+36;
 addEventListener('touchstart',e=>{
  gesture=null;
- if(!touchEnabled()||e.touches.length!==1||shouldLeaveNative(e))return;
+ if(!touchEnabled()||e.touches.length!==1)return;
+ const element=e.target instanceof Element?e.target:null;
+ if(!element||interactiveGestureTarget(element))return;
+ const section=element.closest('.i-scene');
+ if(!section)return;
  const t=e.touches[0];
- gesture={x:t.clientX,y:t.clientY,lastY:t.clientY,vertical:false,horizontal:false};
+ gesture={x:t.clientX,y:t.clientY,axis:null,section,atStart:scrollY<=sceneTop(scenes.indexOf(section))+12,
+ atEnd:scrollY>=sceneTop(scenes.indexOf(section))+section.offsetHeight-innerHeight-12,
+ oversize:tallScene(section)};
 },{passive:true});
 addEventListener('touchmove',e=>{
  if(!gesture||!touchEnabled()||e.touches.length!==1)return;
  const t=e.touches[0],dx=t.clientX-gesture.x,dy=t.clientY-gesture.y;
- gesture.lastY=t.clientY;
- if(!gesture.vertical&&!gesture.horizontal&&Math.max(Math.abs(dx),Math.abs(dy))>10){
-   if(Math.abs(dx)>Math.abs(dy)*1.2)gesture.horizontal=true;
-   else if(Math.abs(dy)>Math.abs(dx)*1.2)gesture.vertical=true;
- }
- // Let horizontal gestures and taps work normally. Cancel native vertical
- // panning so the swipe creates one controlled scene transition on release.
- if(gesture.vertical&&e.cancelable)e.preventDefault();
+ if(!gesture.axis&&Math.max(Math.abs(dx),Math.abs(dy))>10)gesture.axis=Math.abs(dy)>Math.abs(dx)*1.2?'vertical':'horizontal';
+ if(gesture.axis!=='vertical')return;
+ // For oversized scenes permit scrolling through their actual content.
+ const needsContentScroll=gesture.oversize&&((dy<0&&!gesture.atEnd)||(dy>0&&!gesture.atStart));
+ if(needsContentScroll)return;
+ if(e.cancelable)e.preventDefault();
 },{passive:false});
 addEventListener('touchend',e=>{
- if(!gesture)return;
  const g=gesture;gesture=null;
- if(!touchEnabled()||g.horizontal||!g.vertical||e.changedTouches.length!==1)return;
+ if(!g||!touchEnabled()||g.axis!=='vertical'||e.changedTouches.length!==1)return;
  const dy=e.changedTouches[0].clientY-g.y;
- if(Math.abs(dy)<40||performance.now()<gestureLock)return;
- const direction=dy<0?1:-1;
- const currentIndex=nearestScene(),nextIndex=currentIndex+direction;
+ if(Math.abs(dy)<42||performance.now()<gestureLock)return;
+ if(g.oversize&&((dy<0&&!g.atEnd)||(dy>0&&!g.atStart)))return;
+ const currentIndex=scenes.indexOf(g.section);
+ if(currentIndex<0)return;
+ const nextIndex=currentIndex+(dy<0?1:-1);
  if(nextIndex<0||nextIndex>=scenes.length)return;
- // Same transition method used by numbered links and wheel.
  goScene(nextIndex);
- gestureLock=performance.now()+700;
+ gestureLock=performance.now()+650;
 },{passive:true});
 addEventListener('touchcancel',()=>{gesture=null},{passive:true});
 
