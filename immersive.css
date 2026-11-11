@@ -61,3 +61,10 @@ html{
   html{scroll-behavior:auto;scroll-snap-type:none}
   .i-scene{scroll-snap-stop:normal}
 }
+
+
+/* JS-controlled scene journeys use a unified easing curve; native snap stays fallback. */
+@media(min-width:761px) and (min-height:701px){
+ html.i-controlled{scroll-behavior:auto!important;scroll-snap-type:none!important}
+ html.i-controlled .i-scene{scroll-snap-align:none;scroll-snap-stop:normal}
+}
