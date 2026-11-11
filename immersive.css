@@ -83,3 +83,9 @@ html{
 @media(prefers-reduced-motion:reduce){
  html.i-touch-scenes{scroll-snap-type:none}
 }
+
+/* Mobile swipe reliability: no 700px artificial minimum on small phones. */
+@media(max-width:760px){
+ .i-scene{height:auto!important;min-height:100svh!important}
+ html.i-touch-scenes{overscroll-behavior-y:contain}
+}
