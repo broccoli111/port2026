@@ -880,10 +880,8 @@ var HL = (() => {
 <script type="module" id="hl-figure">
 const {Cam,fit,proj,poly,open,rrect,seg,clamp,lerp,spring,stepS,mk,pointer,register,disposer}=HL;
 function mount({stage,svg,read},value){
- const bag=disposer(), C=Cam(45,0.5,1.18);
- const world=(u,v,l=0)=>[(u-187.5)*.26,v*.072,(812-v)*.255+l];
- fit(C,[[0,0,0],[110,65,0],[-55,0,232],[-55,65,232]],200,166);
- const base=proj(C),P=(u,v,l=0)=>base(...world(u,v,l));
+ const bag=disposer();
+ const P=(u,v,l=0)=>[200+(u-187.5)*.31,34+v*.31];
  const g=mk('g',{},svg), items=[];
  function path(cls='nf lo'){return mk('path',{class:cls},g);}
  const shell=path('sil'),rim=path('nf lo');
